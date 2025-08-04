@@ -1,0 +1,6 @@
+name: site_rezal
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - fastapi
