@@ -16,6 +16,6 @@ app.include_router (auth_router)
 def is_alive ():
     return True
 
-@app.get("/user/me/")
+@app.get("/user/me")
 async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
