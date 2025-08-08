@@ -9,6 +9,6 @@ app.include_router (user_router)
 app.include_router (auth_router)
 
 @app.get ("/is_alive")
-def is_alive ():
+async def is_alive () -> bool:
     return True
 

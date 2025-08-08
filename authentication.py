@@ -39,7 +39,7 @@ class TokenData (BaseModel):
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def authenticate_user(username: str, password: str):
+def authenticate_user(username: str, password: str) -> User:
     """
     Détermine si *password* est le mot de passe de l'utilisateur *username*
     """
@@ -57,7 +57,7 @@ def authenticate_user(username: str, password: str):
         return user
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     """
     Détermine si le jeton *token* est un jeton d'authentification valide
     TODO : ajouter une vérification de la durée de validitité
@@ -88,7 +88,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         return user[0]
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     """
     Crée un jeton d'accès à partir des données de *data*, valide pour une durée *expires_delta*
     data ne doit pas contenir de clé *exp*

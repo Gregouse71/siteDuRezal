@@ -41,7 +41,7 @@ class UserUpdate (SQLModel, table=False):
 
 
 
-def user_from_received (user_rec: UserReceived):
+def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
