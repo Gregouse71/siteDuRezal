@@ -4,3 +4,7 @@ channels:
   - defaults
 dependencies:
   - fastapi
+  - sqlmodel
+  - pydantic
+  - pyjwt
+  

@@ -1,17 +1,15 @@
+from pydantic import BaseModel
 from typing import Annotated
-from fastapi import FastAPI, Depends, HTTPException, status, APIRouter
+from fastapi import Depends, HTTPException, status, APIRouter
 from sqlmodel import Session, select
 
-from pydantic import BaseModel
-
 from datetime import datetime, timedelta, timezone
-
 import jwt
 from jwt.exceptions import InvalidTokenError
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from database import User, user_from_received, engine
+from database import User, engine
 
 auth_router = APIRouter (
     prefix="/auth"

@@ -1,7 +1,4 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import sessionmaker
-from typing import Annotated
-
+from pydantic import EmailStr
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
 
 class UserReceived(SQLModel, table=False):
@@ -12,7 +9,7 @@ class UserReceived(SQLModel, table=False):
 
     nom: str
     prenom: str
-    email: str
+    email: EmailStr
     promo: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
 
 
