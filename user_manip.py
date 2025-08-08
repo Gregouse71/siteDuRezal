@@ -1,15 +1,20 @@
-from fastapi import APIRouter
-
+from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
+from typing import Annotated
 
 from database import UserReceived, User, user_from_received, engine
+
+from authentication import get_current_user
 
 user_router = APIRouter (
     prefix="/users"
 )
 
 @user_router.post ("/")
-def post_users (user_to_create: UserReceived):
+def post_users (
+    user_to_create: UserReceived, 
+    current_user: Annotated[User, Depends(get_current_user)]
+):
     """
     Crée un utilisateur dans la db
     TODO : ajouter une vérification de l'unicité avec une gestion des erreurs propre

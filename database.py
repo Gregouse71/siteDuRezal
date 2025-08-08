@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import sessionmaker
+from typing import Annotated
 
 from sqlmodel import SQLModel, Session, Field, create_engine
 
