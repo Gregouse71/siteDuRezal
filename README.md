@@ -13,3 +13,9 @@ Ensuite, toutes les opérations nécessitant d'être authentifié se font en ren
 ```bash
 http GET :8000/user/me/ -v -A bearer -a <le token reçu précédemment>
 ```
+
+TODO :
+- [ ] Ajouter la verfication de l'email
+- [ ] Communiquer avec la bdd du radius
+- [ ] Finir de porter les fonctions de l'ancien nouveau site
+- [ ] Faite le front (à adapter de l'ancien nouveau site)
