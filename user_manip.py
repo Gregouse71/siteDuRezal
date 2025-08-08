@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlmodel import Session, select
 from typing import Annotated
 
-from database import UserReceived, User, user_from_received, engine
+from database import UserReceived, UserUpdate, User, user_from_received, engine
 
 from authentication import get_current_user
 
@@ -55,15 +55,48 @@ def get_users (
         statement = select (User).where (User.uid == uid)
         user = session.exec (statement).all ()
 
+        if not user:
+            return HTTPException (
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="L'utilisateur recherché n'existe pas"
+            )
+
     return user[0]
 
 
 @user_router.patch ("/{uid}")
 def patch_users (
     uid: str,
-    user: User
+    user_update: UserUpdate,
+    current_user: Annotated[User, Depends(get_current_user)]
 ) -> User:
-    return
+    """
+    Modifie les infos de l'utilisateur ayant pour uid *uid*
+    """
+    # Il faut être admin pour modifier les infos
+    if not current_user.is_admin:
+        return HTTPException (
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Vous n'avez pas les droits pour réaliser cette action"
+        )
+    
+    with Session (engine) as session:
+        statement = select (User).where (User.uid == user_update.uid)
+        user = session.exec (statement).all ()
+        if not user:
+            return HTTPException (
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="L'utilisateur recherché n'existe pas"
+            )
+
+        user = user[0]
+        
+        data = user_update.model_dump (exclude_unset=True)
+        user.sqlmodel_update (data)
+        session.add (user)
+        session.commit()
+        session.refresh (user)
+        return user
 
 
 @user_router.delete ("/{uid}")
@@ -84,6 +117,12 @@ def delete_users (
     with Session (engine) as session:
         statement = select (User).where (User.uid == uid)
         users_to_del = session.exec (statement).all () # liste des utilisateurs à effacer
+
+        if not users_to_del:
+            return HTTPException (
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="L'utilisateur recherché n'existe pas"
+            )
 
         for user in users_to_del:
             session.delete (user)
