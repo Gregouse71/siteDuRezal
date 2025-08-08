@@ -27,17 +27,6 @@ class User (UserReceived, table=True):
     acces_wifi: bool
 
 
-class UserUpdate (SQLModel, table=False):
-    """
-    Classe représentant les modifications à faire à un utilisateur
-    """
-    uid: str
-
-    is_admin: bool | None = None
-    acces_wifi: bool | None = None
-
-
-
 def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues

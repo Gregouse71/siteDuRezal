@@ -1,14 +1,23 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session, select
+from sqlmodel import SQLModel, Session, select
 from typing import Annotated
 
-from database import UserReceived, UserUpdate, User, user_from_received, engine
+from database import UserReceived, User, user_from_received, engine
 
 from authentication import get_current_user
 
 user_router = APIRouter (
     prefix="/users"
 )
+
+
+class UserUpdate (SQLModel, table=False):
+    """
+    Classe représentant les modifications à faire à un utilisateur
+    """
+    uid: str
+
+    is_admin: bool | None = None
 
 
 @user_router.get ("/me")

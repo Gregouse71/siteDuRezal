@@ -19,7 +19,7 @@ auth_router = APIRouter (
 # Générée avec openssl rand -hex 32
 SECRET_KEY = "6b208126144669aeb9b52ab55b16781873b5324f30449dc0ed2531e63178da65"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 15
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 
 class Token (BaseModel):
