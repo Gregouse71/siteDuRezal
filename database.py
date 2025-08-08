@@ -21,12 +21,13 @@ class User (UserReceived, table=True):
     """
     __tablename__ = 'users'
     id: int = Field (primary_key=True)
+    is_admin: bool
 
     acces_wifi: bool
 
 
-def create_user (user_rec: UserReceived):
-    return User (uid=user_rec.uid, name=user_rec.name, email=user_rec.email, acces_wifi=False)
+def user_from_received (user_rec: UserReceived):
+    return User (uid=user_rec.uid, name=user_rec.name, email=user_rec.email, is_admin=False, acces_wifi=False)
 
 
 
