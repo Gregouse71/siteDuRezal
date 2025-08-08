@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 from typing import Annotated
 
@@ -9,6 +9,14 @@ from authentication import get_current_user
 user_router = APIRouter (
     prefix="/users"
 )
+
+
+@user_router.get ("/me")
+def get_self (
+    current_user: Annotated[User, Depends(get_current_user)]
+) -> User:
+    return current_user
+
 
 @user_router.post ("/")
 def post_users (

@@ -1,11 +1,7 @@
-from typing import Annotated
-from fastapi import FastAPI, Depends
-
-from database import User
+from fastapi import FastAPI
 
 from user_manip import user_router
-from authentication import auth_router, get_current_user
-
+from authentication import auth_router
 
 app = FastAPI(root_path="/api")
 
@@ -16,6 +12,3 @@ app.include_router (auth_router)
 def is_alive ():
     return True
 
-@app.get("/user/me")
-async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
-    return current_user
