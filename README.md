@@ -16,7 +16,8 @@ http GET :8000/user/me/ -v -A bearer -a <le token reçu précédemment>
 
 TODO :
 - [ ] Ajouter la verfication de l'email
-- [ ] Communiquer avec la bdd du radius
+- [x] Communiquer avec la bdd du radius
 - [x] Finir de porter les fonctions de l'ancien nouveau site
 - [ ] Faite le front (à adapter de l'ancien nouveau site)
 - [ ] Gestion propres de toutes les erreurs possibles
+- [ ] Ecrire des tests
