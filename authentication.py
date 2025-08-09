@@ -58,7 +58,6 @@ def authenticate_user(username: str, password: str) -> User:
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     """
     Détermine si le jeton *token* est un jeton d'authentification valide
-    TODO : ajouter une vérification de la durée de validitité
     """
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

@@ -34,7 +34,6 @@ async def post_users (
 ) -> User:
     """
     Crée un utilisateur dans la db
-    TODO : ajouter une vérification de l'unicité avec une gestion des erreurs propre
     """
     with Session (engine) as session:
         user_rec = UserReceived.model_validate (user_to_create)

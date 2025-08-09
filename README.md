@@ -19,3 +19,4 @@ TODO :
 - [ ] Communiquer avec la bdd du radius
 - [x] Finir de porter les fonctions de l'ancien nouveau site
 - [ ] Faite le front (à adapter de l'ancien nouveau site)
+- [ ] Gestion propres de toutes les erreurs possibles
