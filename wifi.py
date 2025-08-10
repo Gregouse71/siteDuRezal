@@ -41,7 +41,6 @@ async def set_wifi_state (
 ) -> User:
     """
     Autorise ou interdit l'acces au wifi à l'utilisateur dont l'uid est *uid*
-    TODO : communication avec la BDD du RADIUS
     """
     # Pour modifier l'acces wifi d'un compte, il faut avoir les droits admin
     if not current_user.is_admin:
@@ -83,6 +82,6 @@ async def set_wifi_state (
 
 
 # Setting up the database connection and session
-RADIUS_DATABASE_URL = "sqlite://./test_rad.db"
+RADIUS_DATABASE_URL = "sqlite:///./test_rad.db"
 radius_engine = create_engine(RADIUS_DATABASE_URL)
 SQLModel.metadata.create_all(engine)

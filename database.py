@@ -2,7 +2,7 @@ from pydantic import EmailStr
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
 import hashlib
 
-class UserReceived(SQLModel, table=False):
+class UserReceived(SQLModel):
     """
     Classe représentant les utilisateurs envoyés par le frontend.
     Sert à la validation.
@@ -15,7 +15,7 @@ class UserReceived(SQLModel, table=False):
     promo: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
 
 
-class User (UserReceived, table=True):
+class User (SQLModel, table=True):
     """
     Classe représentant les utilisateurs dans la bdd
     """
@@ -29,6 +29,10 @@ class User (UserReceived, table=True):
     acces_wifi: bool
     nt_password: str
 
+    nom: str
+    prenom: str
+    email: EmailStr
+
 
 def user_from_received (user_rec: UserReceived) -> User:
     """
@@ -41,7 +45,6 @@ def user_from_received (user_rec: UserReceived) -> User:
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
-                 promo=user_rec.promo,
                  is_admin=False,
                  acces_wifi=False,
                  nt_password=ntlm_hash
@@ -66,7 +69,7 @@ with Session (engine) as session:
             nom="Admin",
             prenom="Piche",
             email="admin@rezal-mdm.com",
-            promo="XX",
-            acces_wifi=False
+            acces_wifi=False,
+            nt_password="075C574484C3F64146E8230E72B9754B"
         ))
         session.commit ()
