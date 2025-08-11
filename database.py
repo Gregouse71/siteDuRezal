@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
-import hashlib
+from Crypto.Hash import MD4
 
 class UserReceived(SQLModel):
     """
@@ -39,7 +39,7 @@ def user_from_received (user_rec: UserReceived) -> User:
     Génère un utilisateur à partir des données reçues
     """
     # Hashage du mot de passe, NTLM (c'est horrible mais le radius en a besoin)
-    ntlm_hash = hashlib.new ('md4', user_rec.mot_de_passe.encode('utf-16le')).digest ()
+    ntlm_hash = MD4.new (user_rec.mot_de_passe.encode ('utf-16le')). hexdigest ().upper ()
 
     return User (uid=user_rec.promo + user_rec.nom, 
                  nom=user_rec.nom,
