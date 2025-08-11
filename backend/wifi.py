@@ -19,8 +19,8 @@ class RadiusUser (SQLModel):
     __tablename__ = 'radcheck'
     username: str  # Identifiant
     attribute: str # 
-    op: str
-    value: str
+    op: str        #
+    value: str     # Mot de passe hashé NTLM
 
     def __init__ (self, user: User):
         self.username = user.uid

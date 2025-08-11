@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import SQLModel, Session, select
 from typing import Annotated
+from pydantic import EmailStr
 
 from database import UserReceived, User, user_from_received, engine
 
@@ -15,7 +16,10 @@ class UserUpdate (SQLModel, table=False):
     """
     Classe représentant les modifications à faire à un utilisateur
     """
-    uid: str
+    nom: str | None = None
+    prenom: str | None = None
+    email: EmailStr | None = None
+    promo: str | None = None
 
     is_admin: bool | None = None
 
@@ -98,7 +102,7 @@ async def patch_users (
         )
     
     with Session (engine) as session:
-        statement = select (User).where (User.uid == user_update.uid)
+        statement = select (User).where (User.uid == uid)
         user = session.exec (statement).all ()
         if not user:
             raise HTTPException (
