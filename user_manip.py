@@ -27,7 +27,7 @@ async def get_self (
     return current_user
 
 
-@user_router.post ("/")
+@user_router.post ("")
 async def post_users (
     user_to_create: UserReceived, 
     current_user: Annotated[User, Depends(get_current_user)]

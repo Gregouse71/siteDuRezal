@@ -34,7 +34,7 @@ class WiFiUpdate (SQLModel):
     state: bool
 
 
-@wifi_router.post ("/")
+@wifi_router.post ("")
 async def set_wifi_state (
     req: WiFiUpdate,
     current_user: Annotated[User, Depends(get_current_user)]
