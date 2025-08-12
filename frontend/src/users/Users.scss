@@ -1,0 +1,62 @@
+// General for users
+
+.title-page {
+    border-bottom: solid; 
+    padding: 0.5em;
+    width: 8em; 
+    margin-bottom: 1em;
+}
+
+.title-part{
+    text-align: center; 
+    font-size: 2em; 
+    font-weight: bold; 
+    background-color: lightgray; 
+    color: gray;
+}
+
+// User board
+
+#user-board {
+    margin: auto;
+    width: 70%;
+}
+
+#user-board ul {
+    margin: auto;
+}
+
+#user-board ul li {
+    width: 100%;
+    padding: 1vh;
+}
+
+// UserRegister
+
+#register-form {
+    display : flex; 
+    flex-direction: column; 
+    justify-content : space-around;
+    margin : auto;
+    width: 50%;
+    min-height : 30vh; 
+}
+
+#column-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#university-field {
+    display : flex; 
+    flex-direction: column;    
+    justify-content : space-around;
+    width: 100%;
+}
+
+#promotion-field {
+    display : flex; 
+    flex-direction: column;    
+    justify-content : space-around;
+    width: 100%;
+}

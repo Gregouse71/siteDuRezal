@@ -1,0 +1,178 @@
+import { atom, useSetRecoilState } from "recoil";
+import { defaultFilterName } from "../admin/admin-features/UsersManagement/UsersFilters";
+import { Account } from "../models/account"
+import httpInstance from "./api"
+import { useDateService } from "./date.service";
+
+export const databaseAccountsState = atom({
+    key : "databaseAccounts",
+    default : new Map<number, Account>()
+});
+
+export function useAdminService() {
+
+    const dateService = useDateService();
+    
+    const setDatabaseAccounts = useSetRecoilState(databaseAccountsState);
+
+    const copyMapAccounts = (map : Map<number, Account>) => {
+        return new Map(Array.from(map).map(IdAndAccount => [IdAndAccount[0], new Account(IdAndAccount[1])]));
+    }
+
+    const updateDatabaseView = () => {
+        return new Promise<void>((resolve, reject) => {
+            httpInstance.get('users')
+            .then(response => {
+                const accountsData = response.data;
+                if (Array.isArray(accountsData)) {
+                    const mapAccounts = accountsData.reduce(function(map, accountData) {
+                        map.set(accountData.id, new Account(accountData)) 
+                        return map;
+                    }, new Map<number, Account>())
+                    setDatabaseAccounts(mapAccounts);
+                    resolve()
+                }
+            })
+            .catch(error => reject(error))
+        })
+    }
+
+    const getRadiusUsers = () => {
+        return new Promise<Array<string>>((resolve, reject) => {
+            httpInstance.get('radius_users')
+            .then(response => {
+                const loginsInRadius = response.data;
+                resolve(loginsInRadius);
+            })
+            .catch(error => reject(error))
+
+        })
+    }
+    
+    const createAccounts = (accounts : Account[]) => {
+        return new Promise<any>((resolve, reject) => {
+            httpInstance.post('users', accounts)
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+        })
+    }
+    
+    const modifyAccounts = (changesOnAccounts : any[]) => {
+        return new Promise<any>((resolve, reject) => {
+            httpInstance.patch('users', changesOnAccounts)
+            .then(response =>resolve(response.data))  
+            .catch(error => reject(error))
+        })
+    }
+    
+    const deleteAccounts = (idsToDelete : number[]) => {
+        return new Promise<boolean[]>((resolve, reject) => {
+            httpInstance.delete('users', {data : idsToDelete})
+            .then((response : any) => resolve(response.data))
+            .catch(error =>  reject(error))
+        })
+    }
+
+    const filterAccounts = (accounts : Map<number, Account>, userFilters : any) => {
+        var selectedAccounts : Account[] = [];
+        accounts.forEach(account => {
+            if (doesAccountVerifyAllFilters(account, userFilters)) selectedAccounts.push(account)
+        })
+        return selectedAccounts
+    }
+
+    const doesAccountVerifyAllFilters = (account : Account, userFilters : any) => {
+        const userFiltersNames = Object.keys(userFilters).filter(userFiltersName => userFiltersName !== defaultFilterName);
+        if (userFiltersNames.length > 0) {
+            return userFiltersNames
+                .map(userFilterName => {
+                    const userFilter = userFilters[userFilterName];
+                    const accountSatisfyThisFilter = doesAccountVerifyFilter(account, userFilterName, userFilter.value)
+                    return userFilter.inverted ? !accountSatisfyThisFilter : accountSatisfyThisFilter 
+                })
+                .every(val => val === true)
+        } else return true
+        
+    }
+
+    const doesAccountVerifyFilter = (account : Account, filterName : string, filterValue : any) => {
+
+        const accountFilteredFieldValue : any = account.get(filterName);
+        switch (filterName) {
+            case "id" : return accountFilteredFieldValue?.toString().includes(filterValue)
+            case "isInRadius" : return accountFilteredFieldValue === filterValue
+            case "admin" : return accountFilteredFieldValue === filterValue
+            case "firstName" : return accountFilteredFieldValue?.includes(filterValue)
+            case "lastName" : return accountFilteredFieldValue?.includes(filterValue)
+            case "login" : return accountFilteredFieldValue?.includes(filterValue)
+            case "email" : return accountFilteredFieldValue?.includes(filterValue)
+            case "emailIsVerified" : return accountFilteredFieldValue === filterValue
+            case "room" : return accountFilteredFieldValue?.includes(filterValue)
+            case "university" : return accountFilteredFieldValue === filterValue
+            case "promotion" : return accountFilteredFieldValue === filterValue
+            case "t1Paid" : return accountFilteredFieldValue === filterValue
+            case "t1PaymentType" : return accountFilteredFieldValue === filterValue
+            case "t1PaidAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
+            case "t2Paid" : return accountFilteredFieldValue === filterValue
+            case "t2PaymentType" : return accountFilteredFieldValue === filterValue
+            case "t2PaidAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
+            case "t3Paid" : return accountFilteredFieldValue === filterValue
+            case "t3PaymentType" : return accountFilteredFieldValue === filterValue
+            case "t3PaidAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
+            case "createdAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
+            default : return false
+        }
+    }
+
+    const fieldsDisplayableInit : any = {
+        "id" : true,
+        "isInRadius" : true,
+        "admin" : true,
+        "firstName" : false,
+        "lastName" : false,
+        "login" : true,
+        "email" : false,
+        "room" : false,
+        "university" : false,
+        "promotion" : false,
+        "T1" : true,
+        "T2" : true,
+        "T3" : true,
+        "createdAt" : false,
+        "message" : true
+    }
+
+    const fieldsDisplayableInitWithPassword : any = {
+        "id" : true,
+        "isInRadius" : true,
+        "admin" : true,
+        "firstName" : false,
+        "lastName" : false,
+        "login" : true,
+        "password" : true,
+        "email" : true,
+        "room" : false,
+        "university" : false,
+        "promotion" : false,
+        "T1" : true,
+        "T2" : true,
+        "T3" : true,
+        "createdAt" : false,
+        "message" : true
+    }
+
+
+    return {
+        databaseAccountsState : databaseAccountsState,
+        updateDatabaseView : updateDatabaseView,
+        getRadiusUsers : getRadiusUsers,
+        createAccounts : createAccounts,
+        modifyAccounts : modifyAccounts,
+        deleteAccounts : deleteAccounts,
+        filterAccounts : filterAccounts,
+        copyMapAccounts : copyMapAccounts,
+        fieldsDisplayableInit : fieldsDisplayableInit,
+        fieldsDisplayableInitWithPassword : fieldsDisplayableInitWithPassword
+    }
+    
+}

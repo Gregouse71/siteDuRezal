@@ -1,0 +1,40 @@
+
+#titre-page-default {
+    text-align: center;
+}
+
+#border-line {
+    border-bottom: solid; 
+    width: 30%; 
+    margin: 0 auto 15px auto;
+}
+
+.bande {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.container-description {
+    @media (max-width:767px){    
+     width: 100%;
+    }
+    background-color: #f5f5f5; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-around; 
+    text-align: center;
+    padding: 4vh 1vw;
+    min-width: 50%;
+}
+
+.image {
+    min-width: 50%;
+}
+
+.btn-navigation {
+    font-size: 2em; 
+    font-family: 'Brush Script MT', cursive;
+    text-transform: none; 
+    margin : 0 auto 0 auto;
+    width: 50%;
+}

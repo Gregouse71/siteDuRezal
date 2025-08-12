@@ -1,0 +1,41 @@
+#container-about-us {
+    margin: 0.5em auto;
+    padding: 0 1em;
+}
+
+#navbar-about-us{
+    display: flex; 
+    justify-content: space-around; 
+    width: 100%;
+    padding: 0.5em 0;
+    margin-bottom: 1.5em;
+    border-bottom: cornflowerblue solid 0.1em;
+}
+
+div .itemAboutUs{
+    padding: 0.5em 0;
+    justify-content: space-around;
+    display: flex; 
+    font-size: 1.5em;
+    color: cornflowerblue;
+    border : cornflowerblue solid 0.2em;
+    &:hover {
+        border-color: burlywood;
+        background-color: lavender;
+        cursor: pointer;
+    }
+}
+
+.description {
+    margin: auto 1em; 
+}
+
+.icon {
+    margin: auto 1em; 
+}
+
+.link {
+    text-decoration: underline;
+    color : inherit;
+    font-size: 1em;
+}

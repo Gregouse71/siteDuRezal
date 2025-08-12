@@ -1,0 +1,104 @@
+
+// Board
+
+.container-features {
+    display: flex; 
+    margin: auto; 
+    padding: 1%;
+    justify-content: space-around; 
+    background-color: #f5f5f5;
+}
+
+#btn-feature {
+    margin: 1em; 
+    width: 30vw;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    color : grey;
+    border : 3px solid grey; 
+    background-color: white;
+}
+
+.description-feature {
+    padding: 2em;
+}
+
+.title-feature {
+    border-bottom: solid; 
+    padding: 1em;
+}
+
+// Features
+
+.retour-board-admin{
+    cursor : pointer;
+    font-style: italic;
+}
+
+.feature-view {
+    padding: 0 5% 0 5%;
+    width: 100%;
+    text-align: left;
+}
+
+// User manager
+
+#user-manager #container-table {
+    width: 90%; 
+    margin: 1em auto 0 auto; 
+    overflow: auto;
+}
+
+#user-manager #user-filter-table {
+    width: 30%;
+    margin: 1vh 0 2vh 0;
+}
+
+#user-manager p {
+    text-align: center;
+}
+
+#user-manager tr {
+    min-height: 10px;
+}
+
+#user-manager #field-choice-list {
+    width: 90%;
+    margin: 1em auto 0 auto; 
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#user-manager field-choice-list p {
+    padding: 1vh;
+}
+
+#user-manager .user-filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    &:hover {
+        background-color: gray;
+    }
+}
+
+#user-manager .user-filter input{
+    border-bottom: 1px solid silver;
+    width : 70%;
+}
+
+// User creation CSV
+
+#user-creation-buttons-container {
+    display : flex;
+    flex-direction: column;
+    text-align : center;
+    margin : 1vw;
+}
+
+#user-creation-buttons-container Button{
+    margin : 1vw;
+}
