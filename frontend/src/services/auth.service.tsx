@@ -20,25 +20,19 @@ export function useAuthService() {
     const saveToken = (userToken : any) => localStorage.setItem('rezal-token', userToken);
     const removeTokenSaved = () => localStorage.removeItem('rezal-token')
 
-    const saveID = (userID : number) => localStorage.setItem('rezal-id', userID.toString());
-    const removeIDSaved = () => localStorage.removeItem('rezal-id')
-
-
+    /**
+     * Fait la procédure de login à partir du nom d'utilisateur et du mot de passe.
+     * À la suite de ça, *rezal-token* contient le token d'identification.
+     */
     const login = (login : string, password : string) => {
+        const params = new URLSearchParams ({"username" : login, "password" : password})
         return new Promise<void>((resolve, reject) => {
-            httpInstance.post("authorize", {login : login, password : password})
+            httpInstance.post(
+                "auth/token",
+                params.toString (),
+                {headers: {'Content-Type': 'application/x-www-form-urlencoded'},})
             .then((response : any) => {
                 saveToken(response.data.access_token);
-                // Then we use the id returned by the backend to get the user information
-                const id = response.data.user_id;
-                saveID(id);
-                httpInstance.get("user_information/" + id.toString())
-                .then((response_user_info : any) => {
-                    saveID(id);
-                    setUser(new Account(response_user_info.data))
-                    resolve();
-                })
-                .catch(error => reject(error))
             })
             .catch(error => reject(error))
         })
@@ -70,7 +64,6 @@ export function useAuthService() {
 
     const logout = () => {
         removeTokenSaved();
-        removeIDSaved();
         resetUser();
     }
 
