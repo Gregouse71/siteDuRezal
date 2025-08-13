@@ -70,7 +70,7 @@ export default function UsersFilters(props : any) {
         props.setUserFilters({...userFilters,  [field] : {...userFilters[field], inverted : !userFilters[field].inverted}});
     }
 
-    if (userFilters !== {}) {
+    // if (userFilters !== {}) {
         const userFilterNames = Object.keys(userFilters);
 
         const userFiltersList = userFilterNames.map(
@@ -125,10 +125,10 @@ export default function UsersFilters(props : any) {
                     Ajouter un filtre 
             </Button>
         </>
-    } else return <Button 
-        variant="contained" 
-        color='info' 
-        onClick={() => props.setUserFilters({...userFilters, [defaultFilterName] : defaultFilter})}>
-            Ajouter un filtre 
-    </Button>
+    // } else return <Button 
+    //     variant="contained" 
+    //     color='info' 
+    //     onClick={() => props.setUserFilters({...userFilters, [defaultFilterName] : defaultFilter})}>
+    //         Ajouter un filtre 
+    // </Button>
 }
