@@ -5,7 +5,7 @@ from pydantic import EmailStr
 
 from database import UserReceived, User, user_from_received, engine
 
-from authentication import get_current_user
+from auth_router import get_current_user
 
 listing_router = APIRouter (
     prefix="/list"

@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends, Request
 from typing import Annotated
 
 from database import User, engine
-from authentication import get_current_user
+from auth_router import get_current_user
 
 wifi_router = APIRouter (
     prefix="/wifi"

@@ -3,7 +3,7 @@ from typing import Annotated
 
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
 
-from authentication import get_current_user
+from auth_router import get_current_user
 
 user_router = APIRouter (
     prefix="/users"

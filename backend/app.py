@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from user_router import user_router
-from authentication import auth_router
+from auth_router import auth_router
 from wifi import wifi_router
 from listing_router import listing_router
 
