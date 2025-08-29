@@ -93,11 +93,11 @@ export function useAuthService() {
                 })
                 .catch(error => {
                     const errorStatus = error.response.status;
-                    const errorMessage = error.response.data.error;
+                    const errorMessage = error.response.data.detail;
                     switch (errorStatus) {
                         case 401 : {
                             switch(errorMessage) {
-                                case "Wrong credentials" : {
+                                case "Incorrect username or password" : {
                                     popupService.changePopup({status :  "error", message : "Connexion refusée : mauvais login/mot de passe"});
                                     break;
                                 }
