@@ -54,7 +54,7 @@ export function useAuthService() {
                         reject(error);
                     })
                 } else {
-                    reject();
+                    reject(new Error("Pas d'ID utilisateur stocké localement"));
                 }
             } catch(error) {
                 reject(error);
