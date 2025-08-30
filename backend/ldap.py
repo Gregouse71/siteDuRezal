@@ -35,7 +35,7 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
     """
     Vérifie si username et password sont les
     """
-    distinguished_name = distinguished_name_from_uid(uid)
+    distinguished_name = distinguished_name_from_uid(username)
     try:
         with Connection (server, distinguished_name, password) as conn:
               # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon

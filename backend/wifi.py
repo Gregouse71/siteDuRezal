@@ -4,6 +4,7 @@ from typing import Annotated
 
 from database import User, engine
 from auth_router import get_current_user
+from ldap import allow_ldap_wifi, disallow_ldap_wifi
 
 wifi_router = APIRouter (
     prefix="/wifi"
