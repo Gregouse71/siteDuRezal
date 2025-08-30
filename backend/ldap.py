@@ -1,22 +1,28 @@
 # Source : https://ldap3.readthedocs.io/en/latest/index.html
 
-from ldap3 import Server, Connection, ObjectDef, AttrDef, Reader, Writer, ALL, HASHED_SALTED_SHA512
-from ldap3.utils.hashed import hashed
+from ldap3 import Server, Connection, ObjectDef, AttrDef, Reader, Writer, ALL, HASHED_SALTED_SHA512, MODIFY_DELETE
 import os
 from dotenv import load_dotenv
 
+# Recuperation des identifiants de connexion au LDAP
 load_dotenv ()
 LDAP_ADMIN_USERNAME = os.getenv ("LDAP_USERNAME")
 LDAP_ADMIN_PASSWORD = os.getenv ("LDAP_PASSWORD")
 
-server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
+# Paramètres relatifs au LDAP :
+POSITION_UTILISATEURS = "ou=People,dc=rezal-mdm,dc=com" # Position des utilisateurs dans l'arbre du LDAP
+GROUPE_WIFI = "cn=wifi,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com" # Groupe dans lequel il faut être pour avoir le WiFi
 
+def distinguished_name_from_uid (uid: str):
+    return f"{uid},{POSITION_UTILISATEURS}"
+
+server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
 
 def ldap_verify_username_password (username: str, password: str) -> bool:
     """
     Vérifie si username et password sont les
     """
-    distinguished_name = f"uid={username},ou=People,dc=rezal-mdm,dc=com"
+    distinguished_name = f"uid={username},{POSITION_UTILISATEURS}"
     try:
         with Connection (server, distinguished_name, password) as conn:
               # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon
@@ -33,10 +39,7 @@ def ldap_add_user (uid: str, password: str, promo: str, nom, prenom) -> bool:
     Ajoute l'utilisateur dont le nom d'utilisateur est *username* au LDAP
     Si la promo n'est pas XX, il est aussi ajouté au groupe de sa promo
     """
-    distinguished_name = f"uid={uid},ou=People,dc=rezal-mdm,dc=com"
-    hashed_password = hashed(HASHED_SALTED_SHA512, password)
-
-    print (distinguished_name)
+    distinguished_name = distinguished_name_from_uid(uid)
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             # Creation de l'utilisateur
@@ -59,6 +62,38 @@ def ldap_delete_user (uid: str):
     except:
         return False
 
+
+def ldap_add_user_to_group (uid: str, group: str):
+    """
+    Ajoute l'utilisateur dont l'**identifiant** est *uid* (e.g. 24girardet) au groupe *group* (e.g. cn=wifi,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com)
+    """
+    distinguished_name = distinguished_name_from_uid(uid)
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            obj = ObjectDef ("groupOfNames", conn)
+            r = Reader (conn, obj, group)
+            r.search ()
+            w = Writer.from_cursor (r)
+            w[0].member += distinguished_name
+            w.commit ()
+        return True
+    except:
+        return False
+
+
+def ldap_delete_user_from_group (uid: str, group: str):
+    """
+    Retire l'utilisateur dont l'**identifiant** est *uid* (e.g. 24girardet) du groupe *group* (e.g. cn=wifi,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com)
+    """
+    distinguished_name = distinguished_name_from_uid(uid)
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            conn.modify (group, {"member": [(MODIFY_DELETE, [distinguished_name])]})
+        return True
+    except:
+        return False
+
+
 def test_ldap ():
     server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
     with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
@@ -68,9 +103,9 @@ def test_ldap ():
         # print (server.info)
         obj = ObjectDef ("groupOfNames", conn)
         print (obj)
-        r = Reader(conn, obj, "cn=wifi,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com")
+        r = Reader(conn, obj, GROUPE_WIFI)
         r.search ()
-        w = Writer.from_cursor(r)
+        # w = Writer.from_cursor(r)
         # print (r)
         # for e in r:
         #     print (e)
@@ -81,5 +116,7 @@ def test_ldap ():
 
 if __name__ == "__main__":
     # ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")
-    ldap_delete_user ("uid=23frucharde,ou=People,dc=rezal-mdm,dc=com")
+    ldap_add_user_to_group ("23frucharde", GROUPE_WIFI)
+    ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
+    # ldap_delete_user ("uid=23frucharde,ou=People,dc=rezal-mdm,dc=com")
     test_ldap ()
