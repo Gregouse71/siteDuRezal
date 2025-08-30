@@ -28,7 +28,7 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
     return False
 
 
-def ldap_add_user (uid: str, password: str, promo: str, nom, prenom):
+def ldap_add_user (uid: str, password: str, promo: str, nom, prenom) -> bool:
     """
     Ajoute l'utilisateur dont le nom d'utilisateur est *username* au LDAP
     Si la promo n'est pas XX, il est aussi ajouté au groupe de sa promo
@@ -37,13 +37,27 @@ def ldap_add_user (uid: str, password: str, promo: str, nom, prenom):
     hashed_password = hashed(HASHED_SALTED_SHA512, password)
 
     print (distinguished_name)
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            # Creation de l'utilisateur
+            conn.add (distinguished_name, "inetOrgPerson", {"sn": prenom, "cn": nom, "uid": uid})
+            # Changement du mot de passe, en utilisant la méthode par défaut du LDAP (qui, on l'espere, est securisee (c'est une blague, il faut la configurer soit meme pour qu'elle soit securisee))
+            conn.extend.standard.modify_password (distinguished_name, None, password)
+        return True
 
-    with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
-        # Creation de l'utilisateur
-        conn.add (distinguished_name, "inetOrgPerson", {"sn": prenom, "cn": nom, "uid": uid})
-        # Changement du mot de passe, en utilisant la méthode par défaut du LDAP (qui, on l'espere, est securisee (c'est une blague, il faut la configurer soit meme pour qu'elle soit securisee))
-        conn.extend.standard.modify_password (distinguished_name, None, password)
+    except:
+        return False
 
+
+def ldap_delete_user (uid: str):
+    """
+    Efface l'utilisateur dont l'uid est *uid* du LDAP
+    """
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            return conn.delete (uid)
+    except:
+        return False
 
 def test_ldap ():
     server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
@@ -66,5 +80,6 @@ def test_ldap ():
         # print (w[0])
 
 if __name__ == "__main__":
-    ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")
+    # ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")
+    ldap_delete_user ("uid=23frucharde,ou=People,dc=rezal-mdm,dc=com")
     test_ldap ()
