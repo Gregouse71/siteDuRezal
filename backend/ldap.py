@@ -14,15 +14,28 @@ POSITION_UTILISATEURS = "ou=People,dc=rezal-mdm,dc=com" # Position des utilisate
 GROUPE_WIFI = "cn=wifi,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com" # Groupe dans lequel il faut être pour avoir le WiFi
 
 def distinguished_name_from_uid (uid: str):
-    return f"{uid},{POSITION_UTILISATEURS}"
+    return f"uid={uid},{POSITION_UTILISATEURS}"
 
 server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
+
+def allow_ldap_wifi (uid: str):
+    """
+    Autorise l'acces au wifi à l'utilisateur *uid*
+    """
+    return ldap_add_user_to_group (uid, GROUPE_WIFI)
+
+def disallow_ldap_wifi (uid: str):
+    """
+    N'autorise plus l'acces à l'utilisateur dont l'uid est *uid*
+    """
+    return ldap_delete_user_from_group (uid, GROUPE_WIFI)
+
 
 def ldap_verify_username_password (username: str, password: str) -> bool:
     """
     Vérifie si username et password sont les
     """
-    distinguished_name = f"uid={username},{POSITION_UTILISATEURS}"
+    distinguished_name = distinguished_name_from_uid(uid)
     try:
         with Connection (server, distinguished_name, password) as conn:
               # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon
@@ -40,6 +53,7 @@ def ldap_add_user (uid: str, password: str, promo: str, nom, prenom) -> bool:
     Si la promo n'est pas XX, il est aussi ajouté au groupe de sa promo
     """
     distinguished_name = distinguished_name_from_uid(uid)
+    print (distinguished_name)
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             # Creation de l'utilisateur
@@ -107,8 +121,8 @@ def test_ldap ():
         r.search ()
         # w = Writer.from_cursor(r)
         # print (r)
-        # for e in r:
-        #     print (e)
+        for e in r:
+            print (e)
         # print (w[0])
         # w[0].member += "uid=24liens,ou=People,dc=rezal-mdm,dc=com"
         # w.commit ()
@@ -116,7 +130,9 @@ def test_ldap ():
 
 if __name__ == "__main__":
     # ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")
-    ldap_add_user_to_group ("23frucharde", GROUPE_WIFI)
-    ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
+    # ldap_add_user_to_group ("23frucharde", GROUPE_WIFI)
+    # ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
     # ldap_delete_user ("uid=23frucharde,ou=People,dc=rezal-mdm,dc=com")
+    # print (allow_ldap_wifi ("23frucharde"))
+    # print (disallow_ldap_wifi ("23frucharde"))
     test_ldap ()
