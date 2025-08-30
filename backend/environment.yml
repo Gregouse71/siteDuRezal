@@ -8,3 +8,4 @@ dependencies:
   - pydantic
   - pyjwt
   - pycryptodome
+  - ldap3
