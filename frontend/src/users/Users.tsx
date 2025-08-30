@@ -21,6 +21,9 @@ function ProtectedRoute(props : any) {
             navigate(props.path, {replace : true});
         })
         .catch((error) => {
+            if(error.message === "Pas d'ID utilisateur stocké localement"){
+                return;
+            }
             const errorStatus = error.response.status;
             switch(errorStatus) {
                 case "400" : break   // This status code means no token was sent, we don't need to inform the user

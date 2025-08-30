@@ -13,12 +13,11 @@ export default function UserRegister() {
     const regexEmail = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
 
     const defaultFormValues = {
-        firstName : "",
-        lastName : "", 
+        prenom : "",
+        nom : "", 
         email : "",
         emailBis : "",
-        university : null,
-        promotion : null,
+        promo : null,
         room : "",
         chartAccepted : false,
     } 
@@ -27,12 +26,11 @@ export default function UserRegister() {
     const [infoAssigned, setInfoAssigned] = useState({login : "", password : ""});
     
     const areValuesFilled = () => {
-        return formValues.firstName !== "" &&
-                formValues.lastName !== "" && 
+        return formValues.prenom !== "" &&
+                formValues.nom !== "" && 
                 formValues.email !== "" &&
                 formValues.emailBis !== "" &&
-                formValues.university !== null &&
-                (formValues.university !== "Mines" || (formValues.university === "Mines" && formValues.promotion !== null)) &&
+                formValues.promo !== null &&
                 formValues.room !== ""
     }
 
@@ -57,12 +55,12 @@ export default function UserRegister() {
 
     const onRegister = () => {
         const password = accountService.createPassword();
-        const login = (formValues.firstName.toLowerCase() + '.' + formValues.lastName.toLowerCase()).replaceAll('\'', "").replaceAll(" ", "_");
-        accountService.register({...formValues, login : login, password : password})
+        const login = (formValues.promo + formValues.prenom.toLowerCase() + '.' + formValues.nom.toLowerCase()).replaceAll('\'', "").replaceAll(" ", "_");
+        accountService.register({...formValues, login : login, mot_de_passe : password})
         .then((response : any) => {
             popupService.changePopup({status : "success", message : "Création du compte réussie"})
             setInfoAssigned({
-                login : response.data, // It is the login returned by the backend (may be different than the login sent)
+                login : response.data.uid, // It is the login returned by the backend (may be different than the login sent)
                 password : password
             })
             setMode("Post-registration")
@@ -88,8 +86,8 @@ export default function UserRegister() {
                     <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Prénom</FormLabel>
                     <TextField
                         onChange={handleInputChange}
-                        name="firstName"
-                        value={formValues.firstName}
+                        name="prenom"
+                        value={formValues.prenom}
                         autoCapitalize="none"
                         autoCorrect="false"
                         placeholder="prénom"
@@ -98,8 +96,8 @@ export default function UserRegister() {
                     <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Nom</FormLabel>
                     <TextField
                         onChange={(e) => handleInputChange(e)}
-                        name="lastName"
-                        value={formValues.lastName}
+                        name="nom"
+                        value={formValues.nom}
                         placeholder="nom"
                     />
 
@@ -129,32 +127,23 @@ export default function UserRegister() {
                         Les emails ne correspondent pas 
                     </p>}
 
-                    <div id="column-container">
-                        <div id="university-field">
-                            <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Ecole</FormLabel>
-                            <Select value={formValues.university} name="university" onChange={(e) => handleInputChange(e)} >
-                                    {universities.map(el => <MenuItem 
-                                        key={"university value choice " + el} 
-                                        value={el}
-                                    > 
-                                        {el} 
-                                    </MenuItem>
-                                )} 
-                            </Select>
-                        </div>
-                        {formValues.university === "Mines" && <div id="promotion-field">
-                            <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Promotion</FormLabel>
-                            <Select value={formValues.promotion} name="promotion" onChange={(e) => handleInputChange(e)} >
-                                    {promotions.map(el => <MenuItem 
-                                        key={"promotion value choice " + el} 
-                                        value={el}
-                                    > 
-                                        {el} 
-                                    </MenuItem>
-                                )} 
-                            </Select>
-                        </div>}
+                    <div id="promotion-field">
+                        <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Promotion des Mines <br/>
+                        <small>(XX si vous n'êtes pas de l'école cycle ingénieur)</small></FormLabel>
+                        <Select value={formValues.promo} 
+                        name="promo" 
+                        onChange={(e) => handleInputChange(e)} >
+                            
+                            {promotions.map(el => <MenuItem 
+                                    key={"promotion value choice " + el} 
+                                    value={el}
+                                > 
+                                    {el} 
+                                </MenuItem>
+                            )} 
+                        </Select>
                     </div>
+
 
                     <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Chambre</FormLabel>
                     <TextField
