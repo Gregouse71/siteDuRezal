@@ -10,6 +10,7 @@ from jwt.exceptions import InvalidTokenError
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from database import User, engine
+from ldap_auth import ldap_verify_username_password
 
 auth_router = APIRouter (
     prefix="/auth"
@@ -48,8 +49,8 @@ def authenticate_user(username: str, password: str) -> User:
         if not user:  # s'il n'y en a aucun ou plusieurs
             return None  # on le signal, ce qui provoque une erreur
         user = user[0]
-        ## TODO : à remplacer par la logique du ldap
-        if not password == user.uid + "1":
+        # Vérification du mot de passe avec le ldap
+        if not auth_in_ldap (username, password):
             return None
 
         return user

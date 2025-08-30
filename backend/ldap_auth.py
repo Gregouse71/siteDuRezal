@@ -25,3 +25,19 @@ def test_ldap ():
         print (r)
         for e in r:
             print (e)
+
+
+def ldap_verify_username_password (username: str, password: str) -> bool:
+    """
+    Vérifie si username et password sont les
+    """
+    distinguished_name = f"uid={username},ou=People,dc=rezal-mdm,dc=com"
+    try:
+        with Connection (server, distinguished_name, password) as conn:
+              # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon
+            if not conn.extend.standard.who_am_i () is None:
+                return True
+    except:
+        pass
+    # Dans tous les autres cas, l'utilisateur n'est pas bien authentifié
+    return False
