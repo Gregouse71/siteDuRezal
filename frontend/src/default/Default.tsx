@@ -29,7 +29,7 @@ export function Default() {
             <div className="container-description">
                 <h1> Tu as déjà un compte ? </h1>
                 <p> Accède à ton compte pour vérifier ou modifier tes informations personnelles </p>
-                <Link to="/login"><Button className="btn-navigation" variant="outlined" color="success"> Je me connecte  </Button></Link>
+                <Link to="resident/login"><Button className="btn-navigation" variant="outlined" color="success"> Je me connecte  </Button></Link>
             </div>
             {windowWidth > 767 && <img src={baieServeur} alt="baie-serveur" className="image"/>}
         </div>
