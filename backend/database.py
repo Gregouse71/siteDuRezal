@@ -1,6 +1,5 @@
-from pydantic import EmailStr
+from pydantic import EmailStr, datetime
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
-from Crypto.Hash import MD4
 
 class UserReceived(SQLModel):
     """
@@ -26,6 +25,13 @@ class UserUpdate (SQLModel, table=False):
 
     is_admin: bool | None = None
 
+    cotizT1: bool | None = None
+    dateCotizT1: datetime | None = None
+    cotizT2: bool | None = None
+    dateCotizT2: datetime | None = None
+    cotizT3: bool | None = None
+    dateCotizT3: datetime | None = None
+
 
 class User (SQLModel, table=True):
     """
@@ -39,27 +45,29 @@ class User (SQLModel, table=True):
     is_admin: bool
 
     acces_wifi: bool
-    nt_password: str
 
     nom: str
     prenom: str
     email: EmailStr
+
+    cotizT1: bool | None = None
+    dateCotizT1: datetime | None = None
+    cotizT2: bool | None = None
+    dateCotizT2: datetime | None = None
+    cotizT3: bool | None = None
+    dateCotizT3: datetime | None = None
 
 
 def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    # Hashage du mot de passe, NTLM (c'est horrible mais le radius en a besoin)
-    ntlm_hash = MD4.new (user_rec.mot_de_passe.encode ('utf-16le')). hexdigest ().upper ()
-
     return User (uid=user_rec.promo + user_rec.nom, 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
                  is_admin=False,
                  acces_wifi=False,
-                 nt_password=ntlm_hash
                 )
 
 
@@ -143,7 +151,6 @@ with Session (engine) as session:
             nom="Admin",
             prenom="Piche",
             email="admin@rezal-mdm.com",
-            acces_wifi=False,
-            nt_password="075C574484C3F64146E8230E72B9754B"
+            acces_wifi=False
         ))
         session.commit ()
