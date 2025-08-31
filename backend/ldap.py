@@ -8,15 +8,17 @@ from dotenv import load_dotenv
 load_dotenv ()
 LDAP_ADMIN_USERNAME = os.getenv ("LDAP_USERNAME")
 LDAP_ADMIN_PASSWORD = os.getenv ("LDAP_PASSWORD")
+LDAP_SERVER = os.getenv ("LDAP_SERVER")
 
 # Paramètres relatifs au LDAP :
 POSITION_UTILISATEURS = "ou=People,dc=rezal-mdm,dc=com" # Position des utilisateurs dans l'arbre du LDAP
 GROUPE_WIFI = "cn=wifi,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com" # Groupe dans lequel il faut être pour avoir le WiFi
+GROUPE_ADMIN = "cn=admin_site,ou=Gestion,ou=Groups,dc=rezal-mdm,dc=com" # Groupe des admins du site
 
 def distinguished_name_from_uid (uid: str):
     return f"uid={uid},{POSITION_UTILISATEURS}"
 
-server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
+server = Server (LDAP_SERVER, get_info=ALL)
 
 def allow_ldap_wifi (uid: str):
     """
@@ -131,7 +133,7 @@ def test_ldap ():
 if __name__ == "__main__":
     # ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")
     # ldap_add_user_to_group ("23frucharde", GROUPE_WIFI)
-    # ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
+    ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
     # ldap_delete_user ("uid=23frucharde,ou=People,dc=rezal-mdm,dc=com")
     # print (allow_ldap_wifi ("23frucharde"))
     # print (disallow_ldap_wifi ("23frucharde"))
