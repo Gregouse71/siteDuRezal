@@ -33,6 +33,7 @@ export function useAuthService() {
                 {headers: {'Content-Type': 'application/x-www-form-urlencoded'},})
             .then((response : any) => {
                 saveToken(response.data.access_token);
+                resolve();
             })
             .catch(error => reject(error))
         })
@@ -41,21 +42,15 @@ export function useAuthService() {
     const loginFromIDAndToken = () => {
         return new Promise<boolean>((resolve, reject) => {
             try {
-                const idString = localStorage.getItem('rezal-id');
-                const id = idString ? parseInt(idString) : null;
-                if (id) {
-                    httpInstance.get("user_information/" + id.toString())
-                    .then((response_user_info : any) => {
-                        setUser(new Account(response_user_info.data))
-                        resolve(response_user_info.data.admin);
-                    })
-                    .catch(error => {
-                        
-                        reject(error);
-                    })
-                } else {
-                    reject(new Error("Pas d'ID utilisateur stocké localement"));
-                }
+                httpInstance.get("users/me")
+                .then((response_user_info : any) => {
+                    setUser(new Account(response_user_info.data))
+                    resolve(response_user_info.data.admin);
+                })
+                .catch(error => {
+                    
+                    reject(error);
+                })
             } catch(error) {
                 reject(error);
             }

@@ -18,12 +18,11 @@ function ProtectedRoute(props : any) {
     if (!connected) {
         authService.loginFromIDAndToken()
         .then(() => {
+            console.log("Redirection...")
             navigate(props.path, {replace : true});
         })
         .catch((error) => {
-            if(error.message === "Pas d'ID utilisateur stocké localement"){
-                return;
-            }
+            //TODO : quelque chose si pas connecté
             const errorStatus = error.response.status;
             switch(errorStatus) {
                 case "400" : break   // This status code means no token was sent, we don't need to inform the user
