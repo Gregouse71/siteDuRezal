@@ -1,4 +1,5 @@
-from pydantic import EmailStr, datetime
+from pydantic import EmailStr
+from datetime import datetime
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
 
 class UserReceived(SQLModel):
