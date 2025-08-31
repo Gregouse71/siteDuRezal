@@ -33,9 +33,23 @@ def disallow_ldap_wifi (uid: str):
     return ldap_delete_user_from_group (uid, GROUPE_WIFI)
 
 
+def has_ldap_wifi (uid:str):
+    """
+    Détermine si l'utilisateur *uid* a accès au wifi
+    """
+    return ldap_user_in_group (uid, GROUPE_WIFI)
+
+
+def has_ldap_site_admin (uid:str):
+    """
+    Détermine si l'utilisateur *uid* est admin du site
+    """
+    return ldap_user_in_group (uid, GROUPE_ADMIN)
+
+
 def ldap_verify_username_password (username: str, password: str) -> bool:
     """
-    Vérifie si username et password sont les
+    Vérifie si username et password correspondent à un utilisateur du ldap
     """
     distinguished_name = distinguished_name_from_uid(username)
     try:
@@ -110,6 +124,21 @@ def ldap_delete_user_from_group (uid: str, group: str):
         return False
 
 
+def ldap_user_in_group (uid: str, group: str):
+    """
+    Détermine si l'utilisateur *uid* est membre du groupe *group*
+    i.e. si *uid* est dans la liste des membres de *group*
+    """
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            obj = ObjectDef ("groupOfNames", conn)
+            r = Reader(conn, obj, group)
+            r.search ()
+            return distinguished_name_from_uid (uid) in r[0].member
+    except:
+        return False
+
+
 def test_ldap ():
     server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
     with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
@@ -133,8 +162,13 @@ def test_ldap ():
 if __name__ == "__main__":
     # ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")
     # ldap_add_user_to_group ("23frucharde", GROUPE_WIFI)
-    ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
+    # ldap_delete_user_from_group ("23frucharde", GROUPE_WIFI)
     # ldap_delete_user ("uid=23frucharde,ou=People,dc=rezal-mdm,dc=com")
     # print (allow_ldap_wifi ("23frucharde"))
     # print (disallow_ldap_wifi ("23frucharde"))
+    # print(ldap_user_in_group ("23frucharde", GROUPE_ADMIN))
+    # print (has_ldap_site_admin ("24girardet"))
+    # print (has_ldap_site_admin ("23frucharde"))
+    # print (has_ldap_wifi ("24girardet"))
+    # print (has_ldap_wifi ("23frucharde"))
     test_ldap ()
