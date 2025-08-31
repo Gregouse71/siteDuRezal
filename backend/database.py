@@ -154,4 +154,13 @@ with Session (engine) as session:
             email="admin@rezal-mdm.com",
             acces_wifi=False
         ))
+        session.add (User (
+            uid="24girardet",
+            is_admin=True,
+
+            nom="Greg",
+            prenom="Piche",
+            email="greg@rezal-mdm.com",
+            acces_wifi=False
+        ))
         session.commit ()
