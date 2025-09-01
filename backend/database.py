@@ -63,7 +63,7 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    return User (uid=user_rec.promo + user_rec.nom, 
+    return User (uid=user_rec.promo + user_rec.nom.lower (), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
@@ -152,6 +152,15 @@ with Session (engine) as session:
             nom="Admin",
             prenom="Piche",
             email="admin@rezal-mdm.com",
+            acces_wifi=False
+        ))
+        session.add (User (
+            uid="24girardet",
+            is_admin=True,
+
+            nom="Greg",
+            prenom="Piche",
+            email="greg@rezal-mdm.com",
             acces_wifi=False
         ))
         session.commit ()

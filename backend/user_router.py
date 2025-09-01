@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
 
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
-
+from ldap import ldap_add_user
 from auth_router import get_current_user
 
 user_router = APIRouter (
@@ -25,8 +25,14 @@ async def post_users (
     """
     Crée un utilisateur dans la db
     """
-    if user_to_create.promo != "XX": # Si élève de l'école des mines, on ajoute au LDAP
-        pass ## TODO : à remplacer pa la logique du ldap
+    if not ldap_add_user (
+        user_to_create.promo + user_to_create.nom.lower (), user_to_create.mot_de_passe,
+        user_to_create.promo, user_to_create.nom, user_to_create.prenom
+    ):
+        raise HTTPException (
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Impossible de créer l'utilisateur LDAP"
+        )
     return add_new_user_db (user_to_create)
 
 
