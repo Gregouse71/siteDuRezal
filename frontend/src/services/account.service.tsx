@@ -18,13 +18,13 @@ export default function useAccountService() {
         case "room" : return ""
         case "university" : return universities[0]
         case "promotion" : return promotions[0]
-        case "t1Paid" : return false
+        case "cotizT1" : return false
         case "t1PaymentType" : return paymentTypes[0]
         case "t1PaidAt" : return ""
-        case "t2Paid" : return false
+        case "cotizT2" : return false
         case "t2PaymentType" : return paymentTypes[0]
         case "t2PaidAt" : return ""
-        case "t3Paid" : return false
+        case "cotizT3" : return false
         case "t3PaymentType" : return paymentTypes[0]
         case "t3PaidAt" : return ""
         case "createdAt" : return null

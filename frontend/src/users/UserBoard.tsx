@@ -31,7 +31,7 @@ export default function UserBoard() {
                         </tr>
                         <tr>
                             <th>login</th>
-                            <td>{user.login}</td>
+                            <td>{user.uid}</td>
                         </tr>
                         <tr>
                             <th>Date création</th>
@@ -46,16 +46,16 @@ export default function UserBoard() {
             <div>
                 <ul className="list-group">
                     <li className="list-group-item" > Cotisations </li>
-                    <li className={user.t1Paid ? 'list-group-item-success' : 'list-group-item-danger'}>
-                        T1 : {user.t1Paid ? "Oui" : "Non"} <br/>
+                    <li className={user.cotizT1 ? 'list-group-item-success' : 'list-group-item-danger'}>
+                        T1 : {user.cotizT1 ? "Oui" : "Non"} <br/>
                         {dateService.dateTrimester(1)}
                     </li>
-                    <li className={user.t2Paid ? 'list-group-item-success' : 'list-group-item-danger'}>
-                        T2 : {user.t2Paid ? "Oui" : "Non"}  <br/>
+                    <li className={user.cotizT2 ? 'list-group-item-success' : 'list-group-item-danger'}>
+                        T2 : {user.cotizT2 ? "Oui" : "Non"}  <br/>
                         {dateService.dateTrimester(2)}
                     </li>
-                    <li className={user.t3Paid ? 'list-group-item-success' : 'list-group-item-danger'}>
-                        T3 : {user.t3Paid ? "Oui" : "Non"}  <br/>
+                    <li className={user.cotizT3 ? 'list-group-item-success' : 'list-group-item-danger'}>
+                        T3 : {user.cotizT3 ? "Oui" : "Non"}  <br/>
                         {dateService.dateTrimester(3)}
                     </li>
                 </ul>

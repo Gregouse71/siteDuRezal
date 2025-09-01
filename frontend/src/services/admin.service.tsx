@@ -21,10 +21,13 @@ export function useAdminService() {
 
     const updateDatabaseView = () => {
         return new Promise<void>((resolve, reject) => {
-            httpInstance.get('users')
+            httpInstance.get('list/all')
             .then(response => {
                 const accountsData = response.data;
                 if (Array.isArray(accountsData)) {
+                    //Le code était pensé pour recevoir un identifiant unique de chaque compte, sous la forme d'un nombre
+                    //Pour minimiser les changements à faire dans le code, on ajoute un identifiant entier en fonction de sa 
+                    //place dans la liste des comptes (et vous avez deviné la largeur de mon écran)
                     const mapAccounts = accountsData.reduce(function(map, accountData) {
                         map.set(accountData.id, new Account(accountData)) 
                         return map;
@@ -101,22 +104,22 @@ export function useAdminService() {
         switch (filterName) {
             case "id" : return accountFilteredFieldValue?.toString().includes(filterValue)
             case "isInRadius" : return accountFilteredFieldValue === filterValue
-            case "admin" : return accountFilteredFieldValue === filterValue
-            case "firstName" : return accountFilteredFieldValue?.includes(filterValue)
-            case "lastName" : return accountFilteredFieldValue?.includes(filterValue)
-            case "login" : return accountFilteredFieldValue?.includes(filterValue)
+            case "is_admin" : return accountFilteredFieldValue === filterValue
+            case "prenom" : return accountFilteredFieldValue?.includes(filterValue)
+            case "nom" : return accountFilteredFieldValue?.includes(filterValue)
+            case "uid" : return accountFilteredFieldValue?.includes(filterValue)
             case "email" : return accountFilteredFieldValue?.includes(filterValue)
             case "emailIsVerified" : return accountFilteredFieldValue === filterValue
             case "room" : return accountFilteredFieldValue?.includes(filterValue)
             case "university" : return accountFilteredFieldValue === filterValue
             case "promotion" : return accountFilteredFieldValue === filterValue
-            case "t1Paid" : return accountFilteredFieldValue === filterValue
+            case "cotizT1" : return accountFilteredFieldValue === filterValue
             case "t1PaymentType" : return accountFilteredFieldValue === filterValue
             case "t1PaidAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
-            case "t2Paid" : return accountFilteredFieldValue === filterValue
+            case "cotizT2" : return accountFilteredFieldValue === filterValue
             case "t2PaymentType" : return accountFilteredFieldValue === filterValue
             case "t2PaidAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
-            case "t3Paid" : return accountFilteredFieldValue === filterValue
+            case "cotizT3" : return accountFilteredFieldValue === filterValue
             case "t3PaymentType" : return accountFilteredFieldValue === filterValue
             case "t3PaidAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
             case "createdAt" : return dateService.dateToString(accountFilteredFieldValue).includes(filterValue)
@@ -127,10 +130,10 @@ export function useAdminService() {
     const fieldsDisplayableInit : any = {
         "id" : true,
         "isInRadius" : true,
-        "admin" : true,
-        "firstName" : false,
-        "lastName" : false,
-        "login" : true,
+        "is_admin" : true,
+        "prenom" : false,
+        "nom" : false,
+        "uid" : true,
         "email" : false,
         "room" : false,
         "university" : false,

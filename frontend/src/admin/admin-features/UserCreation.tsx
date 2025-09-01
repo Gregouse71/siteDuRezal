@@ -32,7 +32,7 @@ export default function UserCreation() {
         const errorsMissingFields = users.map(
             (user, index) => {
                 
-                const loginMissing = user.login === null || user.login === "";
+                const loginMissing = user.uid === null || user.uid === "";
                 const passwordMissing = user.password === null || user.password === "";
                 const emailMissing = user.email === null || user.email === ""
 
@@ -59,7 +59,7 @@ export default function UserCreation() {
         }
 
         // Detect duplicated logins
-        const loginsNotNull : any[] = users.map(user => user.login).filter(login => login !== null);
+        const loginsNotNull : any[] = users.map(user => user.uid).filter(login => login !== null);
         const loginsDuplicated = loginsNotNull.filter((login, index) => loginsNotNull.indexOf(login) !== index);
         const errorsLoginDuplicated = loginsDuplicated.length > 0 ? loginsDuplicated.map(
             login => {
@@ -115,7 +115,7 @@ export default function UserCreation() {
                 const usersSuccessfullyCreated = users
                     .map(account => {
                         return {
-                            "Login" : account.login,
+                            "Login" : account.uid,
                             "Mot de passe" : account.password,
                             "Email" : account.email
                         }

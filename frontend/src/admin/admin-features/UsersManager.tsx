@@ -9,6 +9,12 @@ import usePopupService from "../../services/popup.service";
 import UsersCSV from "./UsersManagement/UsersCSV";
 import UsersFilters from "./UsersManagement/UsersFilters";
 
+//Aux futurs qui liront ce code,
+//Il avait en têtes des ID nombres pour chaque compte
+//Ce jour j'entreprend le changement pour des ID string, les login
+//Ca cassera peut-être des trucs et explique certaines étrangeté
+//24liens
+
 export default function UsersManager() {
     const adminService = useAdminService();
     const popupService = usePopupService();
@@ -30,7 +36,7 @@ export default function UsersManager() {
     useEffect(() => { // Will only trigger when UsersManager is called for the first time
         adminService.updateDatabaseView()
             .then(() => {})
-            .catch((error) => {})
+            //.catch((error) => {})//TODO : Pourquoi un catch qui fait juste disparaître l'erreur
     }, []) 
 
     useEffect(() => {   

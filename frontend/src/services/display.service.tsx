@@ -14,7 +14,7 @@ export default function useDisplayService() {
     const dateService = useDateService();
     const conversionService = useConversionService();
 
-    const isTrimester = (field: string) => ["t", "T"].includes(field[0]) 
+    const isTrimester = (field: string) => ["t", "T"].includes(field[0]) || ["cotizT1", "cotizT2", "cotizT3"].includes(field) 
     
     const AccountFieldDisplay = (props : any) => {
 
@@ -80,23 +80,23 @@ export default function useDisplayService() {
       switch(field) {
           case "id" : return valueUnmutable
           case "isInRadius" : return props.mutable ? BinaryList() : valueUnmutable
-          case "admin" : return props.mutable ? BinaryList() : valueUnmutable
-          case "firstName" : return props.mutable ? StringInput() : valueUnmutable
-          case "lastName" : return props.mutable ? StringInput() : valueUnmutable
-          case "login" : return props.mutable ? StringInput() : valueUnmutable
+          case "is_admin" : return props.mutable ? BinaryList() : valueUnmutable
+          case "prenom" : return props.mutable ? StringInput() : valueUnmutable
+          case "nom" : return props.mutable ? StringInput() : valueUnmutable
+          case "uid" : return props.mutable ? StringInput() : valueUnmutable
           case "password" : return props.mutable ? StringInput() : valueUnmutable
           case "email" : return props.mutable ? StringInput() : valueUnmutable
           case "emailIsVerified" : return props.mutable ? BinaryList() : valueUnmutable
           case "room" : return props.mutable ? StringInput() : valueUnmutable
           case "university" : return props.mutable ? createOptionsForLists(universities) : valueUnmutable
           case "promotion" : return props.mutable ? createOptionsForLists(promotions) : valueUnmutable
-          case "t1Paid" : return props.mutable ? BinaryList() : valueUnmutable
+          case "cotizT1" : return props.mutable ? BinaryList() : valueUnmutable
           case "t1PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable
           case "t1PaidAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable
-          case "t2Paid" : return props.mutable ? BinaryList() : valueUnmutable
+          case "cotizT2" : return props.mutable ? BinaryList() : valueUnmutable
           case "t2PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable
           case "t2PaidAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable
-          case "t3Paid" : return props.mutable ? BinaryList() : valueUnmutable
+          case "cotizT3" : return props.mutable ? BinaryList() : valueUnmutable
           case "t3PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable
           case "t3PaidAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable
           case "createdAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable 
