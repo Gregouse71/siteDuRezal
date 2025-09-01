@@ -63,7 +63,7 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    return User (uid=user_rec.promo + user_rec.nom, 
+    return User (uid=user_rec.promo + user_rec.nom.lower (), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
