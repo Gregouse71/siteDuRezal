@@ -72,8 +72,8 @@ export default function useConversionService() {
         newAccountXLSX["#"] = account.id;
         newAccountXLSX["Acces a internet"] = account.isInRadius? 1 : 0;
         newAccountXLSX.Admin = account.admin? 1 : 0;
-        newAccountXLSX.Prenom = account.firstName !== null ? account.firstName : "";
-        newAccountXLSX.Nom = account.lastName !== null ? account.lastName : "";
+        newAccountXLSX.Prenom = account.prenom !== null ? account.prenom : "";
+        newAccountXLSX.Nom = account.nom !== null ? account.nom : "";
         newAccountXLSX.Login = account.login !== null ? account.login : "";
         newAccountXLSX["Mot de passe"] = account.password !== null ? account.password : "";
         newAccountXLSX.Email = account.email !== null ? account.email : "";
@@ -99,8 +99,8 @@ export default function useConversionService() {
         newAccount.id = accountXLSX["#"];
         newAccount.isInRadius = accountXLSX["Acces a internet"] === 1 ? true : false;
         newAccount.admin = accountXLSX.Admin === 1 ? true : false;
-        newAccount.firstName = accountXLSX.Prenom;
-        newAccount.lastName = accountXLSX.Nom;
+        newAccount.prenom = accountXLSX.Prenom;
+        newAccount.nom = accountXLSX.Nom;
         newAccount.login = accountXLSX.Login;
         newAccount.password = accountXLSX["Mot de passe"];
         newAccount.email = accountXLSX.Email;

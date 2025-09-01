@@ -5,9 +5,9 @@ export class Account {
     id : number;
     isInRadius: boolean;
     admin: boolean;
-    firstName : string | null;  
-    lastName : string | null;
-    login: string | null;
+    prenom : string | null;  
+    nom : string | null;
+    login: string; // | null;
     password : string | null;
     email: string | null;
     emailIsVerified: boolean;
@@ -30,9 +30,9 @@ export class Account {
       this.id = data.id;
       this.isInRadius = data.isInRadius !== undefined ? data.isInRadius : false;
       this.admin = data.admin !== undefined ? data.admin : false;
-      this.firstName = data.firstName || null;
-      this.lastName = data.lastName || null;
-      this.login = data.login || null;
+      this.prenom = data.prenom || null;
+      this.nom = data.nom || null;
+      this.login = data.uid ;//|| null;
       this.password = data.password || null;
       this.email = data.email || null;
       this.emailIsVerified = data.emailIsVerified !== undefined ? data.emailIsVerified : false;
