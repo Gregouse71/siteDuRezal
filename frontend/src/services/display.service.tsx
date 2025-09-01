@@ -14,8 +14,14 @@ export default function useDisplayService() {
     const dateService = useDateService();
     const conversionService = useConversionService();
 
-    const isTrimester = (field: string) => ["t", "T"].includes(field[0]) 
-    
+    const isTrimester = (field: string) => {
+        if (["t", "T"].includes(field[0])){
+            return field[1];
+        } if (["cotizT1", "cotizT2", "cotizT3"].includes(field)){
+            return field[6];
+        }
+        return false;
+    }
     const AccountFieldDisplay = (props : any) => {
 
       const [value, setValue] = useState(props.value);
@@ -80,23 +86,23 @@ export default function useDisplayService() {
       switch(field) {
           case "id" : return valueUnmutable
           case "isInRadius" : return props.mutable ? BinaryList() : valueUnmutable
-          case "admin" : return props.mutable ? BinaryList() : valueUnmutable
-          case "firstName" : return props.mutable ? StringInput() : valueUnmutable
-          case "lastName" : return props.mutable ? StringInput() : valueUnmutable
-          case "login" : return props.mutable ? StringInput() : valueUnmutable
+          case "is_admin" : return props.mutable ? BinaryList() : valueUnmutable
+          case "prenom" : return props.mutable ? StringInput() : valueUnmutable
+          case "nom" : return props.mutable ? StringInput() : valueUnmutable
+          case "uid" : return props.mutable ? StringInput() : valueUnmutable
           case "password" : return props.mutable ? StringInput() : valueUnmutable
           case "email" : return props.mutable ? StringInput() : valueUnmutable
           case "emailIsVerified" : return props.mutable ? BinaryList() : valueUnmutable
           case "room" : return props.mutable ? StringInput() : valueUnmutable
           case "university" : return props.mutable ? createOptionsForLists(universities) : valueUnmutable
           case "promotion" : return props.mutable ? createOptionsForLists(promotions) : valueUnmutable
-          case "t1Paid" : return props.mutable ? BinaryList() : valueUnmutable
+          case "cotizT1" : return props.mutable ? BinaryList() : valueUnmutable
           case "t1PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable
           case "t1PaidAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable
-          case "t2Paid" : return props.mutable ? BinaryList() : valueUnmutable
+          case "cotizT2" : return props.mutable ? BinaryList() : valueUnmutable
           case "t2PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable
           case "t2PaidAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable
-          case "t3Paid" : return props.mutable ? BinaryList() : valueUnmutable
+          case "cotizT3" : return props.mutable ? BinaryList() : valueUnmutable
           case "t3PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable
           case "t3PaidAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable
           case "createdAt" : return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable 
@@ -139,7 +145,7 @@ export default function useDisplayService() {
             const accountFieldValue = dateService.tranformToDateIfPossible(account.get(innerProps.field));
             const backgroundColor = props.highlightChangesRespectedToDatabaseAccount ? ((databaseAccount && !_.isEqual(databaseAccountFieldValue, accountFieldValue)) ? "orange" : "") : "";
             return <>
-                {fieldDisplayData[isTrimesterField ? ("T" + innerProps.field[1]) : innerProps.field] && 
+                {fieldDisplayData[isTrimesterField ? ("T" + isTrimesterField) : innerProps.field] && 
                 <td style={{backgroundColor : backgroundColor}}>
                     <AccountFieldDisplay
                         value={accountFieldValue}
@@ -159,7 +165,7 @@ export default function useDisplayService() {
             </td>}
             {conversionService
                 .accountFieldsNameInEnglish
-                .map(field => <FieldDisplayedWithComponent key={"account " + account.id + " field " + field} field={field} />)    
+                .map(field => <FieldDisplayedWithComponent field={field} />)    
             }
             <td>
                 {account.id !== -1 && <button className="btn btn-error" onClick={props.onDeleteAccount}> Supprimer </button>}
@@ -198,7 +204,7 @@ export default function useDisplayService() {
             fieldName => {
                 const isTrimesterField = isTrimester(fieldName);
                 return <>
-                    {isTrimesterField && fieldDisplayData["T" + fieldName[1]] && <th key={"User head " + fieldName} >
+                    {isTrimesterField && fieldDisplayData["T" + isTrimesterField] && <th key={"User head " + fieldName} >
                         {conversionService.translateAccountFieldNameInFrench(fieldName)}
                     </th>}
                 </>

@@ -15,8 +15,8 @@ function ProtectedRoute(props : any) {
     const popupService = usePopupService();
     const navigate = useNavigate();
 
-    const connected = authService.user.login !== undefined;
-    const admin = authService.user.admin;
+    const connected = authService.user.uid !== undefined;
+    const admin = authService.user.is_admin;
 
     if (!connected) {
         authService.loginFromIDAndToken()

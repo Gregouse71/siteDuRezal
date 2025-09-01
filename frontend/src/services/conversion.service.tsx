@@ -23,13 +23,13 @@ export default function useConversionService() {
         case "room" : return "Chambre"
         case "university" : return "Ecole"
         case "promotion" : return "Promotion"
-        case "t1Paid" : return "T1 paye"
+        case "cotizT1" : return "T1 paye"
         case "t1PaymentType" : return "Moyen de paiement T1"
         case "t1PaidAt" : return "Date paiement T1"
-        case "t2Paid" : return "T2 paye"
+        case "cotizT2" : return "T2 paye"
         case "t2PaymentType" : return "Moyen de paiement T2"
         case "t2PaidAt" : return "Date paiement T2"
-        case "t3Paid" : return "T3 paye"
+        case "cotizT3" : return "T3 paye"
         case "t3PaymentType" : return "Moyen de paiement T3"
         case "t3PaidAt" : return "Date paiement T3"
         case "createdAt" : return "Date de creation"
@@ -53,13 +53,13 @@ export default function useConversionService() {
         case "Chambre" : return "room"
         case "Ecole" : return "university"
         case "Promotion" : return "promotion"
-        case "T1 paye" : return "t1Paid"
+        case "T1 paye" : return "cotizT1"
         case "Moyen de paiement T1" : return "t1PaymentType"
         case "Date paiement T1" : return "t1PaidAt"
-        case "T2 paye" : return "t2Paid"
+        case "T2 paye" : return "cotizT2"
         case "Moyen de paiement T2" : return "t2PaymentType"
         case "Date paiement T2" : return "t2PaidAt"
-        case "T3 paye" : return "t3Paid"
+        case "T3 paye" : return "cotizT3"
         case "Moyen de paiement T3" : return "t3PaymentType"
         case "Date paiement T3" : return "t3PaidAt"
         case "Date de creation" : return "createdAt"
@@ -71,23 +71,23 @@ export default function useConversionService() {
         var newAccountXLSX = new AccountXLSX({});
         newAccountXLSX["#"] = account.id;
         newAccountXLSX["Acces a internet"] = account.isInRadius? 1 : 0;
-        newAccountXLSX.Admin = account.admin? 1 : 0;
+        newAccountXLSX.Admin = account.is_admin? 1 : 0;
         newAccountXLSX.Prenom = account.prenom !== null ? account.prenom : "";
         newAccountXLSX.Nom = account.nom !== null ? account.nom : "";
-        newAccountXLSX.Login = account.login !== null ? account.login : "";
+        newAccountXLSX.Login = account.uid !== null ? account.uid : "";
         newAccountXLSX["Mot de passe"] = account.password !== null ? account.password : "";
         newAccountXLSX.Email = account.email !== null ? account.email : "";
-        newAccountXLSX["Email verifie"] = account.admin? 1 : 0;
+        newAccountXLSX["Email verifie"] = account.is_admin? 1 : 0;
         newAccountXLSX.Chambre = account.room !== null ? account.room : "";
         newAccountXLSX.Ecole = account.university;
         newAccountXLSX.Promotion = account.promotion;
-        newAccountXLSX["T1 paye"] = account.t1Paid? 1 : 0;
+        newAccountXLSX["T1 paye"] = account.cotizT1? 1 : 0;
         newAccountXLSX["Moyen de paiement T1"] = account.t1PaymentType;
         newAccountXLSX["Date paiement T1"] = dateService.dateToString(account.t1PaidAt);
-        newAccountXLSX["T2 paye"] = account.t2Paid? 1 : 0;
+        newAccountXLSX["T2 paye"] = account.cotizT2? 1 : 0;
         newAccountXLSX["Moyen de paiement T2"] = account.t2PaymentType;
         newAccountXLSX["Date paiement T2"] = dateService.dateToString(account.t2PaidAt);
-        newAccountXLSX["T3 paye"] = account.t3Paid? 1 : 0;
+        newAccountXLSX["T3 paye"] = account.cotizT3? 1 : 0;
         newAccountXLSX["Moyen de paiement T3"] = account.t3PaymentType;
         newAccountXLSX["Date paiement T3"] = dateService.dateToString(account.t3PaidAt);
         newAccountXLSX["Date de creation"] = dateService.dateToString(account.createdAt);
@@ -98,23 +98,23 @@ export default function useConversionService() {
         var newAccount = new Account({});
         newAccount.id = accountXLSX["#"];
         newAccount.isInRadius = accountXLSX["Acces a internet"] === 1 ? true : false;
-        newAccount.admin = accountXLSX.Admin === 1 ? true : false;
+        newAccount.is_admin = accountXLSX.Admin === 1 ? true : false;
         newAccount.prenom = accountXLSX.Prenom;
         newAccount.nom = accountXLSX.Nom;
-        newAccount.login = accountXLSX.Login;
+        newAccount.uid = accountXLSX.Login;
         newAccount.password = accountXLSX["Mot de passe"];
         newAccount.email = accountXLSX.Email;
         newAccount.emailIsVerified = accountXLSX["Email verifie"] === 1 ? true : false;
         newAccount.room = accountXLSX.Chambre;
         newAccount.university = accountXLSX.Ecole;
         newAccount.promotion = accountXLSX.Promotion;
-        newAccount.t1Paid = accountXLSX["T1 paye"] === 1 ? true : false;
+        newAccount.cotizT1 = accountXLSX["T1 paye"] === 1 ? true : false;
         newAccount.t1PaymentType = accountXLSX["Moyen de paiement T1"];
         newAccount.t1PaidAt = dateService.stringToDate(accountXLSX["Date paiement T1"]);
-        newAccount.t2Paid = accountXLSX["T2 paye"] === 1 ? true : false;
+        newAccount.cotizT2 = accountXLSX["T2 paye"] === 1 ? true : false;
         newAccount.t2PaymentType = accountXLSX["Moyen de paiement T2"];
         newAccount.t2PaidAt = dateService.stringToDate(accountXLSX["Date paiement T2"]);
-        newAccount.t3Paid = accountXLSX["T3 paye"] === 1 ? true : false;
+        newAccount.cotizT3 = accountXLSX["T3 paye"] === 1 ? true : false;
         newAccount.t3PaymentType = accountXLSX["Moyen de paiement T3"];
         newAccount.t3PaidAt = dateService.stringToDate(accountXLSX["Date paiement T3"]);
         newAccount.createdAt = dateService.stringToDate(accountXLSX["Date de creation"]);
