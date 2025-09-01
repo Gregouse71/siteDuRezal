@@ -60,7 +60,7 @@ export default function UserBoard() {
 
                 <p> 
                     Comment cotiser ? Toutes les infos 
-                    <Link style={{color : "blue", marginLeft : "3px"}} to="/about-us/cotisation" replace>ici</Link>
+                    <Link style={{color : "blue", marginLeft : "3px"}} to="/about-us" replace>ici</Link>
                 </p>   
                 <div> Si tu as des questions, n'hésite pas à nous contacter avec l'adresse <u>admin@rezal-mdm.com</u> ! </div> 
         

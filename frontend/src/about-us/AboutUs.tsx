@@ -1,5 +1,3 @@
-
-import { Routes, Route, Link } from 'react-router-dom';
 import "./AboutUs.scss"
 
 import charte from "../assets/doc/Charte_VF.pdf";
