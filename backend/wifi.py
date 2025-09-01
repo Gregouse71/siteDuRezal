@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, Session, select, create_engine
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends, Request, status
 from typing import Annotated
 
 from database import User, engine
@@ -9,25 +9,6 @@ from ldap import allow_ldap_wifi, disallow_ldap_wifi
 wifi_router = APIRouter (
     prefix="/wifi"
 )
-
-
-class RadiusUser (SQLModel):
-    """
-    Classe représentant les utilisateurs dans la bdd du RADIUS
-    NE PAS TOUCHER, le model est fixe
-    IL EST IMPERATIF d'utiliser le constructeur fourni afin d'envoyer les bonnes valeurs
-    """
-    __tablename__ = 'radcheck'
-    username: str  # Identifiant
-    attribute: str # 
-    op: str        #
-    value: str     # Mot de passe hashé NTLM
-
-    def __init__ (self, user: User):
-        self.username = user.uid
-        self.attribute = "NT-Password"
-        self.op = ":="
-        self.value = user.nt_password
 
 
 class WiFiUpdate (SQLModel):
@@ -66,17 +47,15 @@ async def set_wifi_state (
         session.commit ()
         session.refresh (user)
 
-        with Session (radius_engine) as rad_session:  # Modification de la bdd du RADIUS
-            if req.state:
-                rad_user = RadiusUser (user)
-                rad_session.add (rad_user)
-                rad_session.commit ()
-                rad_session.refresh (rad_user)
-            else:
-                statement = select (RadiusUser).where (RadiusUser.username == user.uid)
-                rad_users_to_del = rad_session.exec (statement).all ()
-                rad_session.delete (rad_users_to_del)
-                rad_session.commit ()
+        if WiFiUpdate.state:
+            success = allow_ldap_wifi (WiFiUpdate.uid)
+        else:
+            success = disallow_ldap_wifi (WiFiUpdate.uid)
+        if not success:
+            raise HTTPException (
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Impossible de modifier l'acces au wifi pour cet uid"
+            )
 
         return user
     
