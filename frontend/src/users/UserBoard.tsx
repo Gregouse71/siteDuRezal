@@ -12,7 +12,7 @@ export default function UserBoard() {
     <div>
         <h2 className="title-page"> Ton compte </h2>
         <div id="user-board">
-            <h1>{user.login}</h1>
+            <h1>{user.prenom +" " +user.nom}</h1>
     
             <p className="title-part"> Informations générales </p>
     
@@ -28,6 +28,10 @@ export default function UserBoard() {
                         <tr>
                             <th>Email</th>
                             <td>{user.email}</td>
+                        </tr>
+                        <tr>
+                            <th>login</th>
+                            <td>{user.login}</td>
                         </tr>
                         <tr>
                             <th>Date création</th>

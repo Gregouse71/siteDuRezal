@@ -15,7 +15,7 @@ function ProtectedRoute(props : any) {
     const popupService = usePopupService();
     const navigate = useNavigate();
 
-    const connected = authService.user.id !== undefined;
+    const connected = authService.user.login !== undefined;
     const admin = authService.user.admin;
 
     if (!connected) {
@@ -41,8 +41,8 @@ function ProtectedRoute(props : any) {
     } else {
         if (!admin) {
             popupService.changePopup({status : "error", message : "Accès interdit"});
-            console.log("go back to home");
-            return <Navigate to="/" replace/>
+            console.log("go back to home, you should't be there !");
+            //return <Navigate to="/" replace/>
         }
     }
     return admin ? props.child : <Navigate to={adminBasePath} replace/>

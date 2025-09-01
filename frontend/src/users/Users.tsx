@@ -13,7 +13,7 @@ function ProtectedRoute(props : any) {
     const popupService = usePopupService();
     const navigate = useNavigate();
   
-    const connected = authService.user.id !== undefined;
+    const connected = authService.user.login !== undefined;
 
     if (!connected) {
         authService.loginFromIDAndToken()
@@ -30,6 +30,10 @@ function ProtectedRoute(props : any) {
                     popupService.changePopup({status : "error", message : "Le cookie d'authentification a expiré, connexion automatique impossible"});
                     break;
                 }
+                case "500" : {
+                    popupService.changePopup({status: "error", message : "Erreur serveur, veuillez réessayer ou nous contacter par mail"});
+                    break;
+                }
             }
         })
     }
@@ -43,7 +47,7 @@ export default function Users() {
 
     return <Routes>
         <Route path="login" element={<authService.LoginFormComponent redirectionPathIfSuccess="/resident/board" title="Connexion résident" displayAccountCreationLink={true}/>}/>
-        <Route path="board" element={<ProtectedRoute path="resident/board" child={<UserBoard/>}/>}/>
+        <Route path="board" element={<ProtectedRoute path="/resident/board" child={<UserBoard/>}/>}/>
         <Route path="register" element={<UserRegister/>}/>
         <Route path="verify-email/:idString/:verificationCode" element={<UserVerifyEmail/>}/>
         
