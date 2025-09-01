@@ -29,7 +29,7 @@ export class Account {
     constructor(data : any) {
       this.id = data.id;
       this.isInRadius = data.isInRadius !== undefined ? data.isInRadius : false;
-      this.admin = data.admin !== undefined ? data.admin : false;
+      this.admin = data.is_admin !== undefined ? data.is_admin : false;
       this.prenom = data.prenom || null;
       this.nom = data.nom || null;
       this.login = data.uid ;//|| null;
