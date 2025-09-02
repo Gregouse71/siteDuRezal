@@ -1,5 +1,5 @@
-from sqlmodel import SQLModel, Session, select, create_engine
-from fastapi import APIRouter, HTTPException, Depends, Request, status
+from sqlmodel import SQLModel, Session, select
+from fastapi import APIRouter, HTTPException, Depends, status
 from typing import Annotated
 
 from database import User, engine
@@ -58,10 +58,3 @@ async def set_wifi_state (
             )
 
         return user
-    
-
-
-# Setting up the database connection and session
-RADIUS_DATABASE_URL = "sqlite:///./test_rad.db"
-radius_engine = create_engine(RADIUS_DATABASE_URL)
-SQLModel.metadata.create_all(engine)
