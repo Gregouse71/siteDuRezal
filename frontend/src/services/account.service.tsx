@@ -7,7 +7,7 @@ export default function useAccountService() {
     const defaultValueOfAccountField = (fieldName : string) => {
       switch(fieldName) {
         case "id" : return ""
-        case "isInRadius" : return false
+        case "acces_wifi" : return false
         case "admin" : return false
         case "firstName" : return ""
         case "lastName" : return ""

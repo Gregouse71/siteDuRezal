@@ -3,7 +3,7 @@ import { universities, promotions, paymentTypes } from "../assets/lists";
 
 export class Account {
     id : number;
-    isInRadius: boolean;
+    acces_wifi: boolean;
     is_admin: boolean;
     prenom : string | null;  
     nom : string | null;
@@ -28,7 +28,7 @@ export class Account {
 
     constructor(data : any) {
       this.id = data.id;
-      this.isInRadius = data.isInRadius !== undefined ? data.isInRadius : false;
+      this.acces_wifi = data.acces_wifi !== undefined ? data.acces_wifi : false;
       this.is_admin = data.is_admin !== undefined ? data.is_admin : false;
       this.prenom = data.prenom || null;
       this.nom = data.nom || null;

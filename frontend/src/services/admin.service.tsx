@@ -104,7 +104,7 @@ export function useAdminService() {
         const accountFilteredFieldValue : any = account.get(filterName);
         switch (filterName) {
             case "id" : return accountFilteredFieldValue?.toString().includes(filterValue)
-            case "isInRadius" : return accountFilteredFieldValue === filterValue
+            case "acces_wifi" : return accountFilteredFieldValue === filterValue
             case "is_admin" : return accountFilteredFieldValue === filterValue
             case "prenom" : return accountFilteredFieldValue?.includes(filterValue)
             case "nom" : return accountFilteredFieldValue?.includes(filterValue)
@@ -130,7 +130,7 @@ export function useAdminService() {
 
     const fieldsDisplayableInit : any = {
         "id" : true,
-        "isInRadius" : true,
+        "acces_wifi" : true,
         "is_admin" : true,
         "prenom" : false,
         "nom" : false,
@@ -148,7 +148,7 @@ export function useAdminService() {
 
     const fieldsDisplayableInitWithPassword : any = {
         "id" : true,
-        "isInRadius" : true,
+        "acces_wifi" : true,
         "admin" : true,
         "firstName" : false,
         "lastName" : false,

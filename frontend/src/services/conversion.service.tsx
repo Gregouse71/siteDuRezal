@@ -12,7 +12,7 @@ export default function useConversionService() {
     const translateAccountFieldNameInFrench = (field : string) => {
       switch(field) {
         case "id" : return "#"
-        case "isInRadius" : return "Acces a internet"
+        case "acces_wifi" : return "Acces a internet"
         case "admin" : return "Admin"
         case "firstName" : return "Prenom"
         case "lastName" : return "Nom"
@@ -42,7 +42,7 @@ export default function useConversionService() {
     const translateAccountFieldNameInEnglish = (field : string) => {
       switch(field) {
         case "#" : return "id"
-        case "Acces a internet" : return "isInRadius"
+        case "Acces a internet" : return "acces_wifi"
         case "Admin" : return "admin"
         case "Prenom" : return "firstName"
         case "Nom" : return "lastName"
@@ -70,7 +70,7 @@ export default function useConversionService() {
     const AccountToXLSXAccount = (account : Account) => {
         var newAccountXLSX = new AccountXLSX({});
         newAccountXLSX["#"] = account.id;
-        newAccountXLSX["Acces a internet"] = account.isInRadius? 1 : 0;
+        newAccountXLSX["Acces a internet"] = account.acces_wifi? 1 : 0;
         newAccountXLSX.Admin = account.is_admin? 1 : 0;
         newAccountXLSX.Prenom = account.prenom !== null ? account.prenom : "";
         newAccountXLSX.Nom = account.nom !== null ? account.nom : "";
@@ -97,7 +97,7 @@ export default function useConversionService() {
       const XLSXAccountToAccount = (accountXLSX : AccountXLSX) => {
         var newAccount = new Account({});
         newAccount.id = accountXLSX["#"];
-        newAccount.isInRadius = accountXLSX["Acces a internet"] === 1 ? true : false;
+        newAccount.acces_wifi = accountXLSX["Acces a internet"] === 1 ? true : false;
         newAccount.is_admin = accountXLSX.Admin === 1 ? true : false;
         newAccount.prenom = accountXLSX.Prenom;
         newAccount.nom = accountXLSX.Nom;

@@ -21,8 +21,8 @@ export default function UserBoard() {
                     <tbody>
                         <tr>
                             <th>Accès au réseau</th>
-                            <td style={{backgroundColor : user.isInRadius ? 'green' : 'red'}}>
-                                <b style={{color : "white"}}>{user.isInRadius ? "Autorisé":"Non autorisé"}</b>
+                            <td style={{backgroundColor : user.acces_wifi ? 'green' : 'red'}}>
+                                <b style={{color : "white"}}>{user.acces_wifi ? "Autorisé":"Non autorisé"}</b>
                             </td>
                         </tr>
                         <tr>

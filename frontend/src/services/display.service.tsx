@@ -85,7 +85,7 @@ export default function useDisplayService() {
   
       switch(field) {
           case "id" : return valueUnmutable
-          case "isInRadius" : return props.mutable ? BinaryList() : valueUnmutable
+          case "acces_wifi" : return props.mutable ? BinaryList() : valueUnmutable
           case "is_admin" : return props.mutable ? BinaryList() : valueUnmutable
           case "prenom" : return props.mutable ? StringInput() : valueUnmutable
           case "nom" : return props.mutable ? StringInput() : valueUnmutable
