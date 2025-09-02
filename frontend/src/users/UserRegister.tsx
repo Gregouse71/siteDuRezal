@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, TextField, Button, Select, MenuItem, Checkbox } from "@mui/material";
 import { useState } from "react";
-import { promotions, universities } from "../assets/lists";
+import { promotions } from "../assets/lists";
 import charte from "../assets/doc/Charte_VF.pdf";
 import useAccountService from "../services/account.service";
 import usePopupService from "../services/popup.service";

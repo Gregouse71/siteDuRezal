@@ -5,11 +5,13 @@ import ListRadiusUsers from './admin-features/ListRadiusUsers/ListRadiusUsers';
 import UserCreation from './admin-features/UserCreation';
 import UsersManager from './admin-features/UsersManager';
 import AdminBoard from './AdminBoard';
+import { useEffect } from 'react';
 
 const adminBasePath = "/admin/login";
 
 
 function ProtectedRoute(props : any) {
+    console.log("Render protected route")
 
     const authService = useAuthService();
     const popupService = usePopupService();
@@ -18,33 +20,35 @@ function ProtectedRoute(props : any) {
     const connected = authService.user.uid !== undefined;
     const admin = authService.user.is_admin;
 
-    if (!connected) {
-        authService.loginFromIDAndToken()
-        .then((isAdmin : boolean) => {
-            if (isAdmin) {
-                navigate(props.path, {replace : true});
-            }
-        })
-        .catch((error) => {
-            if(error.message === "Pas d'ID utilisateur stocké localement"){
-                return;
-            }
-            const errorStatus = error.response.status;
-            switch(errorStatus) {
-                case "400" : break   // This status code means no token was sent, we don't need to inform the user
-                case "401" : {
-                    popupService.changePopup({status : "error", message : "Le cookie d'authentification a expiré, connexion automatique impossible"});
-                    break;
+
+    useEffect( () => {
+        if (!connected) {
+            authService.loginFromIDAndToken()
+            .then((isAdmin : boolean) => {
+                if (isAdmin) {
+                    navigate(props.path, {replace : true});
                 }
+            })
+            .catch((error) => {
+                if(error.message === "Pas d'ID utilisateur stocké localement"){
+                    return;
+                }
+                const errorStatus = error.response.status;
+                switch(errorStatus) {
+                    case "400" : break   // This status code means no token was sent, we don't need to inform the user
+                    case "401" : {
+                        popupService.changePopup({status : "error", message : "Le cookie d'authentification a expiré, connexion automatique impossible"});
+                        break;
+                    }
+                }
+            })
+        } else {
+            if (!admin) {
+                popupService.changePopup({status : "error", message : "Accès interdit"});
+                console.log("go back to home, you should't be there !");
             }
-        })
-    } else {
-        if (!admin) {
-            popupService.changePopup({status : "error", message : "Accès interdit"});
-            console.log("go back to home, you should't be there !");
-            //return <Navigate to="/" replace/>
         }
-    }
+    }, [authService.user])
     return admin ? props.child : <Navigate to={adminBasePath} replace/>
 }
 
