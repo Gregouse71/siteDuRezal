@@ -51,9 +51,9 @@ export default function UsersManager() {
         .map(IdAndAccount => {
             const id = IdAndAccount[0];
             const databaseAccount = databaseAccounts.get(id);
-            return {...IdAndAccount[1].differenceWith(databaseAccount), id : id};
+            return {...IdAndAccount[1].differenceWith(databaseAccount), id : id, uid:IdAndAccount[1].uid};
         })
-        .filter(IdAndDiff => Object.keys(IdAndDiff).length > 1)
+        .filter(IdAndDiff => Object.keys(IdAndDiff).length > 2)
 
     const onSelectAccount = (idToggled : number) => {
         if (IdsSelected.includes(idToggled)) setIdsSelected(IdsSelected.filter(id => id !== idToggled))
@@ -102,14 +102,15 @@ export default function UsersManager() {
 
     const onCommitChanges = () => {
         if (window.confirm("Confirmer les changements demandés ?")) {
+            var number_error = 0;
             adminService.modifyAccounts(arrayOfChanges)
             .then(accountModificationDataArray => {
                 var isSucessForAll = true;
                 arrayOfChanges
                     .forEach((IdAndAccount, index) => {
                         const id : number = IdAndAccount.id;
-                        const {success, error} = accountModificationDataArray[index];
-                        if (success) currentAccounts.set(
+                        const promiseResult = accountModificationDataArray[index];
+                        if (promiseResult.status === "fulfilled") currentAccounts.set(
                             id, new Account({
                                 ...currentAccounts.get(id), 
                                 message : "SCompte modifié avec succès"
@@ -117,10 +118,11 @@ export default function UsersManager() {
                         ) 
                         else {
                             isSucessForAll = false;
+                            number_error++;
                             currentAccounts.set(
                                 id, new Account({
                                     ...databaseAccounts.get(id), 
-                                    message : "E" + error
+                                    message : "E" + promiseResult.reason
                                 })
                             )
                         }
@@ -130,7 +132,7 @@ export default function UsersManager() {
                 if (isSucessForAll) {
                     popupService.changePopup({status :  "success", message : "Modifications réussies"});
                 } else {
-                    popupService.changePopup({status :  "success", message : "Certains comptes n'ont pas pu être créés, voir la colonne 'message'"});
+                    popupService.changePopup({status :  "error", message : `Nombre d'erreurs : ${number_error}. Certains comptes n'ont pas pu être créés, voir la colonne 'message'`});
                 }
             })
             .catch(error => {

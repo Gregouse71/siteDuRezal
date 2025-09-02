@@ -3,6 +3,8 @@ import { defaultFilterName } from "../admin/admin-features/UsersManagement/Users
 import { Account } from "../models/account"
 import httpInstance from "./api"
 import { useDateService } from "./date.service";
+import { resolve } from "path";
+import { reject } from "lodash";
 
 export const databaseAccountsState = atom({
     key : "databaseAccounts",
@@ -61,13 +63,12 @@ export function useAdminService() {
     }
     
     const modifyAccounts = (changesOnAccounts : any[]) => {
-        return new Promise<any>((resolve, reject) => {
-            httpInstance.patch('users', changesOnAccounts)
-            .then(response =>resolve(response.data))  
-            .catch(error => reject(error))
-        })
+        const promiseArray = changesOnAccounts.map((change) =>
+            httpInstance.patch('users/'+change.uid, change)
+        );
+        return Promise.allSettled(promiseArray)
     }
-    
+
     const deleteAccounts = (idsToDelete : number[]) => {
         return new Promise<boolean[]>((resolve, reject) => {
             httpInstance.delete('users', {data : idsToDelete})
