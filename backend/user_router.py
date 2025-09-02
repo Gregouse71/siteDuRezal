@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
+from datetime import datetime
 
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
 from ldap import ldap_add_user, allow_ldap_wifi, disallow_ldap_wifi
@@ -26,8 +27,8 @@ async def post_users (
     Crée un utilisateur dans la db
     """
     if not ldap_add_user (
-        user_to_create.promo + user_to_create.nom.lower (), user_to_create.mot_de_passe,
-        user_to_create.promo, user_to_create.nom, user_to_create.prenom
+        user_to_create.promotion + user_to_create.nom.lower (), user_to_create.mot_de_passe,
+        user_to_create.promotion, user_to_create.nom, user_to_create.prenom
     ):
         raise HTTPException (
             status_code=status.HTTP_409_CONFLICT,

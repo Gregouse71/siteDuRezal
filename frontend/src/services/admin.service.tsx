@@ -3,8 +3,6 @@ import { defaultFilterName } from "../admin/admin-features/UsersManagement/Users
 import { Account } from "../models/account"
 import httpInstance from "./api"
 import { useDateService } from "./date.service";
-import { resolve } from "path";
-import { reject } from "lodash";
 
 export const databaseAccountsState = atom({
     key : "databaseAccounts",

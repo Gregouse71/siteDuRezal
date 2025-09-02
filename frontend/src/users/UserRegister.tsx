@@ -17,7 +17,7 @@ export default function UserRegister() {
         nom : "", 
         email : "",
         emailBis : "",
-        promo : null,
+        promotion : null,
         room : "",
         chartAccepted : false,
     } 
@@ -30,7 +30,7 @@ export default function UserRegister() {
                 formValues.nom !== "" && 
                 formValues.email !== "" &&
                 formValues.emailBis !== "" &&
-                formValues.promo !== null &&
+                formValues.promotion !== null &&
                 formValues.room !== ""
     }
 
@@ -55,7 +55,7 @@ export default function UserRegister() {
 
     const onRegister = () => {
         const password = accountService.createPassword();
-        const login = (formValues.promo + formValues.prenom.toLowerCase() + '.' + formValues.nom.toLowerCase()).replaceAll('\'', "").replaceAll(" ", "_");
+        const login = (formValues.promotion + formValues.prenom.toLowerCase() + '.' + formValues.nom.toLowerCase()).replaceAll('\'', "").replaceAll(" ", "_");
         accountService.register({...formValues, login : login, mot_de_passe : password})
         .then((response : any) => {
             popupService.changePopup({status : "success", message : "Création du compte réussie"})
@@ -130,8 +130,8 @@ export default function UserRegister() {
                     <div id="promotion-field">
                         <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Promotion des Mines <br/>
                         <small>(XX si vous n'êtes pas de l'école cycle ingénieur)</small></FormLabel>
-                        <Select value={formValues.promo} 
-                        name="promo" 
+                        <Select value={formValues.promotion} 
+                        name="promotion" 
                         onChange={(e) => handleInputChange(e)} >
                             
                             {promotions.map(el => <MenuItem 

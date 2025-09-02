@@ -12,8 +12,8 @@ class UserReceived(SQLModel):
     prenom: str
     email: EmailStr
     mot_de_passe: str
-    promo: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
-
+    promotion: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
+    createdAt: datetime | None = None
 
 class UserUpdate (SQLModel, table=False):
     """
@@ -22,17 +22,22 @@ class UserUpdate (SQLModel, table=False):
     nom: str | None = None
     prenom: str | None = None
     email: EmailStr | None = None
-    promo: str | None = None
+    promotion: str | None = None
 
     is_admin: bool | None = None
     acces_wifi: bool | None = None
 
     cotizT1: bool | None = None
-    dateCotizT1: datetime | None = None
+    t1PaidAt: datetime | None = None
     cotizT2: bool | None = None
-    dateCotizT2: datetime | None = None
+    t2PaidAt: datetime | None = None
     cotizT3: bool | None = None
-    dateCotizT3: datetime | None = None
+    t3PaidAt: datetime | None = None
+    t1PaymentType: str | None = None
+    t2PaymentType: str | None = None
+    t3PaymentType: str | None = None
+
+    detail: str | None = None
 
 
 class User (SQLModel, table=True):
@@ -50,26 +55,34 @@ class User (SQLModel, table=True):
 
     nom: str
     prenom: str
+    promotion: str = "XX"
     email: EmailStr
+    createdAt: datetime
 
     cotizT1: bool | None = None
-    dateCotizT1: datetime | None = None
+    t1PaidAt: datetime | None = None
     cotizT2: bool | None = None
-    dateCotizT2: datetime | None = None
+    t2PaidAt: datetime | None = None
     cotizT3: bool | None = None
-    dateCotizT3: datetime | None = None
+    t3PaidAt: datetime | None = None
+    t1PaymentType: str | None = None
+    t2PaymentType: str | None = None
+    t3PaymentType: str | None = None
+
+    detail: str | None = None
 
 
 def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    return User (uid=user_rec.promo + user_rec.nom.lower (), 
+    return User (uid=user_rec.promotion + user_rec.nom.lower (), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
                  is_admin=False,
                  acces_wifi=False,
+                 createdAt=datetime.now()
                 )
 
 
@@ -153,7 +166,9 @@ with Session (engine) as session:
             nom="Admin",
             prenom="Piche",
             email="admin@rezal-mdm.com",
-            acces_wifi=False
+            acces_wifi=False,
+
+            createdAt = datetime.now()
         ))
         session.add (User (
             uid="24girardet",
@@ -162,6 +177,8 @@ with Session (engine) as session:
             nom="Greg",
             prenom="Piche",
             email="greg@rezal-mdm.com",
-            acces_wifi=False
+            acces_wifi=False,
+
+            createdAt=datetime.now()
         ))
         session.commit ()

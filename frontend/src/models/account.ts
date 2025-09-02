@@ -12,7 +12,7 @@ export class Account {
     email: string | null;
     emailIsVerified: boolean;
     room: string | null;
-    university: string;
+    university: string;//On vire
     promotion: string;
     cotizT1: boolean;
     t1PaymentType: string;
