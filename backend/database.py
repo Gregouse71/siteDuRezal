@@ -25,6 +25,7 @@ class UserUpdate (SQLModel, table=False):
     promo: str | None = None
 
     is_admin: bool | None = None
+    acces_wifi: bool | None = None
 
     cotizT1: bool | None = None
     dateCotizT1: datetime | None = None
