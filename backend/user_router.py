@@ -3,7 +3,7 @@ from typing import Annotated
 from datetime import datetime
 
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
-from ldap import ldap_add_user, allow_ldap_wifi, disallow_ldap_wifi
+from ldap import ldap_add_user, allow_ldap_wifi, disallow_ldap_wifi, ldap_delete_user
 from auth_router import get_current_user
 from mail import send_mail
 
@@ -113,5 +113,11 @@ async def delete_users (
             detail="L'utilisateur recherché n'existe pas"
         )
     user = delete_user_db (user)[0]
+    if not user:
+        raise HTTPException (
+            status_code=status.HTTP_500,
+            detail="Impossible de supprimer l'utilisateur du LDAP"
+        )
+    ldap_delete_user (user.uid)
 
     return user
