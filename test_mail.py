@@ -1,6 +1,7 @@
 import smtplib, ssl
 import os
 from dotenv import load_dotenv
+from email.mime.text import MIMEText
 
 # Lire le fichier .env et le rendre accessible dans les variables d'environnement
 load_dotenv ()
@@ -19,20 +20,16 @@ Subject: Test
 
 This message is sent from Python.{var}"""
 
-context = ssl.create_default_context()
-
-server = smtplib.SMTP ()
-server.connect (SMTP_HOST, SMTP_PORT)
-server.helo()
-server.starttls (context=context)
-server.helo()
+server = smtplib.SMTP (SMTP_HOST, SMTP_PORT)
+server.starttls ()
+server.ehlo()
 server.login (SMTP_USERNAME, SMTP_PASSWORD)
 
-msg = MIMEText ('%s - %s' % (msg.text, msg.channel))
-msg['Subject'] = "msg.channel"
+msg = MIMEText (message, 'plain')
+msg['Subject'] = "Message de test"
 msg['From'] = sender
 msg['To'] = to
-server.sendmail(msg.get('From'), msg["To"], msg.as_string())
+server.sendmail(sender, to, msg.as_string())
 server.quit()
 
 
