@@ -9,7 +9,7 @@ from jwt.exceptions import InvalidTokenError
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from database import User, engine
+from database import User, UserUpdate, engine, get_user_db
 from ldap import ldap_verify_username_password
 
 auth_router = APIRouter (
@@ -19,6 +19,7 @@ auth_router = APIRouter (
 
 # Générée avec openssl rand -hex 32
 SECRET_KEY = "6b208126144669aeb9b52ab55b16781873b5324f30449dc0ed2531e63178da65"
+SECRET_KEY_MAIL = "603a3f6d3f28d2b1e176cf06a8b1720925cfab48403aeeee7bc96663cb030bc5"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
@@ -42,18 +43,16 @@ def authenticate_user(username: str, password: str) -> User:
     """
     Détermine si *password* est le mot de passe de l'utilisateur *username*
     """
-    with Session (engine) as session:
-        statement = select (User).where (User.uid == username)
-        user = session.exec (statement).all ()  # On récupère tous les utilisateurs avec cet username
+    user = get_user_db (username)
 
-        if not user:  # s'il n'y en a aucun ou plusieurs
-            return None  # on le signal, ce qui provoque une erreur
-        user = user[0]
-        # Vérification du mot de passe avec le ldap
-        if not ldap_verify_username_password (username, password):
-            return None
+    if not user:  # s'il n'y en a aucun ou plusieurs
+        return None  # on le signal, ce qui provoque une erreur
+    user = user[0]
+    # Vérification du mot de passe avec le ldap
+    if not ldap_verify_username_password (username, password):
+        return None
 
-        return user
+    return user
 
 
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
@@ -76,17 +75,13 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     except InvalidTokenError:
         raise credentials_exception
 
-    with Session (engine) as session:  #S'il existe, on renvoie l'utilisateur ayant l'uid correspondant
-        statement = select (User).where (User.uid == uid)
-        user = session.exec (statement).all ()
-
-        if not user:
-            raise credentials_exception
-
-        return user[0]
+    user = get_user_db (uid)
+    if not user:
+        raise credentials_exception
+    return user[0]
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
+def create_access_token(data: dict, key: str, expires_delta: timedelta | None = None) -> str:
     """
     Crée un jeton d'accès à partir des données de *data*, valide pour une durée *expires_delta*
     data ne doit pas contenir de clé *exp*
@@ -98,11 +93,11 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
 
     to_encode.update({"exp": expire})  # On ajoute la date d'expiration aux données du jeton
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)  # et on les encode
+    encoded_jwt = jwt.encode(to_encode, key, algorithm=ALGORITHM)  # et on les encode
     return encoded_jwt
 
 
-@auth_router.post("/token")
+@auth_router.post ("/token")
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
     """
     Renvoie un token d'identification de l'utilisateur.
@@ -117,9 +112,46 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> T
             headers={"WWW-Authenticate": "Bearer"}
             )
 
+    if not user.email_verifie:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Email non vérifié",
+            )
+
     access_token = create_access_token(
         data={"sub": user.uid},
+        key=SECRET_KEY,
         expires_delta=timedelta (minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     )
 
     return Token (access_token=access_token, token_type="bearer")
+
+
+@auth_router.post ("/verify_mail/{uid}/{token}")
+async def verify_mail (
+    uid: str,
+    token: str
+):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY_MAIL, algorithms=[ALGORITHM])
+        uid_token = payload.get("sub")
+        if uid_token is None or uid_token != uid:  # S'il n'y en a pas, c'est un jeton invalide
+            raise credentials_exception
+    except InvalidTokenError:
+        raise credentials_exception
+
+    user = get_user_db (uid)
+
+    if not user:
+        raise HTTPException (
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="L'utilisateur recherché n'existe pas"
+        )
+
+    user = patch_user_db (user[0], UserUpdate(email_verifie=True))
+    return user
