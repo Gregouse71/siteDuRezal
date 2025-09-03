@@ -1,6 +1,7 @@
 from pydantic import EmailStr
 from datetime import datetime
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
+from fastapi import HTTPException, status
 
 class UserReceived(SQLModel):
     """
@@ -52,6 +53,7 @@ class User (SQLModel, table=True):
     is_admin: bool
     acces_wifi: bool
     email_verifie: bool
+    mot_de_passe: str | None = None  # Pour conserver entre la creation du compte et l'ajout au ldap
 
     nom: str
     prenom: str
@@ -83,7 +85,8 @@ def user_from_received (user_rec: UserReceived) -> User:
                  is_admin=False,
                  acces_wifi=False,
                  email_verifie=False,
-                 createdAt=datetime.now()
+                 createdAt=datetime.now(),
+                 mot_de_passe=user_rec.mot_de_passe
                 )
 
 

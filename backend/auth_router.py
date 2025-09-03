@@ -9,7 +9,7 @@ from jwt.exceptions import InvalidTokenError
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from database import User, UserUpdate, engine, get_user_db
+from database import User, UserUpdate, engine, get_user_db, patch_user_db
 from ldap import ldap_verify_username_password, ldap_add_user
 
 auth_router = APIRouter (
@@ -153,10 +153,10 @@ async def verify_mail (
             detail="L'utilisateur recherché n'existe pas"
         )
 
-    user = patch_user_db (user[0], UserUpdate(email_verifie=True))
+    user = patch_user_db (user[0], UserUpdate(email_verifie=True, mot_de_passe=None))
     if not ldap_add_user (
-        user_to_create.promotion + user_to_create.nom.lower (), user_to_create.mot_de_passe,
-        user_to_create.promotion, user_to_create.nom, user_to_create.prenom
+        user.promotion + user.nom.lower (), user.mot_de_passe,
+        user.promotion, user.nom, user.prenom
     ):
         raise HTTPException (
             status_code=status.HTTP_409_CONFLICT,
