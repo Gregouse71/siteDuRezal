@@ -13,7 +13,6 @@ class UserReceived(SQLModel):
     email: EmailStr
     mot_de_passe: str
     promotion: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
-    createdAt: datetime | None = None
 
 class UserUpdate (SQLModel, table=False):
     """
@@ -26,6 +25,7 @@ class UserUpdate (SQLModel, table=False):
 
     is_admin: bool | None = None
     acces_wifi: bool | None = None
+    email_verifie: bool | None = None
 
     cotizT1: bool | None = None
     t1PaidAt: datetime | None = None
@@ -50,8 +50,8 @@ class User (SQLModel, table=True):
     uid: str  # uid correspondant au LDAP
 
     is_admin: bool
-
     acces_wifi: bool
+    email_verifie: bool
 
     nom: str
     prenom: str
@@ -82,6 +82,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  email=user_rec.email,
                  is_admin=False,
                  acces_wifi=False,
+                 email_verifie=False,
                  createdAt=datetime.now()
                 )
 
@@ -167,6 +168,7 @@ with Session (engine) as session:
             prenom="Piche",
             email="admin@rezal-mdm.com",
             acces_wifi=False,
+            email_verifie=True,
 
             createdAt = datetime.now()
         ))
@@ -176,8 +178,9 @@ with Session (engine) as session:
 
             nom="Greg",
             prenom="Piche",
-            email="greg@rezal-mdm.com",
+            email="gregoire.girardet@etu.minesparis.psl.eu",
             acces_wifi=False,
+            email_verifie=True,
 
             createdAt=datetime.now()
         ))
