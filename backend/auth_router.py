@@ -10,7 +10,7 @@ from jwt.exceptions import InvalidTokenError
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from database import User, UserUpdate, engine, get_user_db
-from ldap import ldap_verify_username_password
+from ldap import ldap_verify_username_password, ldap_add_user
 
 auth_router = APIRouter (
     prefix="/auth"
@@ -127,7 +127,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> T
     return Token (access_token=access_token, token_type="bearer")
 
 
-@auth_router.post ("/verify_mail/{uid}/{token}")
+@auth_router.post ("/verify_email/{uid}/{token}")
 async def verify_mail (
     uid: str,
     token: str
@@ -154,4 +154,12 @@ async def verify_mail (
         )
 
     user = patch_user_db (user[0], UserUpdate(email_verifie=True))
+    if not ldap_add_user (
+        user_to_create.promotion + user_to_create.nom.lower (), user_to_create.mot_de_passe,
+        user_to_create.promotion, user_to_create.nom, user_to_create.prenom
+    ):
+        raise HTTPException (
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Impossible de créer l'utilisateur LDAP"
+        )
     return user

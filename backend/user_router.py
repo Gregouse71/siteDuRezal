@@ -27,14 +27,7 @@ async def post_users (
     """
     Crée un utilisateur dans la db
     """
-    if not ldap_add_user (
-        user_to_create.promotion + user_to_create.nom.lower (), user_to_create.mot_de_passe,
-        user_to_create.promotion, user_to_create.nom, user_to_create.prenom
-    ):
-        raise HTTPException (
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Impossible de créer l'utilisateur LDAP"
-        )
+
     user = add_new_user_db (user_to_create)
     send_mail (user)
     return user
