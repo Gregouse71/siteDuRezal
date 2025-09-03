@@ -17,10 +17,9 @@ export default function UserVerifyEmail() {
 
     const emailVerification = () => {
         try {
-            const id = parseInt(idString || "");
             accountService.emailVerification({
-                userId : id,
-                secretValue : verificationCode
+                uid : idString,
+                token : verificationCode
             })
             .then(() => {
                 popupService.changePopup({status :  "success", message : "Verification de l'email réussie, redirection vers la connexion... "});
