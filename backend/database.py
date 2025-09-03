@@ -93,11 +93,17 @@ def user_from_received (user_rec: UserReceived) -> User:
 
 
 def add_new_user_db (
-    user_to_create: UserReceived
+    user_to_create: UserReceived,
+    i=0,
+    uid_candidate=""
 ) -> User:
     """
     Créé un nouvel utilisateur dans la bdd
     """
+    # Cette fonction a-t-elle vraiment besoin d'être récursive ?
+    # Certains vous dirons que non. Et bien moi je pense que ce n'est pas tous les
+    # qu'on a la possibilité de faire crasher son sevrveur avec une récursivité
+    # qui crash si elle atteint sa condiftion d'arrêt.
     with Session (engine) as session:
         user_rec = UserReceived.model_validate (user_to_create)
         user = user_from_received (user_rec)
@@ -105,11 +111,13 @@ def add_new_user_db (
         # On vérifie qu'il n'y a pas déjà d'utilisateur avec cet uid
         statement = select (User). where (User.uid == user.uid)
         collisions = session.exec (statement).all ()
-        if collisions: # TODO : ajouter de la logique pour éviter ce genre d'erreur
-            raise HTTPException (
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="Ce sont de famille existe déjà"
-                )
+
+        if collisions:
+            if i < len (user_to_create.prenom):
+                next_uid_candidate = user.uid + user.prenom[0] if uid_candidate == "" else uid_candidate + user.prenom[i]
+            else:
+                next_uid_candidate = uid_candidate + str (i)
+            return add_new_user_db (user_to_create, i + 1, next_uid_candidate)
 
         session.add (user)
         session.commit ()
