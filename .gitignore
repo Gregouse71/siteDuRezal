@@ -28,5 +28,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+base_url.js
+
 auth_request.txt
 acct_request.txt
