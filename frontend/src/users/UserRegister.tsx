@@ -34,11 +34,8 @@ export default function UserRegister() {
                 formValues.room !== ""
     }
 
-    const areEmailsFilledAndEqual = () => {
-        if (formValues.email !== "" && formValues.emailBis !== "") {
-            return formValues.email === formValues.emailBis;
-        }
-        return true
+    const isEmailFilled = () => {
+        return formValues.email !== ""
     }
 
     const areEmailCorrects = () => formValues.email.match(regexEmail) && formValues.emailBis.match(regexEmail);
@@ -79,13 +76,14 @@ export default function UserRegister() {
 
     return <>
         {mode === "Pre-registration" && <> 
-            <h2> Formulaire d'enregistrement </h2>
+            <h2> Création de compte </h2>
         
             <div>
-                <FormControl id="register-form">
-                    <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Prénom</FormLabel>
+                <FormControl id="register-form" style={{fontSize : "0.7rem"}}>
+                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Prénom</FormLabel>
                     <TextField
                         onChange={handleInputChange}
+                        size="small"
                         name="prenom"
                         value={formValues.prenom}
                         autoCapitalize="none"
@@ -93,18 +91,20 @@ export default function UserRegister() {
                         placeholder="prénom"
                     />
                     
-                    <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Nom</FormLabel>
+                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Nom</FormLabel>
                     <TextField
                         onChange={(e) => handleInputChange(e)}
+                        size="small"
                         name="nom"
                         value={formValues.nom}
                         placeholder="nom"
                     />
 
-                    <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Email</FormLabel>
+                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Email</FormLabel>
                     <TextField
                         type="email"
                         onChange={(e) => handleInputChange(e)}
+                        size="small"
                         name="email"
                         value={formValues.email}
                         placeholder="example@etu.minesparis.psl.eu"
@@ -112,26 +112,16 @@ export default function UserRegister() {
                         helperText={(formValues.email !== "" && !formValues.email.match(regexEmail)) ? "Email non valide" : ""}
                     />
 
-                    <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Répéter l'email</FormLabel>
-                    <TextField
-                        type="email"
-                        onChange={(e) => handleInputChange(e)}
-                        name="emailBis"
-                        value={formValues.emailBis}
-                        placeholder="example@etu.minesparis.psl.eu"
-                        error={formValues.emailBis !== "" && !formValues.emailBis.match(regexEmail)}
-                        helperText={(formValues.emailBis !== "" && !formValues.emailBis.match(regexEmail)) ? "Email non valide" : ""}
-                    />
-
-                    {!areEmailsFilledAndEqual() && <p style={{color : "red"}}>
-                        Les emails ne correspondent pas 
+                    {!isEmailFilled() && <p style={{color : "red"}}>
+                        Email obligatoire 
                     </p>}
 
                     <div id="promotion-field">
-                        <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Promotion des Mines <br/>
-                        <small>(XX si vous n'êtes pas de l'école cycle ingénieur)</small></FormLabel>
+                        <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Promotion des Mines <br/></FormLabel>
+                        <small>(XX si vous n'êtes pas de l'école des Mines)</small>
                         <Select value={formValues.promotion} 
-                        name="promotion" 
+                        name="promotion"
+                        size="small"
                         onChange={(e) => handleInputChange(e)} >
                             
                             {promotions.map(el => <MenuItem 
@@ -140,14 +130,15 @@ export default function UserRegister() {
                                 > 
                                     {el} 
                                 </MenuItem>
-                            )} 
+                            )}
                         </Select>
                     </div>
 
 
-                    <FormLabel style={{fontSize : "2rem", margin : "2vh 0"}}>Chambre</FormLabel>
+                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Chambre</FormLabel>
                     <TextField
                         onChange={(e) => handleInputChange(e)}
+                        size="small"
                         name="room"
                         value={formValues.room}
                         placeholder="PAM | N° (ex : 666)"
