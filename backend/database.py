@@ -27,6 +27,7 @@ class UserUpdate (SQLModel, table=False):
     is_admin: bool | None = None
     acces_wifi: bool | None = None
     email_verifie: bool | None = None
+    mot_de_passe: str | None = None
 
     cotizT1: bool | None = None
     t1PaidAt: datetime | None = None
@@ -57,7 +58,7 @@ class User (SQLModel, table=True):
 
     nom: str
     prenom: str
-    promotion: str = "XX"
+    promotion: str
     email: EmailStr
     createdAt: datetime
 
@@ -86,7 +87,8 @@ def user_from_received (user_rec: UserReceived) -> User:
                  acces_wifi=False,
                  email_verifie=False,
                  createdAt=datetime.now(),
-                 mot_de_passe=user_rec.mot_de_passe
+                 mot_de_passe=user_rec.mot_de_passe,
+                 promotion=user_rec.promotion,
                 )
 
 
@@ -166,6 +168,7 @@ with Session (engine) as session:
         session.add (User (
             uid="admin",
             is_admin=True,
+            promotion="XX",
 
             nom="Admin",
             prenom="Piche",
@@ -178,10 +181,24 @@ with Session (engine) as session:
         session.add (User (
             uid="24girardet",
             is_admin=True,
+            promotion="24",
 
             nom="Greg",
             prenom="Piche",
             email="gregoire.girardet@etu.minesparis.psl.eu",
+            acces_wifi=False,
+            email_verifie=True,
+
+            createdAt=datetime.now()
+        ))
+        session.add (User (
+            uid="24liens",
+            is_admin=True,
+            promotion="24",
+
+            nom="Liens",
+            prenom="Mathis",
+            email="mathis.liens@etu.minesparis.psl.eu",
             acces_wifi=False,
             email_verifie=True,
 
