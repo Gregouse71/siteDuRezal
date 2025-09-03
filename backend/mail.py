@@ -2,6 +2,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
+from auth_router import SECRET_KEY_MAIL, create_access_token
 
 from database import User
 
@@ -30,7 +31,6 @@ def send_mail (user: User):
     token = create_access_token(
         data={"sub": user.uid},
         key=SECRET_KEY_MAIL,
-        expires_delta=timedelta (minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     )
 
     msg = MIMEText (message.format (user.uid, token), 'plain')
@@ -39,4 +39,4 @@ def send_mail (user: User):
     msg['To'] = user.email
     server.sendmail(sender, user.email, msg.as_string())
     server.quit()
-    pass
+
