@@ -51,7 +51,7 @@ export default function useAccountService() {
 
   const emailVerification = (verificationInfos : any) => {
       return new Promise<void>((resolve, reject) => {
-          httpInstance.post(`verify_email/${verificationInfos.uid}/${verificationInfos.token}`)
+          httpInstance.post(`auth/verify_email/${verificationInfos.uid}/${verificationInfos.token}`)
           .then(() => resolve())
           .catch(error => reject(error))
       })

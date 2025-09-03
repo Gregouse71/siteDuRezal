@@ -15,10 +15,10 @@ SMTP_PORT = 587
 
 sender = SMTP_USERNAME
 message = """\
-Subject: Test
+Test
 
 This message is sent from Python.
-Click this link : http://10.20.1.80:3000/verify-email/{0}/{1}"""
+Click this link : http://10.20.1.80:3000/resident/verify-email/{0}/{1}"""
 
 
 # Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
