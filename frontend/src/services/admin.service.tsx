@@ -67,12 +67,17 @@ export function useAdminService() {
         return Promise.allSettled(promiseArray)
     }
 
-    const deleteAccounts = (idsToDelete : number[]) => {
-        return new Promise<boolean[]>((resolve, reject) => {
-            httpInstance.delete('users', {data : idsToDelete})
-            .then((response : any) => resolve(response.data))
-            .catch(error =>  reject(error))
-        })
+    const deleteAccounts = (uidsToDelete : any[]) => {
+        // new Promise<boolean[]>((resolve, reject) => {
+        //     httpInstance.delete('users', {data : idsToDelete})
+        //     .then((response : any) => resolve(response.data))
+        //     .catch(error =>  reject(error))
+        // })
+        const promiseArray = uidsToDelete.map((toDelete) =>
+            httpInstance.delete('users/'+toDelete)
+        );
+        console.log(promiseArray);
+        return Promise.allSettled(promiseArray);
     }
 
     const filterAccounts = (accounts : Map<number, Account>, userFilters : any) => {

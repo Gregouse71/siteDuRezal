@@ -162,13 +162,16 @@ export default function UsersManager() {
             } else {
                 idsToDelete = [id]
             }
-            adminService.deleteAccounts(idsToDelete).then(
+            const uidsToDelete = idsToDelete.map((id) => {
+                return databaseAccounts.get(id)!.uid;
+            });
+            adminService.deleteAccounts(uidsToDelete).then(
                 (accountDeletionStatus : any[]) => { 
                     idsToDelete.forEach(    
                         (idToDelete : number, index : number) => {
                             const account = currentAccounts.get(idToDelete);
                             if (account !== undefined) {
-                                const message = accountDeletionStatus[index].success ? "SSuppression effectuée" : ("ESuppression non effectuée, raison : " + accountDeletionStatus[index].error)
+                                const message = accountDeletionStatus[index].status === "fulfilled" ? "SSuppression effectuée" : ("ESuppression non effectuée, raison : " + accountDeletionStatus[index].reason)
                                 const accountWithMessage = new Account({
                                     ...account,
                                     message : message
