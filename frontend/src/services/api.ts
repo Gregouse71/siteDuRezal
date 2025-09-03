@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_BASE_URL } from "../../base_url";
+import { BACKEND_BASE_URL } from "../base_url";
 
 
 const httpInstance = axios.create({
