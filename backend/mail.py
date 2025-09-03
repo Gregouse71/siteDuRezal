@@ -18,7 +18,7 @@ message = """\
 Subject: Test
 
 This message is sent from Python.
-Click this link : http://10.20.1.80:3000/{0}/{1}"""
+Click this link : http://10.20.1.80:3000/verify-email/{0}/{1}"""
 
 
 # Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
