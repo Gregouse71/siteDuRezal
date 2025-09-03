@@ -13,10 +13,11 @@ SMTP_PASSWORD = os.getenv ("SMTP_PASSWORD")
 SMTP_PORT = 587
 
 sender = SMTP_USERNAME
-message = f"""\
+message = """\
 Subject: Test
 
-This message is sent from Python."""
+This message is sent from Python.
+Click this link : http://10.20.1.80:3000/{0}/{1}"""
 
 
 # Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
@@ -26,7 +27,13 @@ def send_mail (user: User):
     server.ehlo()
     server.login (SMTP_USERNAME, SMTP_PASSWORD)
 
-    msg = MIMEText (message, 'plain')
+    token = create_access_token(
+        data={"sub": user.uid},
+        key=SECRET_KEY_MAIL,
+        expires_delta=timedelta (minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+
+    msg = MIMEText (message.format (user.uid, token), 'plain')
     msg['Subject'] = "Message de test"
     msg['From'] = sender
     msg['To'] = user.email
