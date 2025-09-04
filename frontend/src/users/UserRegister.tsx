@@ -89,6 +89,8 @@ export default function UserRegister() {
                         autoCapitalize="none"
                         autoCorrect="false"
                         placeholder="prénom"
+                        label="Required"
+
                     />
                     
                     <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Nom</FormLabel>
@@ -98,11 +100,13 @@ export default function UserRegister() {
                         name="nom"
                         value={formValues.nom}
                         placeholder="nom"
+                        label="Required"
                     />
 
                     <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Email</FormLabel>
                     <TextField
                         type="email"
+                        label="Required"
                         onChange={(e) => handleInputChange(e)}
                         size="small"
                         name="email"
@@ -121,6 +125,7 @@ export default function UserRegister() {
                         <small>(XX si vous n'êtes pas de l'école des Mines)</small>
                         <Select value={formValues.promotion} 
                         name="promotion"
+                        label="Required"
                         size="small"
                         onChange={(e) => handleInputChange(e)} >
                             
