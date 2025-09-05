@@ -19,7 +19,7 @@ export default function useConversionService() {
         case "login" : return "Login"
         case "password" : return "Mot de passe"
         case "email" : return "Email"
-        case "emailIsVerified" : return "Email verifie"
+        case "email_verifie" : return "Courriel vérifié"
         case "room" : return "Chambre"
         case "university" : return "Ecole"
         case "promotion" : return "Promotion"
@@ -49,7 +49,7 @@ export default function useConversionService() {
         case "Login" : return "login"
         case "Mot de passe" : return "password"
         case "Email" : return "email"
-        case "Email verifie" : return "emailIsVerified"
+        case "Courriel vérifié" : return "email_verifie"
         case "Chambre" : return "room"
         case "Ecole" : return "university"
         case "Promotion" : return "promotion"
@@ -103,7 +103,7 @@ export default function useConversionService() {
         newAccount.uid = accountXLSX.Login;
         newAccount.password = accountXLSX["Mot de passe"];
         newAccount.email = accountXLSX.Email;
-        newAccount.emailIsVerified = accountXLSX["Email verifie"] === 1 ? true : false;
+        newAccount.email_verifie = accountXLSX["Email verifie"] === 1 ? true : false;
         newAccount.room = accountXLSX.Chambre;
         newAccount.promotion = accountXLSX.Promotion;
         newAccount.cotizT1 = accountXLSX["T1 paye"] === 1 ? true : false;
