@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { universities, promotions, paymentTypes } from "../assets/lists";
+import { promotions, paymentTypes } from "../assets/lists";
 import { Account } from "../models/account";
 import { databaseAccountsState } from "./admin.service";
 import useConversionService from "./conversion.service";
@@ -94,7 +94,6 @@ export default function useDisplayService() {
           case "email" : return props.mutable ? StringInput() : valueUnmutable
           case "emailIsVerified" : return props.mutable ? BinaryList() : valueUnmutable
           case "room" : return props.mutable ? StringInput() : valueUnmutable
-          case "university" : return props.mutable ? createOptionsForLists(universities) : valueUnmutable
           case "promotion" : return props.mutable ? createOptionsForLists(promotions) : valueUnmutable
           case "cotizT1" : return props.mutable ? BinaryList() : valueUnmutable
           case "t1PaymentType" : return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable

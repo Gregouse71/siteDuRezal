@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { universities, promotions, paymentTypes } from "../assets/lists";
+import { promotions, paymentTypes } from "../assets/lists";
 
 export class Account {
     id : number;
@@ -12,7 +12,6 @@ export class Account {
     email: string | null;
     emailIsVerified: boolean;
     room: string | null;
-    university: string;//TODO : retirer ce champ
     promotion: string;
     cotizT1: boolean;
     t1PaymentType: string;
@@ -37,7 +36,6 @@ export class Account {
       this.email = data.email || null;
       this.emailIsVerified = data.emailIsVerified !== undefined ? data.emailIsVerified : false;
       this.room = data.room || null;
-      this.university =  data.university !== undefined ? (universities.includes(data.university) ? data.university : universities[0]) : universities[0];
       this.promotion = data.promotion !== undefined ? (promotions.includes(data.promotion) ? data.promotion : promotions[0]) : promotions[0];
       this.t1PaymentType = data.t1PaymentType !== undefined ? (paymentTypes.includes(data.t1PaymentType) ? data.t1PaymentType : paymentTypes[0]) : paymentTypes[0];
       this.cotizT1 = data.cotizT1 ? true : false;

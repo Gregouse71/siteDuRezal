@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import usePopupService from "../../../services/popup.service";
 import useConversionService from "../../../services/conversion.service";
 import { useDateService } from "../../../services/date.service";
-import { promotions, universities, paymentTypes } from "../../../assets/lists";
+import { promotions, paymentTypes } from "../../../assets/lists";
 
 export default function UserCreationExcel(props : any) {
 
@@ -26,7 +26,6 @@ export default function UserCreationExcel(props : any) {
             "Mot de passe" : "",
             "Email" :  "",
             "Chambre" : "",
-            "Ecole" : universities.reduce((output, university, index) => index === 0 ? university : output + "|" + university),
             "Promotion" : promotions.reduce((output, promotion, index) => index === 0 ? promotion : output + "|" + promotion),
             "T1 paye" : "1/0",
             "Moyen de paiement T1" : paymentTypes.reduce((output, paymentType, index) => index === 0 ? paymentType : output + "|" + paymentType),

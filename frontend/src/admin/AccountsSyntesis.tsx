@@ -16,9 +16,9 @@ export default function AccountsSyntesis() {
         const trimesterNum = props.trimesterNum.toString();
         const accountThatHavePaid = accounts
                                         .map(IdAndAccount => IdAndAccount[1])
-                                        .filter(accountData => accountData.get("t" + trimesterNum + "Paid"))
+                                        .filter(accountData => accountData.get("cotizT" + trimesterNum))
 
-        const accountsThatHavePaidAndAreMineurs = accountThatHavePaid.filter(account => account.university === "Mines")
+        const accountsThatHavePaidAndAreMineurs = accountThatHavePaid.filter(account => account.promotion !== "XX")
 
         return <tr>
 
@@ -31,15 +31,6 @@ export default function AccountsSyntesis() {
                 </td>)
             }
             <td> {accountsThatHavePaidAndAreMineurs.length} </td>   
-            {universities
-                .filter(university => university !== "Mines")
-                .map(university => <td key={"university td " + university}>
-                    {accountThatHavePaid
-                        .filter(account => account.university === university)
-                        .length
-                    }
-                </td>)
-            }
             {paymentTypes
                 .map(type => <td key={"paymentTypes td " + type}>
                     {accountThatHavePaid
@@ -57,18 +48,15 @@ export default function AccountsSyntesis() {
             <tr>
                 <th scope="col" rowSpan={3}> Période</th>
                 <th scope="col" rowSpan={3}> Nombre cotisants</th>
-                <th scope="col" colSpan={universities.length + promotions.length}> Ecole</th>
+                <th scope="col" rowSpan={2}></th>
+                <th scope="col" colSpan={promotions.length} rowSpan={2}> Mines</th>
                 <th scope="col" colSpan={paymentTypes.length}> Mode de paiement </th>
             </tr>
             <tr>
-                <th scope="col" colSpan={promotions.length + 1} > Mines </th>
-                {universities
-                    .filter(university => university !== "Mines")
-                    .map(university => <th key={"university th " + university} rowSpan={2}>{university}</th>)}
                 {paymentTypes.map(type => <th key={"paymentTypes th " + type} rowSpan={2}>{type}</th>)}
             </tr>
             <tr>
-                {promotions.map(promo => <th key={"promo th " + promo}>{promo}</th>)}
+                {promotions.map(promo => <th key={"promotion th " + promo}>{promo}</th>)}
                 <th> Total Mines</th>
             </tr>
         </thead>

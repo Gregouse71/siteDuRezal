@@ -79,7 +79,6 @@ export default function useConversionService() {
         newAccountXLSX.Email = account.email !== null ? account.email : "";
         newAccountXLSX["Email verifie"] = account.is_admin? 1 : 0;
         newAccountXLSX.Chambre = account.room !== null ? account.room : "";
-        newAccountXLSX.Ecole = account.university;
         newAccountXLSX.Promotion = account.promotion;
         newAccountXLSX["T1 paye"] = account.cotizT1? 1 : 0;
         newAccountXLSX["Moyen de paiement T1"] = account.t1PaymentType;
@@ -106,7 +105,6 @@ export default function useConversionService() {
         newAccount.email = accountXLSX.Email;
         newAccount.emailIsVerified = accountXLSX["Email verifie"] === 1 ? true : false;
         newAccount.room = accountXLSX.Chambre;
-        newAccount.university = accountXLSX.Ecole;
         newAccount.promotion = accountXLSX.Promotion;
         newAccount.cotizT1 = accountXLSX["T1 paye"] === 1 ? true : false;
         newAccount.t1PaymentType = accountXLSX["Moyen de paiement T1"];
