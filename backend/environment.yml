@@ -9,3 +9,4 @@ dependencies:
   - pyjwt
   - pycryptodome
   - ldap3
+  - mysql-python
