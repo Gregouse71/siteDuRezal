@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { universities, promotions, paymentTypes } from "../assets/lists";
+import { promotions, paymentTypes } from "../assets/lists";
 
 
 export class AccountXLSX {
@@ -13,7 +13,6 @@ export class AccountXLSX {
     Email: string;
     "Email verifie": number;
     Chambre: string;
-    Ecole: string;
     Promotion: string;
     "T1 paye": number;                  // Format : dd/mm/yyyy
     "Moyen de paiement T1": string;
@@ -37,7 +36,6 @@ export class AccountXLSX {
         this.Email = data.Email !== undefined ? data.Email : "";
         this["Email verifie"] = data["Email verifie"] !== undefined ? _.toNumber(data["Email verifie"]) : 0;
         this.Chambre = data.Chambre !== undefined ? data.Chambre : "";
-        this.Ecole =  data.Ecole !== undefined ? (universities.includes(data.Ecole) ? data.Ecole : universities[0]) : universities[0];
         this.Promotion = data.Promotion !== undefined ? (promotions.includes(data.Promotion) ? data.Promotion : promotions[0]) : promotions[0];
         this["Moyen de paiement T1"] = data["Moyen de paiement T1"] !== undefined ? (paymentTypes.includes(data["Moyen de paiement T1"]) ? data["Moyen de paiement T1"] : paymentTypes[0]) : paymentTypes[0];
         this["T1 paye"] = data["T1 paye"] !== undefined ? _.toNumber(data["T1 paye"]) : 0;

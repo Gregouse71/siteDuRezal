@@ -1,4 +1,4 @@
-import { universities, promotions, paymentTypes } from "../assets/lists";
+import { promotions, paymentTypes } from "../assets/lists";
 import httpInstance from "./api";
 
 export default function useAccountService() {
@@ -16,7 +16,6 @@ export default function useAccountService() {
         case "email" : return ""
         case "emailIsVerified" : return false
         case "room" : return ""
-        case "university" : return universities[0]
         case "promotion" : return promotions[0]
         case "cotizT1" : return false
         case "t1PaymentType" : return paymentTypes[0]
