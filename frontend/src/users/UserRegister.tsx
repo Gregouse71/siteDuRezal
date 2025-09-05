@@ -16,8 +16,7 @@ export default function UserRegister() {
         prenom : "",
         nom : "", 
         email : "",
-        emailBis : "",
-        promotion : null,
+        promotion : "",
         room : "",
         chartAccepted : false,
     } 
@@ -29,8 +28,7 @@ export default function UserRegister() {
         return formValues.prenom !== "" &&
                 formValues.nom !== "" && 
                 formValues.email !== "" &&
-                formValues.emailBis !== "" &&
-                formValues.promotion !== null &&
+                formValues.promotion !== "" &&
                 formValues.room !== ""
     }
 
@@ -38,7 +36,7 @@ export default function UserRegister() {
         return formValues.email !== ""
     }
 
-    const areEmailCorrects = () => formValues.email.match(regexEmail) && formValues.emailBis.match(regexEmail);
+    const isEmailCorrect = () => formValues.email.match(regexEmail);
     
     const handleInputChange = (e : any) => {
         const { name, value } = e.target;
@@ -150,9 +148,10 @@ export default function UserRegister() {
                     />
 
                     <Button 
+                        type="submit"
                         variant="contained" 
                         className="btn btn-success" 
-                        disabled={!areValuesFilled() || !areEmailCorrects()} 
+                        disabled={!areValuesFilled() || !isEmailCorrect()} 
                         onClick={passToCharterAccept}
                         style={{margin : "5vh 0"}}
                     > 
