@@ -2,6 +2,11 @@ from pydantic import EmailStr
 from datetime import datetime
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
 from fastapi import HTTPException, status
+import os
+from dotenv import load_dotenv
+
+load_dotenv ()
+DATABASE_SERVER = os.getenv ("DATABASE_SERVER")
 
 class UserReceived(SQLModel):
     """

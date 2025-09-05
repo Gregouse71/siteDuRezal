@@ -31,5 +31,6 @@ export const paymentTypes = [
     "Liquide",
     "Cheque",
     "Exonere",
+    "HelloAsso",
     "Autre",
 ]
