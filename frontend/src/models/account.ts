@@ -10,7 +10,7 @@ export class Account {
     uid: string; // | null;
     password : string | null;
     email: string | null;
-    emailIsVerified: boolean;
+    email_verifie: boolean;
     room: string | null;
     promotion: string;
     cotizT1: boolean;
@@ -34,7 +34,7 @@ export class Account {
       this.uid = data.uid ;//|| null;
       this.password = data.password || null;
       this.email = data.email || null;
-      this.emailIsVerified = data.emailIsVerified !== undefined ? data.emailIsVerified : false;
+      this.email_verifie = data.email_verifie !== undefined ? data.email_verifie : false;
       this.room = data.room || null;
       this.promotion = data.promotion !== undefined ? (promotions.includes(data.promotion) ? data.promotion : promotions[0]) : promotions[0];
       this.t1PaymentType = data.t1PaymentType !== undefined ? (paymentTypes.includes(data.t1PaymentType) ? data.t1PaymentType : paymentTypes[0]) : paymentTypes[0];

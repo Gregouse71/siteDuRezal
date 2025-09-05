@@ -14,7 +14,7 @@ export default function useAccountService() {
         case "login" : return ""
         case "password" : return ""
         case "email" : return ""
-        case "emailIsVerified" : return false
+        case "email_verifie" : return false
         case "room" : return ""
         case "promotion" : return promotions[0]
         case "cotizT1" : return false

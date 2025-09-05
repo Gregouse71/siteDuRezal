@@ -113,7 +113,7 @@ export function useAdminService() {
             case "nom" : return accountFilteredFieldValue?.includes(filterValue)
             case "uid" : return accountFilteredFieldValue?.includes(filterValue)
             case "email" : return accountFilteredFieldValue?.includes(filterValue)
-            case "emailIsVerified" : return accountFilteredFieldValue === filterValue
+            case "email_verifie" : return accountFilteredFieldValue === filterValue
             case "room" : return accountFilteredFieldValue?.includes(filterValue)
             case "promotion" : return accountFilteredFieldValue === filterValue
             case "cotizT1" : return accountFilteredFieldValue === filterValue
@@ -133,11 +133,12 @@ export function useAdminService() {
     const fieldsDisplayableInit : any = {
         "id" : true,
         "acces_wifi" : true,
-        "is_admin" : true,
+        "is_admin" : false,
         "prenom" : false,
         "nom" : false,
         "uid" : true,
         "email" : false,
+        "email_verifie" : false,
         "room" : false,
         "promotion" : false,
         "T1" : true,

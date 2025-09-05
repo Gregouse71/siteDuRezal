@@ -87,12 +87,12 @@ export default function useDisplayService() {
           case "id" : return valueUnmutable
           case "acces_wifi" : return props.mutable ? BinaryList() : valueUnmutable
           case "is_admin" : return props.mutable ? BinaryList() : valueUnmutable
+          case "email_verifie" : return props.mutable ? BinaryList() : valueUnmutable
           case "prenom" : return props.mutable ? StringInput() : valueUnmutable
           case "nom" : return props.mutable ? StringInput() : valueUnmutable
           case "uid" : return props.mutable ? StringInput() : valueUnmutable
           case "password" : return props.mutable ? StringInput() : valueUnmutable
           case "email" : return props.mutable ? StringInput() : valueUnmutable
-          case "emailIsVerified" : return props.mutable ? BinaryList() : valueUnmutable
           case "room" : return props.mutable ? StringInput() : valueUnmutable
           case "promotion" : return props.mutable ? createOptionsForLists(promotions) : valueUnmutable
           case "cotizT1" : return props.mutable ? BinaryList() : valueUnmutable
