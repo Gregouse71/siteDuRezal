@@ -169,7 +169,8 @@ def delete_user_db (
 
 
 # Setting up the database connection and session
-engine = create_engine('sqlite:///./test.db')
+print (DATABASE_SERVER)
+engine = create_engine(DATABASE_SERVER)
 SQLModel.metadata.create_all(engine)
 
 # Au démarrage, on s'assure que tout le monde a un compte
