@@ -4,6 +4,7 @@ from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, 
 from fastapi import HTTPException, status
 import os
 from dotenv import load_dotenv
+from Crypto.Hash import MD4
 
 load_dotenv ()
 DATABASE_SERVER = os.getenv ("DATABASE_SERVER")
@@ -61,6 +62,7 @@ class User (SQLModel, table=True):
     acces_wifi: bool
     email_verifie: bool
     mot_de_passe: str | None = None  # Pour conserver entre la creation du compte et l'ajout au ldap
+    nt_pass: str
 
     nom: str
     prenom: str
@@ -85,6 +87,9 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
+    hash = MD4.new()
+    hash.update(user_rec.mot_de_passe.encode('utf-16le'))
+    
     return User (uid=user_rec.promotion + user_rec.nom.lower (), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
@@ -95,6 +100,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  createdAt=datetime.now(),
                  mot_de_passe=user_rec.mot_de_passe,
                  promotion=user_rec.promotion,
+                 nt_pass=hash.hexdigest(),
                 )
 
 
@@ -187,6 +193,23 @@ class RadiusUser (SQLModel, table=True):
         self.value = nt_pass
 
 
+def allow_radius_wifi (uid: str, pwd: str):
+    with Session(radius_engine) as session:
+        new_user = RadiusUser(uid, pwd)
+        session.add (new_user)
+        session.commit ()
+        return True
+
+
+def disallow_radius_wifi (uid):
+    with Session (radius_engine) as session:
+        statement = select (RadiusUser).where (RadiusUser.id == uid)
+        user_to_del = session.exec (statement).all()
+        for u in user_to_del:
+            session.delete (u)
+        return True
+
+
 # Setting up the database connection and session
 print (DATABASE_SERVER)
 engine = create_engine(DATABASE_SERVER)
@@ -196,9 +219,10 @@ radius_engine = create_engine(RADIUS_SERVER)
 if __name__ == "__main__":
     print ("Testing")
     with Session(radius_engine) as session:
-        statement = select (RadiusUser).where (RadiusUser.id == "18adamy")
-        user = statement.exec().first()
-        print (user)
+        # statement = select (RadiusUser).where (RadiusUser.id == "18adamy")
+        # user = statement.exec().first()
+        # print (user)
+        allow_radius_wifi ("24girardet", "7CE21F17C0AEE7FB9CEBA532D0546AD6")
 
 # Au démarrage, on s'assure que tout le monde a un compte
 # TODO : en réalité, il faudrait pull tous les comtes du LDAP
