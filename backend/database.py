@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv ()
 DATABASE_SERVER = os.getenv ("DATABASE_SERVER")
+RADIUS_SERVER = os.getenv ("RADIUS_SERVER")
 
 class UserReceived(SQLModel):
     """
@@ -168,10 +169,36 @@ def delete_user_db (
         return users_to_del
 
 
+class RadiusUser (SQLModel, table=True):
+    """
+    Classe représentant les utilisateurs dans la bdd du Radius
+    """
+    __tablename__ = 'radcheck'
+    id: int = Field (primary_key=True)
+    username: str
+    attribute: str
+    op: str
+    value: str
+
+    def __init__ (self, uid: str, nt_pass: str):
+        self.username = uid
+        self.attribute = "NT-Password"
+        self.op = ":="
+        self.value = nt_pass
+
+
 # Setting up the database connection and session
 print (DATABASE_SERVER)
 engine = create_engine(DATABASE_SERVER)
 SQLModel.metadata.create_all(engine)
+
+radius_engine = create_engine(RADIUS_SERVER)
+if __name__ == "__main__":
+    print ("Testing")
+    with Session(radius_engine) as session:
+        statement = select (RadiusUser).where (RadiusUser.id == "18adamy")
+        user = statement.exec().first()
+        print (user)
 
 # Au démarrage, on s'assure que tout le monde a un compte
 # TODO : en réalité, il faudrait pull tous les comtes du LDAP
