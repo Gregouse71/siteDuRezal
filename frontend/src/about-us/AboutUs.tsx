@@ -4,7 +4,7 @@ import charte from "../assets/doc/Charte_VF.pdf";
 import statut from "../assets/doc/status.pdf";
 
 export function AboutUs() {
-    return <div id="container-about-us" style={{textAlign : "left"}}>
+    return <div id="container-about-us" style={{ textAlign: "left" }}>
         <div>
             <h2>Le Rézal</h2>
             <p>Le Rézal est l'association chargée de l'exploitation du réseau informatique de la Maison des Mines et des Ponts, par délégation de la direction.</p>
@@ -12,11 +12,9 @@ export function AboutUs() {
         <div>
             <h2>Se connecter au réseau</h2>
             <p>
-                Le nom du réseau pour les cotisants est <b>Rezal</b>. 
+                Le nom du réseau pour les cotisants est <b>Rezal</b>.
                 Il suffit d'entrer un login et un mot de passe et s'ils correspondent à un compte approuvé par l'association alors l'accès est confirmé et l'appareil a accès à internet.
             </p>
-            <h3>Certificat</h3>
-            <p>Parfois, l'appareil peut demander un <b>certificat</b> d'authentification, qui n'est pas obligatoire, il est donc recommander d'indiquer <b>pas de certificat</b> lors de la connexion.</p>
         </div>
         <div>
             <h2>Equipe</h2>
@@ -44,7 +42,7 @@ export function AboutUs() {
             </p>
             <h3>Simples membres</h3>
             <p>
-                Pour devenir simple membre de l'association, il faut avoir créé un compte sur ce site, avoir lu et accepté la <a className="link" href={charte} rel="noreferrer" target = "_blank">charte d'utilisation du réseau</a> et avoir cotisé durant au moins un trimestre dans l'année !
+                Pour devenir simple membre de l'association, il faut avoir créé un compte sur ce site, avoir lu et accepté la <a className="link" href={charte} rel="noreferrer" target="_blank">charte d'utilisation du réseau</a> et avoir cotisé durant au moins un trimestre dans l'année !
             </p>
             <h2>Contact</h2>
             <p>
@@ -56,7 +54,7 @@ export function AboutUs() {
             <h2>Cotisation</h2>
             <h3>Pourquoi une cotisation ?</h3>
             <p>
-                La cotisation est nécessaire pour que l'association soit assez indépendante pour encaisser les frais des abonnements WiFi En effet, le Rezal doit parfois faire face à des équipements défectueux, des remises à niveau des appareils pour assurer la bonne fluidité du réseau. Elle est revue chaque année par le bureau de l'association afin de coller au mieux avec les investissements réalisés et les prévisions de l'année. La cotisation est <b>indispensable pour avoir accès au réseau</b> . Lorsque vous faites un compte, celui-ci est enregistré mais n'a pas encore l'autorisation d'accéder à internet.  <br/>
+                La cotisation est nécessaire pour que l'association soit assez indépendante pour encaisser les frais des abonnements WiFi En effet, le Rezal doit parfois faire face à des équipements défectueux, des remises à niveau des appareils pour assurer la bonne fluidité du réseau. Elle est revue chaque année par le bureau de l'association afin de coller au mieux avec les investissements réalisés et les prévisions de l'année. La cotisation est <b>indispensable pour avoir accès au réseau</b> . Lorsque vous faites un compte, celui-ci est enregistré mais n'a pas encore l'autorisation d'accéder à internet.  <br />
                 C'est après votre cotisation qu'un membre de l'association peut autoriser ce dernier et vous permettre d'autentifier vos appareils. Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 5€/trimestre</b> , selon le découpage suivant :
             </p>
             <p>
@@ -66,7 +64,7 @@ export function AboutUs() {
                     <li>Trimestre 3 : 1 Avril - 15 Juillet</li>
                 </ul>
 
-            Lorsque vous avez cotisé pour un trimestre, plus rien à faire!
+                Lorsque vous avez cotisé pour un trimestre, plus rien à faire!
             </p>
             <h3>Comment cotiser ?</h3>
             <p>
@@ -74,8 +72,8 @@ export function AboutUs() {
             </p>
             <h3>Comment se réforme la cotisation ?</h3>
             <p>
-                Si vous avez bien attesté avoir lu et accepté la <a className="link" href={charte} rel="noopener noreferrer" target = "_blank">charte d'utilisation du réseau</a>, vous aurez alors accès au réseau dès que cette personne aura confirmé votre compte ! <br/>
-                La cotisation est votée chaque année lors de <b>l'assemblée générale de passation</b> de l'association. C'est après examen d'un bilan moral et financier qu'un vote est réalisé, conformément aux <a className="link" href={statut} rel="noopener noreferrer" target = "_blank">statuts</a> de l'association.
+                Si vous avez bien attesté avoir lu et accepté la <a className="link" href={charte} rel="noopener noreferrer" target="_blank">charte d'utilisation du réseau</a>, vous aurez alors accès au réseau dès que cette personne aura confirmé votre compte ! <br />
+                La cotisation est votée chaque année lors de <b>l'assemblée générale de passation</b> de l'association. C'est après examen d'un bilan moral et financier qu'un vote est réalisé, conformément aux <a className="link" href={statut} rel="noopener noreferrer" target="_blank">statuts</a> de l'association.
             </p>
         </div>
         <div>
@@ -94,14 +92,14 @@ export function AboutUs() {
             </p>
             <h3>Quand cela se passe ?</h3>
             <p>
-                Ces processus commencent généralement au début du mois de février, cela permet de laisser assez de temps pour l'association actuelle pour former correctement la future équipe. <br/> 
+                Ces processus commencent généralement au début du mois de février, cela permet de laisser assez de temps pour l'association actuelle pour former correctement la future équipe. <br />
                 Une des valeurs de l'association est son ouverture, il est donc encouragé que n'importe qui suive ces formations, même sans vouloir faire partie de l'association ensuite. Cela permet au Rézal de toucher plus de personnes et pour vous d'en apprendre toujours plus sur ce monde parfois méconnu !
             </p>
             <h3>
                 Comment cela se passe
             </h3>
             <p>
-                Généralement, quelques membres volontaires du Rézal de l'année préparent des formations pour expliquer aux volontaires les différents aspects du réseau et les fondamentaux.  <br/> 
+                Généralement, quelques membres volontaires du Rézal de l'année préparent des formations pour expliquer aux volontaires les différents aspects du réseau et les fondamentaux.  <br />
                 Cela ne constitue pas de cours sur les réseaux à proprement parler, mais on peut y voir une approche par l'expérience que les membres du Rézal transmettent. Ces formations durent d'un à deux mois et aboutissent sur une équipe prête à affronter les multiples problèmes pouvant occurir sur le réseau, en garde !
             </p>
         </div>

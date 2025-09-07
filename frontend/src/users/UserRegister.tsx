@@ -193,27 +193,20 @@ export default function UserRegister() {
         
         {mode === "Post-registration" && <div style={{textAlign : "left", margin : "0 1vw 0 1vw"}}>
             <h1> Informations de connexion </h1>
-            <p>
-                Tu n'as pas rentré de mot de passe dans le formulaire, c'est normal, il est créé par le Rézal afin qu'il te permette une connexion sécurisée. N'oublie pas de bien le noter, même si tu pourras en demander de nouveaux ! Tu y as accès en bas de la page et un email te sera envoyé avec les informations de connexion.
-            </p>
-            <h2>Vérification d'adresse mail</h2>
-            <p>
-                Afin d'être sûr que tu ne te sois pas trompé.e dans ton adresse email, nous avons envoyé un mail à l'adresse que tu as donné. Un lien cliquable est présent dans ce mail et te permet de faire vérifier cette adresse. Note bien que <b>tu ne pourras pas te connecter ni à ton compte ni au réseau tant que ton adresse ne sera pas vérifiée</b> !
-            </p>
-            <h2>Cotisation</h2>
-            <p>
-                Même après vérification de ton adresse mail, tu n'auras pas encore la possibilité de te connecter au réseau. Un membre de l'association qui dispose des accès admnisitrateurs doit d'abord récupérer ta cotisation. La cotisation est de <b>5€ par trimestre</b>, pour le découpage exact des trimestres, tu peux regarder dans ton espace résident ou poser la question à un membre de l'association, nous serons ravis de te répondre ! Il est préférable de cotiser par <b>chèque</b> ou <b>liquide</b>. <br/>
-                Après cotisation et validation tu pourras accéder à internet avec tes identifiants. 
-            </p>
-            <h2>Nombre d'appareils connectés</h2>
-            <p>
-                Les règles du Rezal t'autorisent à connecter <b>3 appareils en même temps à un seul compte</b>
-            </p>
-            <h2> Identifiants </h2>
+            <p>Voici tes identifiants de connexion.</p>
             <ul>
                 <li>Login : {infoAssigned.login}</li>
                 <li>Mot de passe : {infoAssigned.password}</li>
             </ul>
+            <p>Ils te permettent de te connecter au Rézal avec 3 appareils simultanément.</p>
+            <h2>Vérification d'adresse mail</h2>
+            <p>
+                Afin d'être sûr que tu ne te sois pas trompé.e dans ton adresse email, nous avons envoyé un mail à l'adresse que tu as donné. Clique sur le lien présent dans le mail pour valider la création de ton compte.
+            </p>
+            <h2>Cotisation</h2>
+            <p>
+                Pour pouvoir te connecter, il te faudra aussi cotiser sur HelloAsoo.
+            </p>
         </div>}
     </>
 }
