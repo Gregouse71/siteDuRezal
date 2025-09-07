@@ -18,7 +18,7 @@ message = """\
 <head>
 <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
 <title>Bienvenue au R=C3=A9zal!</title>
-<style type=3D"text/css">h2, h4 { font-family: Arial, Helvetica, sans-serif; }</style>
+<style type=3D"text/css">h2, h4 \{ font-family: Arial, Helvetica, sans-serif; \}</style>
 </head>
 <div>
     <h2>Bienvenue au Rézal, {0}  !</h2>
