@@ -18,7 +18,7 @@ GROUPE_ADMIN = os.getenv ("GROUPE_ADMIN_LDAP") # Groupe des admins du site
 def distinguished_name_from_uid (uid: str):
     return f"uid={uid},{POSITION_UTILISATEURS}"
 
-server = Server (LDAP_SERVER, get_info=ALL)
+server = Server (LDAP_SERVER, get_info=ALL, port = 636, use_ssl = True)
 
 def allow_ldap_wifi (uid: str):
     """
