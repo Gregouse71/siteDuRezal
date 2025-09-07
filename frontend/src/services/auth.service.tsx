@@ -151,6 +151,7 @@ export function useAuthService() {
                 </Button>
             </FormControl>
             {props.displayAccountCreationLink && <Link to="/resident/register" style={{fontSize : "1rem", color : "blue"}}> Pas de compte ? </Link>}
+            {props.displayAccountCreationLink && <Link to="/resident/forgotten" style={{fontSize : "1rem", color : "blue"}}> Mot de passe oublié ? </Link>}
         </div>
         </>
     }

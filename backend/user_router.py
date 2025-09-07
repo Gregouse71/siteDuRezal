@@ -5,7 +5,7 @@ from datetime import datetime
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db, allow_radius_wifi, disallow_radius_wifi 
 from ldap import ldap_add_user, ldap_delete_user
 from auth_router import get_current_user
-from mail import send_mail
+from mail import send_premier_mail
 
 user_router = APIRouter (
     prefix="/users"
@@ -29,7 +29,7 @@ async def post_users (
     """
 
     user = add_new_user_db (user_to_create)
-    send_mail (user)
+    send_premier_mail (user)
     return user
 
 @user_router.get ("/{uid}")
@@ -109,18 +109,20 @@ async def delete_users (
         )
 
     user = get_user_db (uid)
-
     if not user:
         raise HTTPException (
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="L'utilisateur recherché n'existe pas"
         )
+
     user = delete_user_db (user)[0]
     if not user:
         raise HTTPException (
             status_code=status.HTTP_500,
             detail="Impossible de supprimer l'utilisateur du LDAP"
         )
+
     ldap_delete_user (user.uid)
+    disallow_radius_wifi (user.uid)
 
     return user

@@ -35,15 +35,9 @@ export default function UserVerifyEmail() {
         catch {
             popupService.changePopup({status :  "error", message : "Informations de vérifications non reconnues dans le chemin d'accès rentré"});
         }
-
-        
     } 
 
     return <>
-        La
-
-
-
-        
+        Vous ne devriez pas voir cette page.
     </>
 }

@@ -63,6 +63,7 @@ class User (SQLModel, table=True):
     email_verifie: bool
     mot_de_passe: str | None = None  # Pour conserver entre la creation du compte et l'ajout au ldap
     nt_pass: str
+    has_lost_pass: bool
 
     nom: str
     prenom: str
@@ -101,6 +102,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  mot_de_passe=user_rec.mot_de_passe,
                  promotion=user_rec.promotion,
                  nt_pass=hash.hexdigest(),
+                 has_lost_pass=False,
                 )
 
 
