@@ -153,6 +153,8 @@ async def verify_mail (
             detail="L'utilisateur recherché n'existe pas"
         )
 
+    user = user[0]
+
     if not ldap_add_user (
         user.promotion + user.nom.lower (), user.mot_de_passe,
         user.promotion, user.nom, user.prenom
@@ -161,5 +163,5 @@ async def verify_mail (
             status_code=status.HTTP_409_CONFLICT,
             detail="Impossible de créer l'utilisateur LDAP"
         )
-    user = patch_user_db (user[0], UserUpdate(email_verifie=True, mot_de_passe="0"))
+    user = patch_user_db (user, UserUpdate(email_verifie=True, mot_de_passe="0"))
     return user

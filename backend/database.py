@@ -106,8 +106,6 @@ def user_from_received (user_rec: UserReceived) -> User:
 
 def add_new_user_db (
     user_to_create: UserReceived,
-    i=0,
-    uid_candidate=""
 ) -> User:
     """
     Créé un nouvel utilisateur dans la bdd
@@ -124,12 +122,10 @@ def add_new_user_db (
         statement = select (User). where (User.uid == user.uid)
         collisions = session.exec (statement).all ()
 
-        if collisions:
-            if i < len (user_to_create.prenom):
-                next_uid_candidate = user.uid + user.prenom[0] if uid_candidate == "" else uid_candidate + user.prenom[i]
-            else:
-                next_uid_candidate = uid_candidate + str (i)
-            return add_new_user_db (user_to_create, i + 1, next_uid_candidate)
+        while collisions:
+            user.uid = user.uid + "_"
+            statement = select (User). where (User.uid == user.uid)
+            collisions = session.exec (statement).all ()
 
         session.add (user)
         session.commit ()
