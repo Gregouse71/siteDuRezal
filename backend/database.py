@@ -222,7 +222,7 @@ if __name__ == "__main__":
         # statement = select (RadiusUser).where (RadiusUser.id == "18adamy")
         # user = statement.exec().first()
         # print (user)
-        allow_radius_wifi ("24girardet", "7CE21F17C0AEE7FB9CEBA532D0546AD6")
+        allow_radius_wifi ("24girardet", "")
 
 # Au démarrage, on s'assure que tout le monde a un compte
 # TODO : en réalité, il faudrait pull tous les comtes du LDAP
