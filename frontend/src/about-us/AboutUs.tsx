@@ -46,7 +46,7 @@ export function AboutUs() {
                 </ul>
             </p>
         </div>
-	<di>
+	<div>
 	    <h2>Équipe</h2>
 	    Le bureau est constitué de :
 	        <ul>
