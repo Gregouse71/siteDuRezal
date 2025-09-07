@@ -203,10 +203,11 @@ def allow_radius_wifi (uid: str, pwd: str):
 
 def disallow_radius_wifi (uid):
     with Session (radius_engine) as session:
-        statement = select (RadiusUser).where (RadiusUser.id == uid)
+        statement = select (RadiusUser).where (RadiusUser.username == uid)
         user_to_del = session.exec (statement).all()
         for u in user_to_del:
             session.delete (u)
+        session.commit ()
         return True
 
 
@@ -222,7 +223,8 @@ if __name__ == "__main__":
         # statement = select (RadiusUser).where (RadiusUser.id == "18adamy")
         # user = statement.exec().first()
         # print (user)
-        allow_radius_wifi ("24girardet", "7CE21F17C0AEE7FB9CEBA532D0546AD6")
+        #allow_radius_wifi ("24girardet", "0")
+        disallow_radius_wifi ("24girardet")
 
 # Au démarrage, on s'assure que tout le monde a un compte
 # TODO : en réalité, il faudrait pull tous les comtes du LDAP
@@ -240,6 +242,7 @@ with Session (engine) as session:
             email="admin@rezal-mdm.com",
             acces_wifi=False,
             email_verifie=True,
+            nt_pass="0",
 
             createdAt = datetime.now()
         ))
@@ -253,20 +256,21 @@ with Session (engine) as session:
             email="gregoire.girardet@etu.minesparis.psl.eu",
             acces_wifi=False,
             email_verifie=True,
+            nt_pass="0",
 
             createdAt=datetime.now()
         ))
-        session.add (User (
-            uid="24liens",
-            is_admin=True,
-            promotion="24",
-
-            nom="Liens",
-            prenom="Mathis",
-            email="mathis.liens@etu.minesparis.psl.eu",
-            acces_wifi=False,
-            email_verifie=True,
-
-            createdAt=datetime.now()
-        ))
+#        session.add (User (
+#            uid="24liens",
+#            is_admin=True,
+#            promotion="24",
+#
+#            nom="Liens",
+#            prenom="Mathis",
+#            email="mathis.liens@etu.minesparis.psl.eu",
+#            acces_wifi=False,
+#            email_verifie=True,
+#
+#            createdAt=datetime.now()
+#        ))
         session.commit ()

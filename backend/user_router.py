@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
 from datetime import datetime
 
-from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
-from ldap import ldap_add_user, allow_radius_wifi, disallow_radius_wifi, ldap_delete_user
+from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db, allow_radius_wifi, disallow_radius_wifi 
+from ldap import ldap_add_user, ldap_delete_user
 from auth_router import get_current_user
 from mail import send_mail
 
@@ -77,7 +77,6 @@ async def patch_users (
         )
     
     user = get_user_db (uid)
-    already = user.acces_wifi
 
     if not user:
         raise HTTPException (
@@ -85,6 +84,7 @@ async def patch_users (
             detail="L'utilisateur recherché n'existe pas"
         )
 
+    already = user[0].acces_wifi
     user = patch_user_db (user[0], user_update)
     if user.acces_wifi and not already:
         allow_radius_wifi (user.uid, user.nt_pass)
