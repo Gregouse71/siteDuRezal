@@ -2,7 +2,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
-from auth_router import SECRET_KEY_MAIL, create_access_token
+from auth_router import create_access_token
 
 from database import User
 
@@ -14,6 +14,8 @@ SMTP_PASSWORD = os.getenv ("SMTP_PASSWORD")
 SMTP_PORT = 587
 
 sender = SMTP_USERNAME
+
+SECRET_KEY_MAIL = os.getenv ("SECRET_KEY_MAIL")
 
 # Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
 def send_mail (user: User, contenu: str, subject: str, token: str):

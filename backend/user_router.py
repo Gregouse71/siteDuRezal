@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
 from datetime import datetime
 
-from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db, allow_radius_wifi, disallow_radius_wifi 
-from ldap import ldap_add_user, ldap_delete_user
+from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
+from ldap import ldap_add_user, ldap_delete_user, allow_ldap_wifi, disallow_ldap_wifi
 from auth_router import get_current_user
 from mail import send_premier_mail
 
@@ -55,9 +55,7 @@ async def get_users (
             detail="L'utilisateur recherché n'existe pas"
         )
 
-    to_return = user[0]
-    to_return.nt_pass = "0"
-    return to_return
+    return user[0]
 
 
 @user_router.patch ("/{uid}")
@@ -84,12 +82,11 @@ async def patch_users (
             detail="L'utilisateur recherché n'existe pas"
         )
 
-    already = user[0].acces_wifi
     user = patch_user_db (user[0], user_update)
-    if user.acces_wifi and not already:
-        allow_radius_wifi (user.uid, user.nt_pass)
-    elif already and not user.acces_wifi:
-        disallow_radius_wifi (user.uid)
+    if user.acces_wifi:
+        allow_ldap_wifi (user.uid)
+    elif user.acces_wifi:
+        disallow_ldap_wifi (user.uid)
     return user
 
 
@@ -123,6 +120,5 @@ async def delete_users (
         )
 
     ldap_delete_user (user.uid)
-    disallow_radius_wifi (user.uid)
 
     return user

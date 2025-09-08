@@ -100,9 +100,10 @@ def ldap_delete_user (uid: str):
     """
     Efface l'utilisateur dont l'uid est *uid* du LDAP
     """
+    distinguished_name = distinguished_name_from_uid(uid)
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
-            return conn.delete (uid)
+            return conn.delete (distinguished_name)
     except:
         return False
 

@@ -4,11 +4,9 @@ from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, 
 from fastapi import HTTPException, status
 import os
 from dotenv import load_dotenv
-from Crypto.Hash import MD4
 
 load_dotenv ()
 DATABASE_SERVER = os.getenv ("DATABASE_SERVER")
-RADIUS_SERVER = os.getenv ("RADIUS_SERVER")
 
 class UserReceived(SQLModel):
     """
@@ -62,7 +60,6 @@ class User (SQLModel, table=True):
     acces_wifi: bool
     email_verifie: bool
     mot_de_passe: str | None = None  # Pour conserver entre la creation du compte et l'ajout au ldap
-    nt_pass: str
     has_lost_pass: bool
 
     nom: str
@@ -88,9 +85,6 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    hash = MD4.new()
-    hash.update(user_rec.mot_de_passe.encode('utf-16le'))
-    
     return User (uid=user_rec.promotion + user_rec.nom.lower (), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
@@ -101,7 +95,6 @@ def user_from_received (user_rec: UserReceived) -> User:
                  createdAt=datetime.now(),
                  mot_de_passe=user_rec.mot_de_passe,
                  promotion=user_rec.promotion,
-                 nt_pass=hash.hexdigest(),
                  has_lost_pass=False,
                 )
 
@@ -173,56 +166,11 @@ def delete_user_db (
         return users_to_del
 
 
-class RadiusUser (SQLModel, table=True):
-    """
-    Classe représentant les utilisateurs dans la bdd du Radius
-    """
-    __tablename__ = 'radcheck'
-    id: int = Field (primary_key=True)
-    username: str
-    attribute: str
-    op: str
-    value: str
-
-    def __init__ (self, uid: str, nt_pass: str):
-        self.username = uid
-        self.attribute = "NT-Password"
-        self.op = ":="
-        self.value = nt_pass
-
-
-def allow_radius_wifi (uid: str, pwd: str):
-    with Session(radius_engine) as session:
-        new_user = RadiusUser(uid, pwd)
-        session.add (new_user)
-        session.commit ()
-        return True
-
-
-def disallow_radius_wifi (uid):
-    with Session (radius_engine) as session:
-        statement = select (RadiusUser).where (RadiusUser.username == uid)
-        user_to_del = session.exec (statement).all()
-        for u in user_to_del:
-            session.delete (u)
-        session.commit ()
-        return True
-
-
 # Setting up the database connection and session
 print (DATABASE_SERVER)
 engine = create_engine(DATABASE_SERVER)
 SQLModel.metadata.create_all(engine)
 
-radius_engine = create_engine(RADIUS_SERVER)
-if __name__ == "__main__":
-    print ("Testing")
-    with Session(radius_engine) as session:
-        # statement = select (RadiusUser).where (RadiusUser.id == "18adamy")
-        # user = statement.exec().first()
-        # print (user)
-        #allow_radius_wifi ("24girardet", "0")
-        disallow_radius_wifi ("24girardet")
 
 # Au démarrage, on s'assure que tout le monde a un compte
 # TODO : en réalité, il faudrait pull tous les comtes du LDAP
@@ -240,7 +188,7 @@ with Session (engine) as session:
             email="admin@rezal-mdm.com",
             acces_wifi=False,
             email_verifie=True,
-            nt_pass="0",
+            has_lost_pass=False,
 
             createdAt = datetime.now()
         ))
@@ -254,21 +202,22 @@ with Session (engine) as session:
             email="gregoire.girardet@etu.minesparis.psl.eu",
             acces_wifi=False,
             email_verifie=True,
-            nt_pass="0",
+            has_lost_pass=False,
 
             createdAt=datetime.now()
         ))
-#        session.add (User (
-#            uid="24liens",
-#            is_admin=True,
-#            promotion="24",
-#
-#            nom="Liens",
-#            prenom="Mathis",
-#            email="mathis.liens@etu.minesparis.psl.eu",
-#            acces_wifi=False,
-#            email_verifie=True,
-#
-#            createdAt=datetime.now()
-#        ))
+        session.add (User (
+            uid="24liens",
+            is_admin=True,
+            promotion="24",
+
+            nom="Liens",
+            prenom="Mathis",
+            email="mathis.liens@etu.minesparis.psl.eu",
+            acces_wifi=False,
+            email_verifie=True,
+            has_lost_pass=False,
+
+            createdAt=datetime.now()
+        ))
         session.commit ()
