@@ -56,12 +56,11 @@ message_premiere_co = """\
 <div>
     <h2>Bienvenue au Rézal, {0}  !</h2>
     <p>Note bien que <strong>tu ne pourras pas te connecter ni à ton compte ni au réseau tant que ton adresse ne sera pas vérifiée.</strong></p>
-    <p><a href="http://www.rezal-mdm.com/resident/verify-email/{1}/{2}">Clique ici pour verifier ton email !</a>
+    <p><a href="http://www.rezal-mdm.com/resident/verify-email/{1}/{2}">Clique ici pour verifier ton email !</a></p>
     
     <p>Nous te rappelons que l'usage d'internet à la résidence se doit de respecter la loi, notamment <strong>l'interdiction de téléchargement illégal de films en Torrent.</strong> 
     Comme écrit dans notre charte, l'association a la charge du bon fonctionnement du réseau et peut t'interdire l'accès en cas d'utilisation frauduleuse.</p>
     <p>Si tu as un problème avec le réseau, tu peux nous contacter par mail sur l'adresse admin.</p>
-    
 
     <a href="mailto:admin@rezal-mdm.com">admin@rezal-mdm.com</a>
 </div>
@@ -76,8 +75,9 @@ message_mdp = """\
 <div>
     <h2>{0}, tu as oublié ton mot de passe Rézal et c'est mal !</h2>
     <p>Ne t'avise pas de recommencer</p>
-    <p><a href="http://www.rezal-mdm.com/resident/new_password/{2}">Clique ici pour en obtenir un nouveau.</a>
-
+    <p><a href="http://www.rezal-mdm.com/resident/new_password/{2}">Clique ici pour en obtenir un nouveau.</a></p>
+    <p>Si tu n'as pas demandé de nouveau mot de passe pour ton compte Rézal, igone ce mail et contact le bureau.</p>
+    
     <a href="mailto:admin@rezal-mdm.com">admin@rezal-mdm.com</a>
 </div>
 """

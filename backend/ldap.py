@@ -81,6 +81,21 @@ def ldap_add_user (uid: str, password: str, promo: str, nom, prenom) -> bool:
         return False
 
 
+def ldap_change_pwd (uid: str, password: str):
+    """
+    Change le mot de passe ldap de l'utilisateur
+    """
+    distinguished_name = distinguished_name_from_uid(uid)
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            # Changement du mot de passe, en utilisant la méthode par défaut du LDAP (qui, on l'espere, est securisee (c'est une blague, il faut la configurer soit meme pour qu'elle soit securisee))
+            conn.extend.standard.modify_password (distinguished_name, None, password)
+        return True
+
+    except:
+        return False
+
+
 def ldap_delete_user (uid: str):
     """
     Efface l'utilisateur dont l'uid est *uid* du LDAP
