@@ -174,75 +174,64 @@ async def verify_mail (
     return user
 
 
-# @user_router.get ("/new_password_mail/{uid}")
-# async def get_new_password_mail (
-#     uid: str
-# ):
-#     """
-#     Marque l'utilisateur comme ayant perdu son mail et lui envoie un mail de nouveau mdp
-#     """
-#     send_nouveau_mail
-#     user = get_user_db (uid)
-#     if not user:
-#         raise HTTPException (
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="L'utilisateur recherché n'existe pas"
-#         )
-#     user = user[0]
-#     user.has_lost_pass = True
-#     send_nouveau_mail (user)
-#     with Session (engine) as session:
-#         session.add (user)
-#         session.commit()
+@user_router.get ("/new_password_mail/{uid}")
+async def get_new_password_mail (
+    uid: str
+):
+    """
+    Marque l'utilisateur comme ayant perdu son mail et lui envoie un mail de nouveau mdp
+    """
+    user = get_user_db (uid)
+    if not user:
+        raise HTTPException (
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="L'utilisateur recherché n'existe pas"
+        )
+    user = user[0]
+    user.has_lost_pass = True
+    send_nouveau_mail (user)
+    with Session (engine) as session:
+        session.add (user)
+        session.commit()
 
 
-# @user_router.get ("/new_password/{token}")
-# async def obtain_new_password (
-#     token: str
-# ):
-#     """
-#     Change le mdp de l'utilisateur
-#     """
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY_MAIL, algorithms=[ALGORITHM])
-#         uid_token = payload.get("sub")
-#         if uid_token is None:  # S'il n'y en a pas, c'est un jeton invalide
-#             raise credentials_exception
-#     except InvalidTokenError:
-#         raise credentials_exception
+@user_router.get ("/new_password/{token}")
+async def obtain_new_password (
+    token: str
+):
+    """
+    Change le mdp de l'utilisateur
+    """
+    try:
+        payload = jwt.decode(token, SECRET_KEY_MAIL, algorithms=[ALGORITHM])
+        uid_token = payload.get("sub")
+        if uid_token is None:  # S'il n'y en a pas, c'est un jeton invalide
+            raise credentials_exception
+    except InvalidTokenError:
+        raise credentials_exception
 
-#     user = get_user_db (uid)
-#     if not user:
-#         raise HTTPException (
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="L'utilisateur recherché n'existe pas"
-#         )
+    user = get_user_db (uid)
+    if not user:
+        raise HTTPException (
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="L'utilisateur recherché n'existe pas"
+        )
 
-#     user = user[0]
-#     if not user.has_lost_pass:
-#         raise HTTPException (
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="L'utilisateur n'a pas demandé de nouveau mot de passe"
-#         )
+    user = user[0]
+    if not user.has_lost_pass:
+        raise HTTPException (
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="L'utilisateur n'a pas demandé de nouveau mot de passe"
+        )
 
-#     disallow_radius_wifi (uid)
+    s = string.lowercase+string.digits+string+string.punctuation  # Génération du nouveau mdp
+    mdp = ''.join(random.sample(s, 15))
+    ldap_change_pwd (user.uid, mdp)
 
-#     s = string.lowercase+string.digits+string+string.punctuation  # Génération du nouveau mdp
-#     mdp = ''.join(random.sample(s, 15))
+    user.has_lost_pass = False
 
-#     ldap_change_pwd (user.uid, mdp)
+    with Session (engine) as session:
+        session.add (user)
+        session.commit()
 
-#     hash = MD4.new()
-#     hash.update(user.mot_de_passe.encode('utf-16le'))
-#     user.nt_pass = hash.hexdigest()
-
-#     user.has_lost_pass = False
-
-
-#     allow_radius_wifi (uid)
-
-#     with Session (engine) as session:
-#         session.add (user)
-#         session.commit()
-
-#     return { "data": mdp }
+    return { "user": user.uid, "mdp": mdp }
