@@ -56,11 +56,28 @@ export default function useAccountService() {
     })
   }
 
+  const getNewPasswordMail = (verificationInfos: any) => {
+    return new Promise<void>((resolve, reject) => {
+      httpInstance.get(`auth/new_password_mail/${verificationInfos.email}`)
+        .then(() => resolve())
+        .catch(error => reject(error))
+    })
+  }
+
+  const getNewPassword = (infos: any) => {
+    return new Promise<void>((resolve, reject) => {
+      httpInstance.get(`auth/new_password/${infos.token}`)
+        .then((data: any) => resolve(data))
+        .catch(error => reject(error))
+    })
+  }
+
   return {
     defaultValueOfAccountField: defaultValueOfAccountField,
     createPassword: createPassword,
     register: register,
     emailVerification: emailVerification,
+    getNewPassword: getNewPassword,
   }
 }
 

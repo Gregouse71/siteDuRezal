@@ -13,7 +13,7 @@ export default function UserVerifyEmail() {
 
     useEffect(() => {
         emailVerification();
-    }, []);
+    }, [idString, verificationCode]);
 
     const emailVerification = () => {
         try {

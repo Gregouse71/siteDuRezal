@@ -155,24 +155,23 @@ def ldap_user_in_group (uid: str, group: str):
 
 
 def test_ldap ():
-    server = Server ("ldaps://ldap.rezal-mdm.com", get_info=ALL)
-    with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
-        print (f"Bind : {conn.bind()}")
-        print (f"Who : {conn.extend.standard.who_am_i ()}")
-        print (conn)
-        # print (server.info)
-        obj = ObjectDef ("groupOfNames", conn)
-        print (obj)
-        r = Reader(conn, obj, GROUPE_WIFI)
-        r.search ()
-        # w = Writer.from_cursor(r)
-        # print (r)
-        for e in r:
-            print (e)
-        # print (w[0])
-        # w[0].member += "uid=24liens,ou=People,dc=rezal-mdm,dc=com"
-        # w.commit ()
-        # print (w[0])
+    conn =  Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD, )
+    print (conn)
+    print (f"Bind : {conn.bind()}")
+    print (f"Who : {conn.extend.standard.who_am_i ()}")
+    # print (server.info)
+    obj = ObjectDef ("groupOfNames", conn)
+    print (obj)
+    r = Reader(conn, obj, GROUPE_WIFI)
+    r.search ()
+    # w = Writer.from_cursor(r)
+    # print (r)
+    for e in r:
+        print (e)
+    # print (w[0])
+    # w[0].member += "uid=24liens,ou=People,dc=rezal-mdm,dc=com"
+    # w.commit ()
+    # print (w[0])
 
 if __name__ == "__main__":
     # ldap_add_user ("23frucharde", "1234", "24", "fru", "ach")

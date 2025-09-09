@@ -3,8 +3,9 @@ from typing import Annotated
 from fastapi import Depends, HTTPException, status, APIRouter
 from sqlmodel import Session, select
 
+import urllib
 import random, string
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta, timezone
 import jwt
 from jwt.exceptions import InvalidTokenError
 import os
@@ -14,7 +15,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from database import User, UserUpdate, engine, get_user_db, patch_user_db
 from ldap import ldap_verify_username_password, ldap_add_user, ldap_change_pwd
-# from mail import send_nouveau_mail
+from utils import create_access_token
+from mail import send_nouveau_mail
 
 
 auth_router = APIRouter (
@@ -86,22 +88,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     return user[0]
 
 
-def create_access_token(data: dict, key: str, expires_delta: timedelta | None = None) -> str:
-    """
-    Crée un jeton d'accès à partir des données de *data*, valide pour une durée *expires_delta*
-    data ne doit pas contenir de clé *exp*
-    """
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta  # on calcule la date d'expiration
-    else:  # si elle n'est pas demandée, c'est 15 min
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
-
-    to_encode.update({"exp": expire})  # On ajoute la date d'expiration aux données du jeton
-    encoded_jwt = jwt.encode(to_encode, key, algorithm=ALGORITHM)  # et on les encode
-    return encoded_jwt
-
-
 @auth_router.post ("/token")
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
     """
@@ -126,6 +112,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> T
     access_token = create_access_token(
         data={"sub": user.uid},
         key=SECRET_KEY,
+        algorithm=ALGORITHM,
         expires_delta=timedelta (minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     )
 
@@ -174,28 +161,32 @@ async def verify_mail (
     return user
 
 
-@user_router.get ("/new_password_mail/{uid}")
+@auth_router.get ("/new_password_mail/{email_url}")
 async def get_new_password_mail (
-    uid: str
+    email_url: str
 ):
     """
     Marque l'utilisateur comme ayant perdu son mail et lui envoie un mail de nouveau mdp
     """
-    user = get_user_db (uid)
-    if not user:
-        raise HTTPException (
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="L'utilisateur recherché n'existe pas"
-        )
-    user = user[0]
-    user.has_lost_pass = True
-    send_nouveau_mail (user)
+    email = urllib.parse.unquote (email_url)
+    print (email)
     with Session (engine) as session:
+        statement = select (User). where (User.email == email)
+        user = session.exec (statement).all ()
+
+        if not user:
+            raise HTTPException (
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="L'utilisateur recherché n'existe pas"
+            )
+        user = user[0]
+        user.has_lost_pass = True
+        send_nouveau_mail (user)
         session.add (user)
         session.commit()
 
 
-@user_router.get ("/new_password/{token}")
+@auth_router.get ("/new_password/{token}")
 async def obtain_new_password (
     token: str
 ):
@@ -204,8 +195,9 @@ async def obtain_new_password (
     """
     try:
         payload = jwt.decode(token, SECRET_KEY_MAIL, algorithms=[ALGORITHM])
-        uid_token = payload.get("sub")
-        if uid_token is None:  # S'il n'y en a pas, c'est un jeton invalide
+        uid = payload.get("sub")
+        print (uid)
+        if uid is None:  # S'il n'y en a pas, c'est un jeton invalide
             raise credentials_exception
     except InvalidTokenError:
         raise credentials_exception
@@ -224,14 +216,9 @@ async def obtain_new_password (
             detail="L'utilisateur n'a pas demandé de nouveau mot de passe"
         )
 
-    s = string.lowercase+string.digits+string+string.punctuation  # Génération du nouveau mdp
+    s = string.ascii_letters + string.digits + string.punctuation  # Génération du nouveau mdp
     mdp = ''.join(random.sample(s, 15))
     ldap_change_pwd (user.uid, mdp)
 
-    user.has_lost_pass = False
-
-    with Session (engine) as session:
-        session.add (user)
-        session.commit()
-
+    user = patch_user_db (user, UserUpdate (has_lost_pass=False))
     return { "user": user.uid, "mdp": mdp }

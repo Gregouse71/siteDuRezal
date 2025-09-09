@@ -150,8 +150,8 @@ export function useAuthService() {
                     Connexion 
                 </Button>
             </FormControl>
-            {props.displayAccountCreationLink && <Link to="/resident/register" style={{fontSize : "1rem", color : "blue"}}> Pas de compte ? </Link>}
-            {props.displayAccountCreationLink && <Link to="/resident/forgotten" style={{fontSize : "1rem", color : "blue"}}> Mot de passe oublié ? </Link>}
+            {props.displayAccountCreationLink && <Link to="/resident/register" style={{fontSize : "1rem", color : "blue"}}> Pas de compte ? </Link>}<br/>
+            {props.displayAccountCreationLink && <Link to="/resident/new-password" style={{fontSize : "1rem", color : "blue"}}> Mot de passe oublié ? </Link>}
         </div>
         </>
     }

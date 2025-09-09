@@ -4,6 +4,8 @@ import usePopupService from "../services/popup.service";
 import UserBoard from "./UserBoard";
 import UserRegister from "./UserRegister";
 import UserVerifyEmail from "./UserVerifyEmail";
+import UserNewPassword from "./PasseOublie";
+import DisplayID from "./IdDisplay";
 
 const pathBaseUsers = "/resident/login"
 
@@ -50,7 +52,9 @@ export default function Users() {
         <Route path="board" element={<ProtectedRoute path="/resident/board" child={<UserBoard/>}/>}/>
         <Route path="register" element={<UserRegister/>}/>
         <Route path="verify-email/:idString/:verificationCode" element={<UserVerifyEmail/>}/>
-        
+        <Route path="new-password" element={<UserNewPassword/>}/>
+        <Route path="get-password/:token" element={<DisplayID/>}/>
+
         <Route
             path="*"
             element={<Navigate to="/resident/board" replace />}

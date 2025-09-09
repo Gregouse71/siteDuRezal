@@ -2,9 +2,11 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
-from auth_router import create_access_token
+from utils import create_access_token
 
 from database import User
+
+ALGORITHM = "HS256"
 
 # Lire le fichier .env et le rendre accessible dans les variables d'environnement
 load_dotenv ()
@@ -18,13 +20,13 @@ sender = SMTP_USERNAME
 SECRET_KEY_MAIL = os.getenv ("SECRET_KEY_MAIL")
 
 # Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
-def send_mail (user: User, contenu: str, subject: str, token: str):
+def send_mail (contenu: str, subject: str):
     server = smtplib.SMTP (SMTP_HOST, SMTP_PORT)
     server.starttls ()
     server.ehlo()
     server.login (SMTP_USERNAME, SMTP_PASSWORD)
 
-    msg = MIMEText (message_premiere_co.format (user.prenom, user.uid, token), 'html')
+    msg = MIMEText (contenu.format (user.prenom, user.uid, token), 'html')
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = user.email
@@ -36,17 +38,19 @@ def send_premier_mail (user: User):
     token = create_access_token(
         data={"sub": user.uid},
         key=SECRET_KEY_MAIL,
+        algorithm=ALGORITHM
     )
 
-    send_mail (user, message_premiere_co, "Création de compte Rézal", token)
+    send_mail (message_premiere_co.format (user.prenom, user.uid, token), "Création de compte Rézal")
 
 
 def send_nouveau_mail (user: User):
     token = create_access_token(
         data={"sub": user.uid},
         key=SECRET_KEY_MAIL,
+        algorithm=ALGORITHM
     )
-    send_mail (user, message_mdp, "Rézal : mot de passe oublié", token)
+    send_mail (message_mdp.format (user.prenom, user.uid, token), "Rézal : mot de passe oublié")
 
 
 message_premiere_co = """\
@@ -77,7 +81,7 @@ message_mdp = """\
 <div>
     <h2>{0}, tu as oublié ton mot de passe Rézal et c'est mal !</h2>
     <p>Ne t'avise pas de recommencer</p>
-    <p><a href="https://www.rezal-mdm.com/resident/new_password/{2}">Clique ici pour en obtenir un nouveau.</a></p>
+    <p><a href="https://www.rezal-mdm.com/resident/get-password/{2}">Clique ici pour en obtenir un nouveau.</a></p>
     <p>Si tu n'as pas demandé de nouveau mot de passe pour ton compte Rézal, igone ce mail et contact le bureau.</p>
     
     <a href="mailto:admin@rezal-mdm.com">admin@rezal-mdm.com</a>
