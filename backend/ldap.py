@@ -63,7 +63,7 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
     return False
 
 
-def ldap_add_user (uid: str, password: str, promo: str, nom, prenom) -> bool:
+def ldap_add_user (uid: str, password: str, promo: str, nom, prenom, mail) -> bool:
     """
     Ajoute l'utilisateur dont le nom d'utilisateur est *username* au LDAP
     Si la promo n'est pas XX, il est aussi ajouté au groupe de sa promo
@@ -72,7 +72,7 @@ def ldap_add_user (uid: str, password: str, promo: str, nom, prenom) -> bool:
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             # Creation de l'utilisateur
-            conn.add (distinguished_name, "inetOrgPerson", {"sn": prenom, "cn": nom, "uid": uid})
+            conn.add (distinguished_name, "inetOrgPerson", {"sn": prenom, "cn": nom, "uid": uid, "mail": mail})
             # Changement du mot de passe, en utilisant la méthode par défaut du LDAP (qui, on l'espere, est securisee (c'est une blague, il faut la configurer soit meme pour qu'elle soit securisee))
             conn.extend.standard.modify_password (distinguished_name, None, password)
         return True

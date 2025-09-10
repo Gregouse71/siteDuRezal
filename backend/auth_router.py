@@ -186,7 +186,7 @@ async def obtain_new_password (
 
     if (not user.email_verifie) and not ldap_add_user (
         user.promotion + user.nom.lower (), mdp,
-        user.promotion, user.nom, user.prenom
+        user.promotion, user.nom, user.prenom, user.email
     ):
         raise HTTPException (
             status_code=status.HTTP_409_CONFLICT,
