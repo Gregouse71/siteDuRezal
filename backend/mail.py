@@ -20,17 +20,17 @@ sender = SMTP_USERNAME
 SECRET_KEY_MAIL = os.getenv ("SECRET_KEY_MAIL")
 
 # Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
-def send_mail (contenu: str, subject: str):
+def send_mail (contenu: str, subject: str, to: str):
     server = smtplib.SMTP (SMTP_HOST, SMTP_PORT)
     server.starttls ()
     server.ehlo()
     server.login (SMTP_USERNAME, SMTP_PASSWORD)
 
-    msg = MIMEText (contenu.format (user.prenom, user.uid, token), 'html')
+    msg = MIMEText (contenu, 'html')
     msg['Subject'] = subject
     msg['From'] = sender
-    msg['To'] = user.email
-    server.sendmail(sender, user.email, msg.as_string())
+    msg['To'] = to
+    server.sendmail(sender, to, msg.as_string())
     server.quit()
 
 
@@ -41,7 +41,7 @@ def send_premier_mail (user: User):
         algorithm=ALGORITHM
     )
 
-    send_mail (message_premiere_co.format (user.prenom, user.uid, token), "Création de compte Rézal")
+    send_mail (message_premiere_co.format (user.prenom, user.uid, token), "Création de compte Rézal", user.email)
 
 
 def send_nouveau_mail (user: User):
@@ -50,7 +50,7 @@ def send_nouveau_mail (user: User):
         key=SECRET_KEY_MAIL,
         algorithm=ALGORITHM
     )
-    send_mail (message_mdp.format (user.prenom, user.uid, token), "Rézal : mot de passe oublié")
+    send_mail (message_mdp.format (user.prenom, user.uid, token), "Rézal : mot de passe oublié", user.email)
 
 
 message_premiere_co = """\
@@ -62,7 +62,7 @@ message_premiere_co = """\
 <div>
     <h2>Bienvenue au Rézal, {0}  !</h2>
     <p>Note bien que <strong>tu ne pourras pas te connecter ni à ton compte ni au réseau tant que ton adresse ne sera pas vérifiée.</strong></p>
-    <p><a href="https://www.rezal-mdm.com/resident/verify-email/{1}/{2}">Clique ici pour verifier ton email !</a></p>
+    <p><a href="https://www.rezal-mdm.com/resident/get-password/{2}">Clique ici pour verifier ton email !</a></p>
     
     <p>Nous te rappelons que l'usage d'internet à la résidence se doit de respecter la loi, notamment <strong>l'interdiction de téléchargement illégal de films en Torrent.</strong> 
     Comme écrit dans notre charte, l'association a la charge du bon fonctionnement du réseau et peut t'interdire l'accès en cas d'utilisation frauduleuse.</p>

@@ -39,11 +39,9 @@ export default function useAccountService() {
   }
 
   const register = (registrationInfos: any) => {
-    return new Promise<number>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       httpInstance.post("users", registrationInfos)
-        .then((idGiven: any) => {
-          resolve(idGiven);
-        })
+        .then(() => resolve())
         .catch(error => reject(error))
     })
   }

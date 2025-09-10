@@ -22,7 +22,6 @@ export default function UserRegister() {
     } 
     const [formValues, setFormValues] = useState(defaultFormValues);
     const [mode, setMode] = useState("Pre-registration");
-    const [infoAssigned, setInfoAssigned] = useState({login : "", password : ""});
     
     const areValuesFilled = () => {
         return formValues.prenom !== "" &&
@@ -49,15 +48,9 @@ export default function UserRegister() {
     const passToCharterAccept = () =>  setMode("Charter-accept");
 
     const onRegister = () => {
-        const password = accountService.createPassword();
-        const login = (formValues.promotion + formValues.prenom.toLowerCase() + '.' + formValues.nom.toLowerCase()).replaceAll('\'', "").replaceAll(" ", "_");
-        accountService.register({...formValues, login : login, mot_de_passe : password})
+        accountService.register(formValues)
         .then((response : any) => {
             popupService.changePopup({status : "success", message : "Création du compte réussie"})
-            setInfoAssigned({
-                login : response.data.uid, // It is the login returned by the backend (may be different than the login sent)
-                password : password
-            })
             setMode("Post-registration")
         })
         .catch(error => {
@@ -192,22 +185,8 @@ export default function UserRegister() {
         </>}
         
         {mode === "Post-registration" && <div style={{textAlign : "left", margin : "0 1vw 0 1vw"}}>
-            <h1> Informations de connexion </h1>
-            <p>Voici tes identifiants de connexion.</p>
-            <ul>
-                <li>Login : {infoAssigned.login}</li>
-                <li>Mot de passe : {infoAssigned.password}</li>
-            </ul>
-            <p>Ils te permettent de te connecter au Rézal avec 3 appareils simultanément.</p>
-            <h2>Vérification d'adresse mail</h2>
-            <p>
-                Afin d'être sûr que tu ne te sois pas trompé.e dans ton adresse email, nous avons envoyé un mail à l'adresse que tu as donné. Clique sur le lien présent dans le mail pour valider la création de ton compte.
-            </p>
-            <h2>Cotisation</h2>
-            <p>
-                Pour pouvoir te connecter, il te faudra aussi cotiser sur HelloAsoo.
-            </p>
+            <h2>Création de compte réussi !</h2>
+            <p>Ton compte a bien été créé. Tu vas recevoir un mail dans lequel se trouve un lien qui te permettra de récupérer tes identifiants.</p>
         </div>}
     </>
 }
-

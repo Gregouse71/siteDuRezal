@@ -17,7 +17,6 @@ class UserReceived(SQLModel):
     nom: str
     prenom: str
     email: EmailStr
-    mot_de_passe: str
     promotion: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
 
 class UserUpdate (SQLModel, table=False):
@@ -93,7 +92,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  acces_wifi=False,
                  email_verifie=False,
                  createdAt=datetime.now(),
-                 mot_de_passe=user_rec.mot_de_passe,
+                 mot_de_passe="0",
                  promotion=user_rec.promotion,
                  has_lost_pass=False,
                 )
