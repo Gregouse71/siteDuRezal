@@ -55,7 +55,7 @@ export default function UserRegister() {
             .catch(error => {
                 const errorStatus = error.response.status;
                 switch (errorStatus) {
-                    case "400": {
+                    case 400: {
                         popupService.changePopup({ status: "error", message: "Cette adresse mail est déjà utilisée par un utilisateur" });
                         break;
                     }
