@@ -31,7 +31,6 @@ class UserUpdate (SQLModel, table=False):
     is_admin: bool | None = None
     acces_wifi: bool | None = None
     email_verifie: bool | None = None
-    mot_de_passe: str | None = None
 
     cotizT1: bool | None = None
     t1PaidAt: datetime | None = None
@@ -58,7 +57,6 @@ class User (SQLModel, table=True):
     is_admin: bool
     acces_wifi: bool
     email_verifie: bool
-    mot_de_passe: str | None = None  # Pour conserver entre la creation du compte et l'ajout au ldap
     has_lost_pass: bool
 
     nom: str
@@ -92,7 +90,6 @@ def user_from_received (user_rec: UserReceived) -> User:
                  acces_wifi=False,
                  email_verifie=False,
                  createdAt=datetime.now(),
-                 mot_de_passe="0",
                  promotion=user_rec.promotion,
                  has_lost_pass=False,
                 )

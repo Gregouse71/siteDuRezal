@@ -119,48 +119,6 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> T
     return Token (access_token=access_token, token_type="bearer")
 
 
-# @auth_router.post ("/verify_email/{uid}/{token}")
-# async def verify_mail (
-#     uid: str,
-#     token: str
-# ) -> User:
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_400_BAD_REQUEST,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY_MAIL, algorithms=[ALGORITHM])
-#         uid_token = payload.get("sub")
-#         if uid_token is None or uid_token != uid:  # S'il n'y en a pas, c'est un jeton invalide
-#             raise credentials_exception
-#     except InvalidTokenError:
-#         raise credentials_exception
-
-#     user = get_user_db (uid)
-
-#     if not user:
-#         raise HTTPException (
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="L'utilisateur recherché n'existe pas"
-#         )
-
-#     user = user[0]
-#     if user.email_verifie:
-#         return user
-
-#     if not ldap_add_user (
-#         user.promotion + user.nom.lower (), user.mot_de_passe,
-#         user.promotion, user.nom, user.prenom
-#     ):
-#         raise HTTPException (
-#             status_code=status.HTTP_409_CONFLICT,
-#             detail="Impossible de créer l'utilisateur LDAP"
-#         )
-#     user = patch_user_db (user, UserUpdate(email_verifie=True, mot_de_passe="0"))
-#     return user
-
-
 @auth_router.get ("/new_password_mail/{email_url}")
 async def get_new_password_mail (
     email_url: str
@@ -222,18 +180,20 @@ async def obtain_new_password (
             detail="L'utilisateur n'a pas demandé de nouveau mot de passe"
         )
     
+
+    s = string.ascii_letters + string.digits  # Génération du nouveau mdp
+    mdp = ''.join(random.sample(s, 15))
+
     if (not user.email_verifie) and not ldap_add_user (
-        user.promotion + user.nom.lower (), user.mot_de_passe,
+        user.promotion + user.nom.lower (), mdp,
         user.promotion, user.nom, user.prenom
     ):
         raise HTTPException (
             status_code=status.HTTP_409_CONFLICT,
             detail="Impossible de créer l'utilisateur LDAP"
         )
-
-    s = string.ascii_letters + string.digits  # Génération du nouveau mdp
-    mdp = ''.join(random.sample(s, 15))
-    ldap_change_pwd (user.uid, mdp)
+    if user.has_lost_pass:
+        ldap_change_pwd (user.uid, mdp)
 
     user = patch_user_db (user, UserUpdate (has_lost_pass=False, email_verifie=True))
     return { "user": user.uid, "mdp": mdp }
