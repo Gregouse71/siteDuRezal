@@ -18,9 +18,13 @@ export function AboutUs() {
         </div>
         <div>
             <h2>Cotisation</h2>
+            La cagnote est <a
+                style={{ color: "blue", marginLeft: "3px" }}
+                href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
+            >ici</a>, sur HellAsso.
             <h3>Pourquoi une cotisation ?</h3>
             <p>
-                La cotisation est nécessaire pour que l'association puisse payer les frais des abonnements WiFi, renouveller ses équipements, et constituer un fond de secours en cas de défaillance soudaine d'équipements essentiels.<br/>
+                La cotisation est nécessaire pour que l'association puisse payer les frais des abonnements WiFi, renouveller ses équipements, et constituer un fond de secours en cas de défaillance soudaine d'équipements essentiels.<br />
                 Une fois que vous avez cotisé, un membre du bureau peut activer l'accès au wifi sur votre compte. Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 6€/trimestre</b> , selon le découpage suivant :
             </p>
             <p>
@@ -46,14 +50,14 @@ export function AboutUs() {
                 </ul>
             </p>
         </div>
-	<div>
-	    <h2>Équipe</h2>
-	    Le bureau est constitué de :
-	        <ul>
-		    <li>Grégoire Girardet, président;</li>
-		    <li>Adrien Martinez, trésorier;</li>
-		    <li>Mathis Liens, secrétaire général.</li>
-		</ul>
-	</div>
+        <div>
+            <h2>Équipe</h2>
+            Le bureau est constitué de :
+            <ul>
+                <li>Grégoire Girardet, président;</li>
+                <li>Adrien Martinez, trésorier;</li>
+                <li>Mathis Liens, secrétaire général.</li>
+            </ul>
+        </div>
     </div>
 }
