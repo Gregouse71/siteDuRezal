@@ -109,6 +109,15 @@ def add_new_user_db (
         user_rec = UserReceived.model_validate (user_to_create)
         user = user_from_received (user_rec)
 
+        # On vérifie que l'adresse mail est unique
+        statement = select (User). where (User.email == user.email)
+        collisions = session.exec (statement).all ()
+        if collisions:
+            raise HTTPException (
+                status=status.HTTP_400_BAD_REQUEST,
+                detail="Cette adresse mail est déjà utilisée"
+            )
+
         # On vérifie qu'il n'y a pas déjà d'utilisateur avec cet uid
         statement = select (User). where (User.uid == user.uid)
         collisions = session.exec (statement).all ()

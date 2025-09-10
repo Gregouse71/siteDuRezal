@@ -1,5 +1,5 @@
-import { FormControl, FormLabel, TextField, Button, Select, MenuItem, Checkbox } from "@mui/material";
-import { useState } from "react";
+import { FormControl, FormLabel, FormControlLabel, TextField, Button, Select, MenuItem, Checkbox } from "@mui/material";
+import { useEffect, useState } from "react";
 import { promotions } from "../assets/lists";
 import charte from "../assets/doc/Charte_VF.pdf";
 import useAccountService from "../services/account.service";
@@ -11,24 +11,25 @@ export default function UserRegister() {
     const popupService = usePopupService();
 
     const regexEmail = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
+    const [charteAccepted, setCharteAccepted] = useState(false);
 
     const defaultFormValues = {
-        prenom : "",
-        nom : "", 
-        email : "",
-        promotion : "",
-        room : "",
-        chartAccepted : false,
-    } 
+        prenom: "",
+        nom: "",
+        email: "",
+        promotion: "",
+        room: "",
+        chartAccepted: false,
+    }
     const [formValues, setFormValues] = useState(defaultFormValues);
-    const [mode, setMode] = useState("Pre-registration");
-    
+    const [mode, setMode] = useState("Charter-accept");
+
     const areValuesFilled = () => {
         return formValues.prenom !== "" &&
-                formValues.nom !== "" && 
-                formValues.email !== "" &&
-                formValues.promotion !== "" &&
-                formValues.room !== ""
+            formValues.nom !== "" &&
+            formValues.email !== "" &&
+            formValues.promotion !== "" &&
+            formValues.room !== ""
     }
 
     const isEmailFilled = () => {
@@ -36,42 +37,68 @@ export default function UserRegister() {
     }
 
     const isEmailCorrect = () => formValues.email.match(regexEmail);
-    
-    const handleInputChange = (e : any) => {
+
+    const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setFormValues({
             ...formValues,
             [name]: value,
         });
-      };
-
-    const passToCharterAccept = () =>  setMode("Charter-accept");
+    };
 
     const onRegister = () => {
         accountService.register(formValues)
-        .then((response : any) => {
-            popupService.changePopup({status : "success", message : "Création du compte réussie"})
-            setMode("Post-registration")
-        })
-        .catch(error => {
-            const errorStatus = error.response.status;
-            switch(errorStatus) {
-                case "400" : {
-                    popupService.changePopup({status : "error", message : "Email déjà présent dans la base de données"});
-                    break;
+            .then((response: any) => {
+                popupService.changePopup({ status: "success", message: "Création du compte réussie" })
+                setMode("Post-registration")
+            })
+            .catch(error => {
+                const errorStatus = error.response.status;
+                switch (errorStatus) {
+                    case "400": {
+                        popupService.changePopup({ status: "error", message: "Cette adresse mail est déjà utilisée par un utilisateur" });
+                        break;
+                    }
+                    default: popupService.changePopup({ status: "error", message: "Erreur inconnue" })
                 }
-                default : popupService.changePopup({status : "error", message : "Erreur inconnue"})
-            }
-        });
+            });
     }
 
     return <>
-        {mode === "Pre-registration" && <> 
+        {mode === "Charter-accept" && <>
+            <h2> Charte d'utilisation du réseau par les étudiants </h2>
+            <iframe
+                title="file"
+                style={{ width: '70vw', height: '150vh' }}
+                src={charte}
+            />
+
+            <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+                <FormControlLabel
+                    required
+                    control={<Checkbox />}
+                    label="J'ai lu et j'accepete la charte d'utilisation du réseau"
+                    checked={charteAccepted}
+                    onChange={() => setCharteAccepted(!charteAccepted)}
+                />
+            </div>
+            <Button
+                variant="contained"
+                className="btn btn-success"
+                disabled={!charteAccepted}
+                onClick={() => { setMode("Pre-registration") }}
+                style={{ margin: "5vh 0" }}
+            >
+                Confirmer
+            </Button>
+        </>}
+
+        {mode === "Pre-registration" && <>
             <h2> Création de compte </h2>
-        
+
             <div>
-                <FormControl id="register-form" style={{fontSize : "0.7rem"}}>
-                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Prénom</FormLabel>
+                <FormControl id="register-form" style={{ fontSize: "0.7rem" }}>
+                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Prénom</FormLabel>
                     <TextField
                         onChange={handleInputChange}
                         size="small"
@@ -83,8 +110,8 @@ export default function UserRegister() {
                         label="Required"
 
                     />
-                    
-                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Nom</FormLabel>
+
+                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Nom</FormLabel>
                     <TextField
                         onChange={(e) => handleInputChange(e)}
                         size="small"
@@ -94,7 +121,7 @@ export default function UserRegister() {
                         label="Required"
                     />
 
-                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Email</FormLabel>
+                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Email</FormLabel>
                     <TextField
                         type="email"
                         label="Required"
@@ -107,31 +134,30 @@ export default function UserRegister() {
                         helperText={(formValues.email !== "" && !formValues.email.match(regexEmail)) ? "Email non valide" : ""}
                     />
 
-                    {!isEmailFilled() && <p style={{color : "red"}}>
-                        Email obligatoire 
+                    {!isEmailFilled() && <p style={{ color: "red" }}>
+                        Email obligatoire
                     </p>}
 
                     <div id="promotion-field">
-                        <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Promotion des Mines <br/></FormLabel>
+                        <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Promotion des Mines <br /></FormLabel>
                         <small>(XX si vous n'êtes pas de l'école des Mines)</small>
-                        <Select value={formValues.promotion} 
-                        name="promotion"
-                        label="Required"
-                        size="small"
-                        onChange={(e) => handleInputChange(e)} >
-                            
-                            {promotions.map(el => <MenuItem 
-                                    key={"promotion value choice " + el} 
-                                    value={el}
-                                > 
-                                    {el} 
-                                </MenuItem>
+                        <Select value={formValues.promotion}
+                            name="promotion"
+                            size="small"
+                            onChange={(e) => handleInputChange(e)} >
+
+                            {promotions.map(el => <MenuItem
+                                key={"promotion value choice " + el}
+                                value={el}
+                            >
+                                {el}
+                            </MenuItem>
                             )}
                         </Select>
                     </div>
 
 
-                    <FormLabel style={{fontSize : "2em", margin : "2vh 0"}}>Chambre</FormLabel>
+                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Chambre</FormLabel>
                     <TextField
                         onChange={(e) => handleInputChange(e)}
                         size="small"
@@ -140,51 +166,22 @@ export default function UserRegister() {
                         placeholder="PAM | N° (ex : 666)"
                     />
 
-                    <Button 
+                    <Button
                         type="submit"
-                        variant="contained" 
-                        className="btn btn-success" 
-                        disabled={!areValuesFilled() || !isEmailCorrect()} 
-                        onClick={passToCharterAccept}
-                        style={{margin : "5vh 0"}}
-                    > 
-                        Confirmer 
+                        variant="contained"
+                        className="btn btn-success"
+                        disabled={!areValuesFilled() || !isEmailCorrect()}
+                        onClick={onRegister}
+                        style={{ margin: "5vh 0" }}
+                    >
+                        Confirmer
                     </Button>
 
                 </FormControl>
-            </div> 
+            </div>
         </>}
 
-        {mode === "Charter-accept" && <>
-            <h2> Charte d'utilisation du réseau par les étudiants </h2>
-            <iframe
-                title="file"
-                style={{ width: '70vw', height: '150vh' }}
-                src={charte}
-            />
-            <div style={{display : "flex", justifyContent : "center", gap : "10px"}}>
-                <Checkbox
-                    checked={formValues.chartAccepted}
-                    onChange={() => setFormValues({...formValues, chartAccepted : !formValues.chartAccepted})}
-                />
-                <div style={{display : "flex", flexDirection : "column", justifyContent : "center"}}>
-                    <span>
-                        J'ai lu et j'accepte la <a className="link" href={charte} rel="noopener noreferrer" target = "_blank">charte d'utilisation du réseau par les étudiants</a>
-                    </span>  
-                </div>
-            </div>
-            <Button 
-                variant="contained" 
-                className="btn btn-success" 
-                disabled={!(formValues.chartAccepted === true)} 
-                onClick={onRegister}
-                style={{margin : "5vh 0"}}
-            > 
-                Confirmer 
-            </Button>
-        </>}
-        
-        {mode === "Post-registration" && <div style={{textAlign : "left", margin : "0 1vw 0 1vw"}}>
+        {mode === "Post-registration" && <div style={{ textAlign: "left", margin: "0 1vw 0 1vw" }}>
             <h2>Création de compte réussi !</h2>
             <p>Ton compte a bien été créé. Tu vas recevoir un mail dans lequel se trouve un lien qui te permettra de récupérer tes identifiants.</p>
         </div>}
