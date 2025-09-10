@@ -67,7 +67,7 @@ export default function UserBoard() {
                         <Link
                             style={{ color: "blue", marginLeft: "3px" }}
                             to="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
-                            replace>HelloAsoo
+                            replace>HelloAsso
                         </Link>
                     </p>
                     <div> Si tu as des questions, n'hésite pas à nous contacter avec l'adresse <u>admin@rezal-mdm.com</u> ! </div>
