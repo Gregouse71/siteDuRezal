@@ -221,6 +221,15 @@ async def obtain_new_password (
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="L'utilisateur n'a pas demandé de nouveau mot de passe"
         )
+    
+    if (not user.email_verifie) and not ldap_add_user (
+        user.promotion + user.nom.lower (), user.mot_de_passe,
+        user.promotion, user.nom, user.prenom
+    ):
+        raise HTTPException (
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Impossible de créer l'utilisateur LDAP"
+        )
 
     s = string.ascii_letters + string.digits  # Génération du nouveau mdp
     mdp = ''.join(random.sample(s, 15))
