@@ -183,7 +183,7 @@ export default function UserRegister() {
 
         {mode === "Post-registration" && <div style={{ textAlign: "left", margin: "0 1vw 0 1vw" }}>
             <h2>Création de compte réussi !</h2>
-            <p>Ton compte a bien été créé. Tu vas recevoir un mail dans lequel se trouve un lien qui te permettra de récupérer tes identifiants.</p>
+            <p>Ton compte a bien été créé. Tu vas recevoir un mail d'ici quelques minutes dans lequel se trouve un lien qui te permettra de récupérer tes identifiants. Tu as une semaine pour cliquer dessus pour valider ton inscription.</p>
         </div>}
     </>
 }

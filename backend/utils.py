@@ -10,7 +10,7 @@ def create_access_token(data: dict, key: str, algorithm: str, expires_delta: tim
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta  # on calcule la date d'expiration
     else:  # si elle n'est pas demandée, c'est 15 min
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+        expire = datetime.now(timezone.utc) + timedelta(days=15)
 
     to_encode.update({"exp": expire})  # On ajoute la date d'expiration aux données du jeton
     encoded_jwt = jwt.encode(to_encode, key, algorithm=algorithm)  # et on les encode

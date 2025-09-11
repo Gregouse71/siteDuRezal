@@ -26,6 +26,10 @@ export default function DisplayID() {
                         popupService.changePopup({ status: "error", message: "Impossible d'obtenir les identifiants" });
                         break;
                     }
+                    case "401": {
+                        popupService.changePopup({ status: "error", message: "Le code d'identification a expiré. Contactez l'administrateur." });
+                        break;
+                    }
                     default: popupService.changePopup({ status: "error", message: "Erreur inconnue" })
                 }
             });
@@ -38,8 +42,10 @@ export default function DisplayID() {
     return <>
         <h2> Vos identifiants </h2>
         <div>
-            { infos.user } : { infos.mdp }
+            <ul>Ton identifiant est : { infos.user }</ul>
+            <ul>Ton mot de passe est : { infos.mdp }</ul>
         </div>
+        <div>Prends le soin de les noter quelque part. <strong>Tu n'y aura plus accès une fois que tu auras quitté cette page.</strong></div>
     </>
 }
 

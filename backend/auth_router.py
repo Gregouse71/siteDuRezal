@@ -127,7 +127,6 @@ async def get_new_password_mail (
     Marque l'utilisateur comme ayant perdu son mail et lui envoie un mail de nouveau mdp
     """
     email = urllib.parse.unquote (email_url)
-    print (email)
     with Session (engine) as session:
         statement = select (User). where (User.email == email)
         user = session.exec (statement).all ()
@@ -160,9 +159,13 @@ async def obtain_new_password (
     try:
         payload = jwt.decode(token, SECRET_KEY_MAIL, algorithms=[ALGORITHM])
         uid = payload.get("sub")
-        print (uid)
         if uid is None:  # S'il n'y en a pas, c'est un jeton invalide
             raise credentials_exception
+    except jwt.ExpiredSignatureError:
+        raise HTTPException (
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Le jeton d'authentification a expiré"
+        )
     except InvalidTokenError:
         raise credentials_exception
 
