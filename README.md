@@ -4,7 +4,7 @@ Ce répertoire contient le site du Rézal, nouvelle version modernisé de 2025. 
 
 ## Frontend
 
-Le frontend a été récupéré de ka cersion précédente du site.
+Le frontend a été récupéré de la cersion précédente du site.
 
 ## Backend
 
