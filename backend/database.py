@@ -127,10 +127,17 @@ def add_new_user_db (
             statement = select (User). where (User.uid == user.uid)
             collisions = session.exec (statement).all ()
 
-        session.add (user)
-        session.commit ()
-        session.refresh (user)
-        return user
+        try:
+            session.add (user)
+            session.commit ()
+            session.refresh (user)
+            return user
+        except:
+            session.rollback ()
+            raise HTTPException (
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Erreur inconnue"
+            )
 
 
 def get_user_db (
