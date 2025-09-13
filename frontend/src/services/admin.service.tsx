@@ -114,6 +114,7 @@ export function useAdminService() {
             case "uid" : return accountFilteredFieldValue?.includes(filterValue)
             case "email" : return accountFilteredFieldValue?.includes(filterValue)
             case "email_verifie" : return accountFilteredFieldValue === filterValue
+            case "credits" : return accountFilteredFieldValue === filterValue
             case "room" : return accountFilteredFieldValue?.includes(filterValue)
             case "promotion" : return accountFilteredFieldValue === filterValue
             case "cotizT1" : return accountFilteredFieldValue === filterValue
@@ -138,6 +139,7 @@ export function useAdminService() {
         "nom" : false,
         "uid" : true,
         "email" : false,
+        "credits" : true,
         "email_verifie" : false,
         "room" : false,
         "promotion" : false,
@@ -157,6 +159,7 @@ export function useAdminService() {
         "login" : true,
         "password" : true,
         "email" : true,
+        "credits" : true,
         "room" : false,
         "promotion" : false,
         "T1" : true,

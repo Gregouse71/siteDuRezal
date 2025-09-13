@@ -31,6 +31,7 @@ class UserUpdate (SQLModel, table=False):
     is_admin: bool | None = None
     acces_wifi: bool | None = None
     email_verifie: bool | None = None
+    credits: int | None = None
 
     cotizT1: bool | None = None
     t1PaidAt: datetime | None = None
@@ -64,6 +65,7 @@ class User (SQLModel, table=True):
     promotion: str
     email: EmailStr
     createdAt: datetime
+    credits: int
 
     cotizT1: bool | None = None
     t1PaidAt: datetime | None = None
@@ -92,6 +94,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  createdAt=datetime.now(),
                  promotion=user_rec.promotion,
                  has_lost_pass=False,
+                 credits=0,
                 )
 
 
@@ -200,6 +203,7 @@ with Session (engine) as session:
             acces_wifi=False,
             email_verifie=True,
             has_lost_pass=False,
+            credits=0,
 
             createdAt = datetime.now()
         ))
@@ -214,6 +218,7 @@ with Session (engine) as session:
             acces_wifi=False,
             email_verifie=True,
             has_lost_pass=False,
+            credits=0,
 
             createdAt=datetime.now()
         ))
@@ -228,6 +233,7 @@ with Session (engine) as session:
             acces_wifi=False,
             email_verifie=True,
             has_lost_pass=False,
+            credits=0,
 
             createdAt=datetime.now()
         ))

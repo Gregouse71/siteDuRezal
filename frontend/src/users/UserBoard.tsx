@@ -1,12 +1,43 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useAuthService } from "../services/auth.service"
 import { useDateService } from "../services/date.service";
+import { useAdminService } from "../services/admin.service";
+import { Account } from "../models/account";
+import usePopupService from "../services/popup.service";
+import httpInstance from "../services/api";
 import './Users.scss'
 
 export default function UserBoard() {
-
-    const user = useAuthService().user;
+    const modifyAccount = useAdminService().modifyAccounts;
+    const { user, setUser } = useAuthService();
     const dateService = useDateService();
+    const popupService = usePopupService();
+    let update = true;
+    const [cotT1, setCotT1] = useState(user.cotizT1);
+
+    const crediterT1 = () => {
+        httpInstance.post('wifi/cotiser', { T1: true })
+            .then((response: any) => {
+                popupService.changePopup({ status: "success", message: "Crédits ajoutés pour le T1" })
+                console.log(response);
+                setUser(new Account(response.data))
+            })
+            .catch(error => {
+                const errorStatus = error.response.status;
+                switch (errorStatus) {
+                    case "400": {
+                        popupService.changePopup({ status: "error", message: "Pas assez de crédits" });
+                        break;
+                    }
+                    case "401": {
+                        popupService.changePopup({ status: "error", message: "Le code d'identification a expiré. Contactez l'administrateur." });
+                        break;
+                    }
+                    default: popupService.changePopup({ status: "error", message: "Erreur inconnue" })
+                }
+            });
+    }
 
     return <>
         <div>
@@ -24,6 +55,10 @@ export default function UserBoard() {
                                 <td style={{ backgroundColor: user.acces_wifi ? 'green' : 'red' }}>
                                     <b style={{ color: "white" }}>{user.acces_wifi ? "Autorisé" : "Non autorisé"}</b>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>Crédits</th>
+                                <td>{user.credits}</td>
                             </tr>
                             <tr>
                                 <th>Email</th>
@@ -47,7 +82,11 @@ export default function UserBoard() {
                     <ul className="list-group">
                         <li className="list-group-item" > Cotisations </li>
                         <li className={user.cotizT1 ? 'list-group-item-success' : 'list-group-item-danger'}>
-                            T1 : {user.cotizT1 ? "Oui" : "Non"} <br />
+                            T1 :
+                            {user.cotizT1 ?
+                                <span style={{ color: "green" }}>Oui</span> :
+                                <><span style={{ color: "red" }}>Non</span><button onClick={crediterT1}>Activer</button></>}
+                            <br />
                             {dateService.dateTrimester(1)}
                         </li>
                         <li className={user.cotizT2 ? 'list-group-item-success' : 'list-group-item-danger'}>

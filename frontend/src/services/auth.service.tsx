@@ -62,6 +62,10 @@ export function useAuthService() {
         resetUser();
     }
 
+    const updateUser = () => {
+        
+    }
+
     const LoginFormComponent = (props : any) => {
 
         const popupService = usePopupService();
@@ -160,7 +164,7 @@ export function useAuthService() {
         login : login,
         loginFromIDAndToken : loginFromIDAndToken,
         logout : logout,
-        user : user,
+        setUser: setUser, user : user,
         LoginFormComponent : LoginFormComponent,
     }
 
