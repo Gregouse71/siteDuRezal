@@ -11,6 +11,9 @@ wifi_router = APIRouter (
     prefix="/wifi"
 )
 
+DEBUT_T1 = datetime (2025, 9, 1)
+DEBUT_T2 = datetime (2025, 11, 24)
+DEBUT_T3 = datetime (2026, 2, 23)
 
 class WiFiUpdate (SQLModel):
     uid: str
@@ -32,22 +35,28 @@ def ajouter_credits_trimestre (
     Dépense les crédits pour activer le wifi sur un trimestre
     """
     print (current_user)
-    if current_user.credits < 5:
+    if current_user.credits < 1:
         raise HTTPException (
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Vous n'avez pas assez de crédits"
             )
     if req.T1:
-        update = UserUpdate (credits=current_user.credits-5, cotizT1=True, t1PaidAt=datetime.now(), t1PaymentType="Autocredits")
+        update = UserUpdate (credits=current_user.credits - 1, cotizT1=True, t1PaidAt=datetime.now(), t1PaymentType="Autocredits")
         user = patch_user_db (current_user, update)
+        if datetime.now () > DEBUT_T1:
+            allow_ldap_wifi (current_user.uid)
         return user
     if req.T2:
-        update = UserUpdate (credits=current_user.credits-5, cotizT2=True, t2PaidAt=datetime.now(), t2PaymentType="Autocredits")
+        update = UserUpdate (credits=current_user.credits - 1, cotizT2=True, t2PaidAt=datetime.now(), t2PaymentType="Autocredits")
         user = patch_user_db (current_user, update)
+        if datetime.now () > DEBUT_T2:
+            allow_ldap_wifi (current_user.uid)
         return user
     if req.T3:
-        update = UserUpdate (credits=current_user.credits-5, cotizT3=True, t3PaidAt=datetime.now(), t3PaymentType="Autocredits")
+        update = UserUpdate (credits=current_user.credits - 1, cotizT3=True, t3PaidAt=datetime.now(), t3PaymentType="Autocredits")
         user = patch_user_db (current_user, update)
+        if datetime.now () > DEBUT_T3:
+            allow_ldap_wifi (current_user.uid)
         return user
 
 

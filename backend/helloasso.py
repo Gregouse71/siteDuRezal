@@ -22,7 +22,7 @@ async def post_helloasso (
         with Session (engine) as session:
             statement = select (User).where (User.email == data["payer"]["email"])
             user = session.exec (statement).one ()
-            user.credits = len(data["items"]) * 5
+            user.credits = len(data["items"])
             session.add (user)
             session.commit ()
             print ("done")
