@@ -35,8 +35,8 @@ function ProtectedRoute(props : any) {
                 }
                 const errorStatus = error.response.status;
                 switch(errorStatus) {
-                    case "400" : break   // This status code means no token was sent, we don't need to inform the user
-                    case "401" : {
+                    case 400 : break   // This status code means no token was sent, we don't need to inform the user
+                    case 401 : {
                         popupService.changePopup({status : "error", message : "Le cookie d'authentification a expiré, connexion automatique impossible"});
                         break;
                     }

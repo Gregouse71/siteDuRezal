@@ -16,8 +16,8 @@ export default function UserBoard() {
     let update = true;
     const [cotT1, setCotT1] = useState(user.cotizT1);
 
-    const crediterT1 = () => {
-        httpInstance.post('wifi/cotiser', { T1: true })
+    const cotiser = (trimestre: any) => {
+        httpInstance.post('wifi/cotiser', trimestre)
             .then((response: any) => {
                 popupService.changePopup({ status: "success", message: "Crédits ajoutés pour le T1" })
                 console.log(response);
@@ -26,18 +26,18 @@ export default function UserBoard() {
             .catch(error => {
                 const errorStatus = error.response.status;
                 switch (errorStatus) {
-                    case "400": {
+                    case 400: {
                         popupService.changePopup({ status: "error", message: "Pas assez de crédits" });
-                        break;
-                    }
-                    case "401": {
-                        popupService.changePopup({ status: "error", message: "Le code d'identification a expiré. Contactez l'administrateur." });
                         break;
                     }
                     default: popupService.changePopup({ status: "error", message: "Erreur inconnue" })
                 }
             });
     }
+
+    const crediterT1 = () => { cotiser({ T1: true }) }
+    const crediterT2 = () => { cotiser({ T2: true }) }
+    const crediterT3 = () => { cotiser({ T3: true }) }
 
     return <>
         <div>
@@ -58,7 +58,7 @@ export default function UserBoard() {
                             </tr>
                             <tr>
                                 <th>Crédits</th>
-                                <td>{user.credits}</td>
+                                <td>{user.credits ? user.credits : "0"}</td>
                             </tr>
                             <tr>
                                 <th>Email</th>
@@ -90,11 +90,19 @@ export default function UserBoard() {
                             {dateService.dateTrimester(1)}
                         </li>
                         <li className={user.cotizT2 ? 'list-group-item-success' : 'list-group-item-danger'}>
-                            T2 : {user.cotizT2 ? "Oui" : "Non"}  <br />
+                            T2 :
+                            {user.cotizT2 ?
+                                <span style={{ color: "green" }}>Oui</span> :
+                                <><span style={{ color: "red" }}>Non</span><button onClick={crediterT2}>Activer</button></>}
+                            <br />
                             {dateService.dateTrimester(2)}
                         </li>
                         <li className={user.cotizT3 ? 'list-group-item-success' : 'list-group-item-danger'}>
-                            T3 : {user.cotizT3 ? "Oui" : "Non"}  <br />
+                            T3 :
+                            {user.cotizT3 ?
+                                <span style={{ color: "green" }}>Oui</span> :
+                                <><span style={{ color: "red" }}>Non</span><button onClick={crediterT3}>Activer</button></>}
+                            <br />
                             {dateService.dateTrimester(3)}
                         </li>
                     </ul>

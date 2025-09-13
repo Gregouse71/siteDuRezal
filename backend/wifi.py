@@ -41,7 +41,15 @@ def ajouter_credits_trimestre (
         update = UserUpdate (credits=current_user.credits-5, cotizT1=True, t1PaidAt=datetime.now(), t1PaymentType="Autocredits")
         user = patch_user_db (current_user, update)
         return user
-    
+    if req.T2:
+        update = UserUpdate (credits=current_user.credits-5, cotizT2=True, t2PaidAt=datetime.now(), t2PaymentType="Autocredits")
+        user = patch_user_db (current_user, update)
+        return user
+    if req.T3:
+        update = UserUpdate (credits=current_user.credits-5, cotizT3=True, t3PaidAt=datetime.now(), t3PaymentType="Autocredits")
+        user = patch_user_db (current_user, update)
+        return user
+
 
 
 @wifi_router.post ("")
