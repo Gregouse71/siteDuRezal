@@ -40,23 +40,44 @@ def ajouter_credits_trimestre (
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Vous n'avez pas assez de crédits"
             )
+
     if req.T1:
-        update = UserUpdate (credits=current_user.credits - 1, cotizT1=True, t1PaidAt=datetime.now(), t1PaymentType="Autocredits")
-        user = patch_user_db (current_user, update)
-        if datetime.now () > DEBUT_T1:
+        update = UserUpdate (
+            credits=current_user.credits - 1,
+            cotizT1=True, t1PaidAt=datetime.now(),
+            t1PaymentType="Autocredits",
+        )
+        if DEBUT_T2 > datetime.now () > DEBUT_T1:
             allow_ldap_wifi (current_user.uid)
+            update.acces_wifi = True
+
+        user = patch_user_db (current_user, update)
         return user
+
     if req.T2:
-        update = UserUpdate (credits=current_user.credits - 1, cotizT2=True, t2PaidAt=datetime.now(), t2PaymentType="Autocredits")
-        user = patch_user_db (current_user, update)
-        if datetime.now () > DEBUT_T2:
+        update = UserUpdate (
+            credits=current_user.credits - 1,
+            cotizT2=True, t2PaidAt=datetime.now(),
+            t2PaymentType="Autocredits",
+        )
+        if DEBUT_T3 > datetime.now () > DEBUT_T2:
             allow_ldap_wifi (current_user.uid)
-        return user
-    if req.T3:
-        update = UserUpdate (credits=current_user.credits - 1, cotizT3=True, t3PaidAt=datetime.now(), t3PaymentType="Autocredits")
+            update.acces_wifi = True
+
         user = patch_user_db (current_user, update)
+        return user
+
+    if req.T3:
+        update = UserUpdate (
+            credits=current_user.credits - 1,
+            cotizT3=True, t3PaidAt=datetime.now(),
+            t3PaymentType="Autocredits",
+        )
         if datetime.now () > DEBUT_T3:
             allow_ldap_wifi (current_user.uid)
+            update.acces_wifi = True
+
+        user = patch_user_db (current_user, update)
         return user
 
 
