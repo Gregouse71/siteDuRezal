@@ -45,6 +45,7 @@ export default function DisplayID() {
             <ul>Ton identifiant est : { infos.user }</ul>
             <ul>Ton mot de passe est : { infos.mdp }</ul>
         </div>
+        <div>Tu peux maintenant te connecter pour aller voir ta page utilisateur et cotiser.</div>
         <div>Prends le soin de les noter quelque part. <strong>Tu n'y aura plus accès une fois que tu auras quitté cette page.</strong></div>
     </>
 }
