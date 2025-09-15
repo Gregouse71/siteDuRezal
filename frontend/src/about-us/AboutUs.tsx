@@ -41,7 +41,7 @@ export function AboutUs() {
             </p>
         </div>
         <div>
-            <h2>Prêts d'équipements</h2>
+            <h2>Prêt d'équipements</h2>
             <p>
                 L'association dispose de quelques équipements qu'elle peut prêter durant une certaine durée en échange d'une caution. Ces équipements comprennent:
                 <ul>
