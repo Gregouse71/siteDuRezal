@@ -28,7 +28,7 @@ load_dotenv ()
 SECRET_KEY = os.getenv ("SECRET_KEY")
 SECRET_KEY_MAIL = os.getenv ("SECRET_KEY_MAIL")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 10
 
 
 class Token (BaseModel):
