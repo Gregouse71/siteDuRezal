@@ -18,27 +18,26 @@ export function AboutUs() {
         </div>
         <div>
             <h2>Cotisation</h2>
-            La cagnote est <a
+            La campagne de cotisation est accessible <a
                 style={{ color: "blue", marginLeft: "3px" }}
                 href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
-            >ici</a>, sur HellAsso.
+            >ici</a>, sur HelloAsso.
             <h3>Pourquoi une cotisation ?</h3>
             <p>
-                La cotisation est nécessaire pour que l'association puisse payer les frais des abonnements WiFi, renouveller ses équipements, et constituer un fond de secours en cas de défaillance soudaine d'équipements essentiels.<br />
-                Une fois que vous avez cotisé, un membre du bureau peut activer l'accès au wifi sur votre compte. Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 5€/trimestre</b> , selon le découpage suivant :
+                La cotisation est nécessaire pour que l'association puisse payer les frais des abonnements WiFi, renouveler ses équipements, et constituer un fonds de secours en cas de défaillance soudaine d'équipements essentiels.<br />
+                Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 5€/trimestre</b> , selon le découpage suivant : 
             </p>
             <p>
                 <ul>
-                    <li>Trimestre 1 : 10 Septembre - 1 Janvier</li>
-                    <li>Trimestre 2 : 1 Janvier - 1 Avril</li>
-                    <li>Trimestre 3 : 1 Avril - 15 Juillet</li>
+                    <li>Trimestre 1 : 10 septembre - 31 décembre</li>
+                    <li>Trimestre 2 : 1er janvier - 31 mars </li>
+                    <li>Trimestre 3 : 1er avril - 15 juillet</li>
                 </ul>
-
-                Lorsque vous avez cotisé pour un trimestre, plus rien à faire !
             </p>
             <h3>Comment cotiser ?</h3>
             <p>
                 La cotisation se fait par paiement via HelloAsso, ou par chèque ou par espèces, directement dans une chambre ou dans une boite aux lettres d'un membre du bureau restreint.
+                Une fois que vous avez cotisé, vous voyez dans votre onglet <b>Résident</b> un nombre de crédits correspondant au nombre de trimestres pour lesquels vous avez cotisé. C'est ensuite à vous de jouer : activez avec ces crédits votre accès au Rézal pour les trimestres pendant lesquels vous voulez avoir accès à cette connexion WiFi de qua-li-té ! Et le tour est joué !
             </p>
         </div>
         <div>
