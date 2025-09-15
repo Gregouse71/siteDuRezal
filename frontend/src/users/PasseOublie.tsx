@@ -28,7 +28,7 @@ export default function UserNewPassword() {
             .catch(error => {
                 const errorStatus = error.response.status;
                 switch (errorStatus) {
-                    case "400": {
+                    case 400: {
                         popupService.changePopup({ status: "error", message: "Cet adresse mail n'est pas enregistrée" });
                         break;
                     }

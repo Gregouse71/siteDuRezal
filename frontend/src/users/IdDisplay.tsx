@@ -22,11 +22,11 @@ export default function DisplayID() {
             .catch(error => {
                 const errorStatus = error.response.status;
                 switch (errorStatus) {
-                    case "400": {
+                    case 400: {
                         popupService.changePopup({ status: "error", message: "Impossible d'obtenir les identifiants" });
                         break;
                     }
-                    case "401": {
+                    case 401: {
                         popupService.changePopup({ status: "error", message: "Le code d'identification a expiré. Contactez l'administrateur." });
                         break;
                     }

@@ -1,0 +1,67 @@
+{
+  "data": {
+    "order": {
+      "id": 58200,
+      "date": "2025-09-12T23:32:09.0254261+02:00",
+      "formSlug": "cotisation",
+      "formType": "Membership",
+      "organizationName": "REZALTEST",
+      "organizationSlug": "rezaltest",
+      "organizationType": "Association1901",
+      "organizationIsUnderColucheLaw": false,
+      "formName": "Cotisation",
+      "meta": {
+        "createdAt": "2025-09-12T23:31:30.520543+02:00",
+        "updatedAt": "2025-09-12T23:32:09.1404889+02:00"
+      },
+      "isAnonymous": false,
+      "isAmountHidden": false
+    },
+    "payer": {
+      "email": "gregoire.girardet@etu.minesparis.psl.eu",
+      "country": "FRA",
+      "firstName": "Jean",
+      "lastName": "Jacques"
+    },
+    "items": [
+      {
+        "shareAmount": 500,
+        "shareItemAmount": 500,
+        "id": 58200,
+        "amount": 500,
+        "type": "Membership",
+        "state": "Processed"
+      },
+      {
+        "shareAmount": 500,
+        "shareItemAmount": 500,
+        "id": 58201,
+        "amount": 500,
+        "type": "Membership",
+        "state": "Processed"
+      },
+      {
+        "shareAmount": 500,
+        "shareItemAmount": 500,
+        "id": 58202,
+        "amount": 500,
+        "type": "Membership",
+        "state": "Processed"
+      }
+    ],
+    "cashOutState": "Transfered",
+    "paymentReceiptUrl": "https://www.helloasso-sandbox.com/associations/rezaltest/adhesions/cotisation/paiement-attestation/58200",
+    "id": 37468,
+    "amount": 1500,
+    "date": "2025-09-12T23:32:09.0254261+02:00",
+    "paymentMeans": "Card",
+    "installmentNumber": 1,
+    "state": "Authorized",
+    "meta": {
+      "createdAt": "2025-09-12T23:31:30.520543+02:00",
+      "updatedAt": "2025-09-12T23:32:09.0433333+02:00"
+    },
+    "refundOperations": []
+  },
+  "eventType": "Payment"
+}
