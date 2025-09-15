@@ -29,9 +29,9 @@ export function AboutUs() {
             </p>
             <p>
                 <ul>
-                    <li>Trimestre 1 : 10 septembre - 31 décembre</li>
-                    <li>Trimestre 2 : 1er janvier - 31 mars </li>
-                    <li>Trimestre 3 : 1er avril - 15 juillet</li>
+                    <li>Trimestre 1 : 10 septembre - 31 novembre</li>
+                    <li>Trimestre 2 : 17 novembre - 22 février </li>
+                    <li>Trimestre 3 : 16 février - 15 juillet</li>
                 </ul>
             </p>
             <h3>Comment cotiser ?</h3>
