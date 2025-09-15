@@ -76,6 +76,7 @@ export default function useAccountService() {
     createPassword: createPassword,
     register: register,
     emailVerification: emailVerification,
+    getNewPasswordMail: getNewPasswordMail,
     getNewPassword: getNewPassword,
   }
 }
