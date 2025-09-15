@@ -25,7 +25,7 @@ export function AboutUs() {
             <h3>Pourquoi une cotisation ?</h3>
             <p>
                 La cotisation est nécessaire pour que l'association puisse payer les frais des abonnements WiFi, renouveller ses équipements, et constituer un fond de secours en cas de défaillance soudaine d'équipements essentiels.<br />
-                Une fois que vous avez cotisé, un membre du bureau peut activer l'accès au wifi sur votre compte. Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 6€/trimestre</b> , selon le découpage suivant :
+                Une fois que vous avez cotisé, un membre du bureau peut activer l'accès au wifi sur votre compte. Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 5€/trimestre</b> , selon le découpage suivant :
             </p>
             <p>
                 <ul>
