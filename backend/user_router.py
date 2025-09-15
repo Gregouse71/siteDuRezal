@@ -85,7 +85,7 @@ async def patch_users (
     user = patch_user_db (user[0], user_update)
     if user.acces_wifi:
         allow_ldap_wifi (user.uid)
-    elif user.acces_wifi:
+    elif (not user.acces_wifi is None) and (not user.acces_wifi):
         disallow_ldap_wifi (user.uid)
     return user
 
