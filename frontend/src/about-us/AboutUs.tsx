@@ -29,7 +29,7 @@ export function AboutUs() {
             </p>
             <p>
                 <ul>
-                    <li>Trimestre 1 : 10 septembre - 31 novembre</li>
+                    <li>Trimestre 1 : 10 septembre - 30 novembre</li>
                     <li>Trimestre 2 : 17 novembre - 22 février </li>
                     <li>Trimestre 3 : 16 février - 15 juillet</li>
                 </ul>
