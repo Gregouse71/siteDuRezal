@@ -1,13 +1,8 @@
-
-
-
-
-
 export function useDateService() {
 
   const startFirstTrimester = new Date("09/10/2025 23:00") // Format mm/dd/yyyy hh:mm
   const endFirstTrimester = new Date("11/30/2025 23:00") // Format mm/dd/yyyy hh:mm
-  const startSecondTrimester = new Date("17/11/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const startSecondTrimester = new Date("11/17/2025 23:00") // Format mm/dd/yyyy hh:mm
   const endSecondTrimester = new Date("02/22/2025 23:00") // Format mm/dd/yyyy hh:mm
   const startThirdTrimester = new Date("02/16/2025 23:00") // Format mm/dd/yyyy hh:mm
   const endThirdTrimester = new Date("07/15/2025 23:00") // Format mm/dd/yyyy hh:mm
@@ -16,7 +11,7 @@ export function useDateService() {
     switch(numTrimester) {
       case 1 : return dateToString(startFirstTrimester) + " - " + dateToString(endFirstTrimester)
       case 2 : return dateToString(startSecondTrimester) + " - " + dateToString(endSecondTrimester)
-      case 2 : return dateToString(startThirdTrimester) + " - " + dateToString(endThirdTrimester)
+      case 3 : return dateToString(startThirdTrimester) + " - " + dateToString(endThirdTrimester)
       default : return "Mauvais numéro de trimestre"
     }
   }
