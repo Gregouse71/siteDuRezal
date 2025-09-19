@@ -21,7 +21,10 @@ async def post_helloasso (
     else:
         with Session (engine) as session:
             statement = select (User).where (User.email == data["payer"]["email"])
-            user = session.exec (statement).one ()
+            user = session.exec (statement).all ()
+            if not user:
+                return True
+            user = user[0]
             user.credits = len(data["items"])
             session.add (user)
             session.commit ()
