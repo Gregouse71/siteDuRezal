@@ -5,15 +5,18 @@
 
 export function useDateService() {
 
-  
-  const endFirstTrimester = new Date("12/12/2022 23:00") // Format mm/dd/yyyy hh:mm
-  const endSecondTrimster = new Date("03/12/2023 23:00") // Format mm/dd/yyyy hh:mm
+  const startFirstTrimester = new Date("09/10/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const endFirstTrimester = new Date("11/30/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const startSecondTrimester = new Date("17/11/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const endSecondTrimester = new Date("02/22/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const startThirdTrimester = new Date("02/16/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const endThirdTrimester = new Date("07/15/2025 23:00") // Format mm/dd/yyyy hh:mm
 
   const dateTrimester = (numTrimester : number) => {
     switch(numTrimester) {
-      case 1 : return "Début de l'année - " + dateToString(endFirstTrimester)
-      case 2 : return dateToString(endFirstTrimester) + " - " + dateToString(endSecondTrimster)
-      case 3 : return dateToString(endSecondTrimster) + " - début de l'année prochaine"
+      case 1 : return dateToString(startFirstTrimester) + " - " + dateToString(endFirstTrimester)
+      case 2 : return dateToString(startSecondTrimester) + " - " + dateToString(endSecondTrimester)
+      case 2 : return dateToString(startThirdTrimester) + " - " + dateToString(endThirdTrimester)
       default : return "Mauvais numéro de trimestre"
     }
   }
@@ -21,7 +24,7 @@ export function useDateService() {
   const getTrimester = () => {
     const now = new Date();
     if (now < endFirstTrimester) return 1
-    else if (now < endSecondTrimster) return 2
+    else if (now < endSecondTrimester) return 2
     else return 3
   }
 
