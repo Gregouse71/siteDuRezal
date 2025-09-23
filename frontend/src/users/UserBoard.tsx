@@ -108,7 +108,13 @@ export default function UserBoard() {
                     </ul>
 
                     <p></p>
-
+                    <p>Tu n'arrives pas à te connecter ? Si tu es sûr de rentrer les bons identifiants :
+                        <Link
+                            style={{ color: "orange", marginLeft: "3px" }}
+                            to="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
+                            replace>Comment se connecter ?
+                        </Link>
+                    </p>
                     <p>
                         Comment cotiser ? Rends toi vite sur
                         <Link

@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from user_router import user_router
 from auth_router import auth_router
 from wifi import wifi_router
 from listing_router import listing_router
 from helloasso import helloasso_router
+
+profile_file = "Rézal.mobileconfig"
 
 app = FastAPI(
     root_path="/api"
@@ -29,3 +32,6 @@ app.include_router (helloasso_router)
 async def is_alive () -> bool:
     return True
 
+@app.get ("/apple_profile")
+async def get_apple_profile () -> bool:
+    return FileResponse (profile_file, media_type='application/octet-stream',filename=profile_file)

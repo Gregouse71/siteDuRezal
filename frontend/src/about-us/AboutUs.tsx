@@ -2,6 +2,7 @@ import "./AboutUs.scss"
 
 import charte from "../assets/doc/Charte_VF.pdf";
 import statut from "../assets/doc/status.pdf";
+import { BACKEND_BASE_URL } from "../base_url.js"
 
 export function AboutUs() {
     return <div id="container-about-us" style={{ textAlign: "left" }}>
@@ -11,6 +12,12 @@ export function AboutUs() {
         </div>
         <div>
             <h2>Se connecter au réseau</h2>
+            <ul>
+                <li>Pour Pour windows : cliquer sur Rezal, rentrez vos identifiants, et confirmez que vous vous attendez à voie Rezal à cet endroit.</li>
+                <li>Pour les Mac : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a>, allez dans <em>Réglages système</em>, cherchez <em>Profils</em>, double-cliquez sur le profil nommé Rézal, et sélectionnez <em>Installer</em>.</li>
+                <li>Pour les iPhones : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a> allez dans <em>Réglages</em>, <em>Profil téléchargé</em>, rentrez le code de votre téléphone, puis vos identifiants du Rézal.</li>
+                <li>Pour les appareils Android : lors de la connexion, il faut sélectionner TTLS en <em>Méthode EAP</em>, PAP en <em>Application étape 2</em>, et Faire confiance lors de la première connexion. Remplissez vos identifiants Rézal dans <em>Identité</em> et <em>Mot de passe</em>.</li>
+            </ul>
             <p>
                 Le nom du réseau pour les cotisants est <b>Rezal</b>.
                 Il suffit d'entrer un login et un mot de passe et s'ils correspondent à un compte approuvé par l'association alors l'accès est confirmé et l'appareil a accès à Internet.
@@ -25,7 +32,7 @@ export function AboutUs() {
             <h3>Pourquoi une cotisation ?</h3>
             <p>
                 La cotisation est nécessaire pour que l'association puisse payer les frais des abonnements WiFi, renouveler ses équipements, et constituer un fonds de secours en cas de défaillance soudaine d'équipements essentiels.<br />
-                Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 5€/trimestre</b> , selon le découpage suivant : 
+                Actuellement, la cotisation se fait sur une durée <b>trimestrielle: 5€/trimestre</b> , selon le découpage suivant :
             </p>
             <p>
                 <ul>
