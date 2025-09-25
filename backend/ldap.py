@@ -24,13 +24,13 @@ def allow_ldap_wifi (uid: str):
     """
     Autorise l'acces au wifi à l'utilisateur *uid*
     """
-    return ldap_add_user_to_group (uid, GROUPE_WIFI)
+    return ldap_add_user_to_group (uid.replace(" ", ""), GROUPE_WIFI)
 
 def disallow_ldap_wifi (uid: str):
     """
     N'autorise plus l'acces à l'utilisateur dont l'uid est *uid*
     """
-    return ldap_delete_user_from_group (uid, GROUPE_WIFI)
+    return ldap_delete_user_from_group (uid.replace(" ", ""), GROUPE_WIFI)
 
 
 def has_ldap_wifi (uid:str):

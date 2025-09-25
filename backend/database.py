@@ -121,6 +121,7 @@ def add_new_user_db (
                 detail="Cette adresse mail est déjà utilisée"
             )
 
+        user.uid = user.uid.replace (" ", "")
         # On vérifie qu'il n'y a pas déjà d'utilisateur avec cet uid
         statement = select (User). where (User.uid == user.uid)
         collisions = session.exec (statement).all ()
