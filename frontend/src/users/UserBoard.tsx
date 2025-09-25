@@ -111,7 +111,7 @@ export default function UserBoard() {
                     <p>Tu as un appareil Apple ? Tu n'arrives pas à te connecter ? Si tu es sûr de rentrer les bons identifiants :
                         <Link
                             style={{ color: "orange", marginLeft: "3px" }}
-                            to="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
+                            to="/about-us"
                             replace>Comment se connecter ?
                         </Link>
                     </p>
