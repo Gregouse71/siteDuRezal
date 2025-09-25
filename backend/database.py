@@ -84,7 +84,7 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    return User (uid=user_rec.promotion + user_rec.nom.lower (), 
+    return User (uid=user_rec.promotion + user_rec.nom.lower ().replace (" ", ""), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
@@ -121,7 +121,6 @@ def add_new_user_db (
                 detail="Cette adresse mail est déjà utilisée"
             )
 
-        user.uid = user.uid.replace (" ", "")
         # On vérifie qu'il n'y a pas déjà d'utilisateur avec cet uid
         statement = select (User). where (User.uid == user.uid)
         collisions = session.exec (statement).all ()
