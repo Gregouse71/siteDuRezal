@@ -4,6 +4,8 @@ from ldap3 import Server, Connection, ObjectDef, AttrDef, Reader, Writer, ALL, H
 import os
 from dotenv import load_dotenv
 
+from database import User
+
 # Recuperation des identifiants de connexion au LDAP
 load_dotenv ()
 LDAP_ADMIN_USERNAME = os.getenv ("LDAP_USERNAME")
@@ -63,16 +65,25 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
     return False
 
 
-def ldap_add_user (uid: str, password: str, promo: str, nom, prenom, mail) -> bool:
+def ldap_add_user (user: User, password: str) -> bool:
     """
     Ajoute l'utilisateur dont le nom d'utilisateur est *username* au LDAP
     Si la promo n'est pas XX, il est aussi ajouté au groupe de sa promo
     """
-    distinguished_name = distinguished_name_from_uid(uid)
+    distinguished_name = distinguished_name_from_uid(user.uid)
+    promo: str, nom, prenom, mail
+
+ user.nom, user.prenom, user.email
+
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             # Creation de l'utilisateur
-            conn.add (distinguished_name, "inetOrgPerson", {"sn": prenom, "cn": nom, "uid": uid, "mail": mail})
+            conn.add (distinguished_name, "inetOrgPerson", {
+                "sn": user.prenom,
+                "cn": user.nom,
+                "uid": user.uid,
+                "mail": user.email
+            })
             # Changement du mot de passe, en utilisant la méthode par défaut du LDAP (qui, on l'espere, est securisee (c'est une blague, il faut la configurer soit meme pour qu'elle soit securisee))
             conn.extend.standard.modify_password (distinguished_name, None, password)
         return True

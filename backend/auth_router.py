@@ -187,14 +187,12 @@ async def obtain_new_password (
     s = string.ascii_letters + string.digits  # Génération du nouveau mdp
     mdp = ''.join(random.sample(s, 15))
 
-    if (not user.email_verifie) and not ldap_add_user (
-        user.promotion + user.nom.lower ().replace (" ", ""), mdp,
-        user.promotion, user.nom, user.prenom, user.email
-    ):
+    if (not user.email_verifie) and not ldap_add_user (user, mdp):
         raise HTTPException (
             status_code=status.HTTP_409_CONFLICT,
             detail="Impossible de créer l'utilisateur LDAP"
         )
+
     if user.has_lost_pass:
         ldap_change_pwd (user.uid, mdp)
 
