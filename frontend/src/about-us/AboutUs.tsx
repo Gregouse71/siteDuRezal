@@ -12,16 +12,16 @@ export function AboutUs() {
         </div>
         <div>
             <h2>Se connecter au réseau</h2>
+            <p>
+                Le nom du réseau principal pour les cotisants est <b>Rezal</b>. Si la connexion est mauvaise dans votre chambre, vous pouvez aussi essayer <b>Rezal-2.4GHz</b>.
+            </p>
             <ul>
-                <li>Pour Pour windows : cliquer sur Rezal, rentrez vos identifiants, et confirmez que vous vous attendez à voie Rezal à cet endroit.</li>
+                <li>Pour windows : cliquer sur Rezal, rentrez vos identifiants, et confirmez que vous vous attendez à voir Rezal à cet endroit.</li>
                 <li>Pour les Mac : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a>, allez dans <em>Réglages système</em>, cherchez <em>Profils</em>, double-cliquez sur le profil nommé Rézal, et sélectionnez <em>Installer</em>.</li>
                 <li>Pour les iPhones : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a> allez dans <em>Réglages</em>, <em>Profil téléchargé</em>, rentrez le code de votre téléphone, puis vos identifiants du Rézal.</li>
                 <li>Pour les appareils Android : lors de la connexion, il faut sélectionner TTLS en <em>Méthode EAP</em>, PAP en <em>Application étape 2</em>, et Faire confiance lors de la première connexion. Remplissez vos identifiants Rézal dans <em>Identité</em> et <em>Mot de passe</em>.</li>
             </ul>
-            <p>
-                Le nom du réseau pour les cotisants est <b>Rezal</b>.
-                Il suffit d'entrer un login et un mot de passe et s'ils correspondent à un compte approuvé par l'association alors l'accès est confirmé et l'appareil a accès à Internet.
-            </p>
+            
         </div>
         <div>
             <h2>Cotisation</h2>
