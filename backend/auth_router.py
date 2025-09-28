@@ -188,7 +188,7 @@ async def obtain_new_password (
     mdp = ''.join(random.sample(s, 15))
 
     if (not user.email_verifie) and not ldap_add_user (
-        user.promotion + user.nom.lower (), mdp,
+        user.promotion + user.nom.lower ().replace (" ", ""), mdp,
         user.promotion, user.nom, user.prenom, user.email
     ):
         raise HTTPException (
