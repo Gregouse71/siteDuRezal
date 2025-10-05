@@ -19,7 +19,7 @@ export function AboutUs() {
                 <li>Pour windows : cliquer sur Rezal, rentrez vos identifiants, et confirmez que vous vous attendez à voir Rezal à cet endroit.</li>
                 <li>Pour les Mac : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a>, allez dans <em>Réglages système</em>, cherchez <em>Profils</em>, double-cliquez sur le profil nommé Rézal, et sélectionnez <em>Installer</em>.</li>
                 <li>Pour les iPhones : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a> allez dans <em>Réglages</em>, <em>Profil téléchargé</em>, rentrez le code de votre téléphone, puis vos identifiants du Rézal.</li>
-                <li>Pour les appareils Android : lors de la connexion, il faut sélectionner TTLS en <em>Méthode EAP</em>, PAP en <em>Application étape 2</em>, et Faire confiance lors de la première connexion comme <em>Certificat CA</em>. Remplissez vos identifiants Rézal dans <em>Identité</em> et <em>Mot de passe</em>. Si vous ne pouvez pas Faire confiance à la première connexion, choisisez de faire confiance au domaine <em>rezal-mdm.com</em></li>
+                <li>Pour les appareils Android : lors de la connexion, il faut sélectionner TTLS en <em>Méthode EAP</em>, PAP en <em>Application étape 2</em>, et Faire confiance lors de la première connexion comme <em>Certificat CA</em>. Remplissez vos identifiants Rézal dans <em>Identité</em> et <em>Mot de passe</em>. Si vous ne pouvez pas Faire confiance à la première connexion, selectionnez <em>Certificats du système</em> choisisez de faire confiance au domaine <em>rezal-mdm.com</em></li>
             </ul>
             
         </div>
