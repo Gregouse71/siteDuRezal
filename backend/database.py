@@ -182,7 +182,7 @@ def delete_user_db (
 
 
 # Setting up the database connection and session
-engine = create_engine(DATABASE_SERVER)
+engine = create_engine(DATABASE_SERVER, pool_recycle=3600)
 SQLModel.metadata.create_all(engine)
 
 
