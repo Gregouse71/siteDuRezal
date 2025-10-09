@@ -4,6 +4,7 @@ from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, 
 from fastapi import HTTPException, status
 import os
 from dotenv import load_dotenv
+from unidecode import unidecode
 
 load_dotenv ()
 DATABASE_SERVER = os.getenv ("DATABASE_SERVER")
@@ -84,7 +85,7 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    return User (uid=user_rec.promotion + user_rec.nom.lower ().replace (" ", ""), 
+    return User (uid=user_rec.promotion + unidecode(user_rec.nom).lower ().replace (" ", "").replace (), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,

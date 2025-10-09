@@ -11,3 +11,5 @@ dependencies:
   - ldap3
   - pymysql
   - mariadb
+  - unidecode
+  
