@@ -123,7 +123,8 @@ export default function UserBoard() {
                             replace>HelloAsso
                         </Link>. Penses bien à indiquer le même mail pour le paiement sur HelloAsso.
                     </p>
-                    <div> Si tu as des questions, n'hésite pas à nous contacter avec l'adresse <u>admin@rezal-mdm.com</u> ! </div>
+                    <div> Si tu as des questions, n'hésite pas à nous contacter avec l'adresse <u>admin@rezal-mdm.com</u> ! <br/>
+                    S'il s'agit d'un problème de connexion, vérifie qu'il y a bien écrit Accés au réseau "autorisé" en haut de cette page (si ce n'est pas le cas il faut peut-être que tu actives tes crédits) et que tu utilises les bons identifiants/mot de passe (les même que pour ce site). S'il y a bien un problème, n'hésite pas à nous écrire, en spécifiant le type d'appareil qui a des problème, tout message d'erreur qui pourrait être utile, et la chambre dans laquelle tu résides. </div>
 
 
                 </div>
