@@ -85,7 +85,11 @@ def user_from_received (user_rec: UserReceived) -> User:
     """
     Génère un utilisateur à partir des données reçues
     """
-    return User (uid=user_rec.promotion + unidecode(user_rec.nom).lower ().replace (" ", ""), 
+    if user_rec.promotion == "XX":
+        new_uid = user.prenom + user.nom
+    else:
+        new_uid = user_rec.promotion + user_rec.nom
+    return User (uid=unidecode(new_uid).lower ().replace (" ", ""), 
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
