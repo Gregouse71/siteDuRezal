@@ -23,6 +23,7 @@ async def post_helloasso (
             statement = select (User).where (User.email == data["payer"]["email"])
             user = session.exec (statement).all ()
             if not user:
+                print("No user found   ", data["payer"]["email"])
                 return True
             user = user[0]
             user.credits = len(data["items"])
