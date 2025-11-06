@@ -82,7 +82,7 @@ message_mdp = """\
     <h2>{0}, tu as oublié ton mot de passe Rézal et c'est mal !</h2>
     <p>Ne t'avise pas de recommencer</p>
     <p><a href="https://www.rezal-mdm.com/resident/get-password/{2}">Clique ici pour en obtenir un nouveau.</a></p>
-    <p>Si tu n'as pas demandé de nouveau mot de passe pour ton compte Rézal, igone ce mail et contact le bureau.</p>
+    <p>Si tu n'as pas demandé de nouveau mot de passe pour ton compte Rézal, ignore ce mail et contacte le bureau.</p>
     
     <a href="mailto:admin@rezal-mdm.com">admin@rezal-mdm.com</a>
 </div>
