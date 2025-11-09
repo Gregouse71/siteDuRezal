@@ -63,9 +63,9 @@ export default function useAccountService() {
     })
   }
 
-  const getNewPassword = (infos: any) => {
+  const setNewPassword = (infos: any) => {
     return new Promise<void>((resolve, reject) => {
-      httpInstance.get(`auth/new_password/${infos.token}`)
+      httpInstance.post(`auth/new_password/${infos.token}`, {"password": infos.password})
         .then((data: any) => resolve(data))
         .catch(error => reject(error))
     })
@@ -77,7 +77,7 @@ export default function useAccountService() {
     register: register,
     emailVerification: emailVerification,
     getNewPasswordMail: getNewPasswordMail,
-    getNewPassword: getNewPassword,
+    setNewPassword: setNewPassword,
   }
 }
 

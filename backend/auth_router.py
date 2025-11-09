@@ -38,6 +38,12 @@ class Token (BaseModel):
     access_token: str
     token_type: str
 
+class ReceivedPassowrd (BaseModel):
+    """
+    Mot de passe reçu
+    """
+    password: str
+
 class TokenData (BaseModel):
     """
     Données contenues dans un token
@@ -143,9 +149,10 @@ async def get_new_password_mail (
         session.commit()
 
 
-@auth_router.get ("/new_password/{token}")
+@auth_router.post ("/new_password/{token}")
 async def obtain_new_password (
-    token: str
+    token: str,
+    mdp: ReceivedPassowrd
 ):
     """
     Change le mdp de l'utilisateur
@@ -182,10 +189,8 @@ async def obtain_new_password (
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="L'utilisateur n'a pas demandé de nouveau mot de passe"
         )
-    
 
-    s = string.ascii_letters + string.digits  # Génération du nouveau mdp
-    mdp = ''.join(random.sample(s, 15))
+    mdp = mdp.password
 
     if (not user.email_verifie) and not ldap_add_user (user, mdp):
         raise HTTPException (
