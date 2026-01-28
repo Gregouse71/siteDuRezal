@@ -10,8 +10,7 @@ npm install
 
 On peut ensuite réaliser la compilation du site, et le servir :
 ```bash
-npm run build
-serve -l 3000 -s build/
+npm run dev
 ```
 
 Le serveur écoute alors normalement sur le port 3000.
