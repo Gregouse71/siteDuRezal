@@ -10,6 +10,4 @@ dependencies:
   - pycryptodome
   - ldap3
   - pymysql
-  - mariadb
   - unidecode
-  
