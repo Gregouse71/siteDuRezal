@@ -42,13 +42,12 @@ export function useAdminService() {
 
     const getRadiusUsers = () => {
         return new Promise<Array<string>>((resolve, reject) => {
-            httpInstance.get('radius_users')
+            httpInstance.get('list/radius_users')
             .then(response => {
                 const loginsInRadius = response.data;
                 resolve(loginsInRadius);
             })
             .catch(error => reject(error))
-
         })
     }
     

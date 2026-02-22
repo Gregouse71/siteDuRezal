@@ -125,10 +125,4 @@ export default function UsersFilters(props : any) {
                     Ajouter un filtre 
             </Button>
         </>
-    // } else return <Button 
-    //     variant="contained" 
-    //     color='info' 
-    //     onClick={() => props.setUserFilters({...userFilters, [defaultFilterName] : defaultFilter})}>
-    //         Ajouter un filtre 
-    // </Button>
 }

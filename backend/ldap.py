@@ -2,6 +2,7 @@
 
 from ldap3 import Server, Connection, ObjectDef, AttrDef, Reader, Writer, ALL, HASHED_SALTED_SHA512, MODIFY_DELETE
 import os
+import re
 from dotenv import load_dotenv
 
 from database import User
@@ -159,6 +160,21 @@ def ldap_user_in_group (uid: str, group: str):
             r = Reader(conn, obj, group)
             r.search ()
             return distinguished_name_from_uid (uid) in r[0].member
+    except:
+        return False
+
+
+def ldap_group_members (group: str):
+    """
+    Renvoie la liste des noms d'utilisateur dans le groupe *group*
+    """
+    p = re.compile("uid=([^,]*),ou=People[^\n]*")
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            obj = ObjectDef ("groupOfNames", conn)
+            r = Reader(conn, obj, group)
+            r.search ()
+            return [p.search(m).group(1) for m in r[0].member]
     except:
         return False
 

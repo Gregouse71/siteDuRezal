@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, FormControl, TextField } from "@mui/material";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -23,13 +23,14 @@ export default function UsersManager() {
     const [fieldsData, setFieldData] = useState(adminService.fieldsDisplayableInit);
     const [userFilters, setUserFilters] = useState({});
     const [mutable, setMutable] = useState(false);
-    const [IdsSelected, setIdsSelected] = useState<number[]>([]);
+    const [IdsSelected, setIdsSelected] = useState([]);
     const [areAllIdsSelected, setAreAllIdsSelected] = useState(false);
 
     const [databaseAccounts, setDatabaseAccounts] = useRecoilState(databaseAccountsState);
-    const [currentAccounts, setCurrentAccouts] = useState<Map<number, Account>>(adminService.copyMapAccounts(databaseAccounts));
+    const [currentAccounts, setCurrentAccouts] = useState(adminService.copyMapAccounts(databaseAccounts));
     const [accountFiltered, setAccountFiltered] = useState(adminService.filterAccounts(currentAccounts, userFilters));
 
+    const [query, setQuery] = useState("");
 
     // console.log({newCurrentsAccounts : currentAccounts, accountFiltered : accountFiltered, databaseAccounts : databaseAccounts});
 
@@ -47,7 +48,7 @@ export default function UsersManager() {
         setAccountFiltered(adminService.filterAccounts(currentAccounts, userFilters))
     }, [currentAccounts, userFilters])
 
-    const arrayOfChanges : Array<any> = Array.from(currentAccounts)
+    const arrayOfChanges = Array.from(currentAccounts)
         .map(IdAndAccount => {
             const id = IdAndAccount[0];
             const databaseAccount = databaseAccounts.get(id);
@@ -55,7 +56,7 @@ export default function UsersManager() {
         })
         .filter(IdAndDiff => Object.keys(IdAndDiff).length > 2)
 
-    const onSelectAccount = (idToggled : number) => {
+    const onSelectAccount = (idToggled) => {
         if (IdsSelected.includes(idToggled)) setIdsSelected(IdsSelected.filter(id => id !== idToggled))
         else setIdsSelected([...IdsSelected, idToggled])
     }
@@ -66,9 +67,9 @@ export default function UsersManager() {
         setAreAllIdsSelected(!areAllIdsSelected);
     }
 
-    const onAccountValueChange = (id : number, field : string, newValue : any) => {
+    const onAccountValueChange = (id, field, newValue) => {
         var account = currentAccounts.get(id);
-        if (account && !_.isEqual((account as any)[field], newValue)) {
+        if (account && !_.isEqual((account)[field], newValue)) {
             if (["login", "email"].includes(field) && newValue) {
                 if (!window.confirm("Attention, modifier ce champ peut empecher un utilisateur d'accèder à son compte, confirmer ?")) {
                     setCurrentAccouts(
@@ -108,7 +109,7 @@ export default function UsersManager() {
                 var isSucessForAll = true;
                 arrayOfChanges
                     .forEach((IdAndAccount, index) => {
-                        const id : number = IdAndAccount.id;
+                        const id = IdAndAccount.id;
                         const promiseResult = accountModificationDataArray[index];
                         if (promiseResult.status === "fulfilled") currentAccounts.set(
                             id, new Account({
@@ -154,21 +155,21 @@ export default function UsersManager() {
         }
     }
 
-    const onDeleteAccount = (id : number) => {
+    const onDeleteAccount = (id) => {
         if (window.confirm("Confirmer la suppression de ce compte ?")) {
-            var idsToDelete : Array<number> = [];            
+            var idsToDelete = [];            
             if (IdsSelected.length > 1 && IdsSelected.includes(id) && window.confirm("Effectuer cette action sur tous les comptes sélectionnés ? [Oui/Non]")) {
                 idsToDelete = IdsSelected;
             } else {
                 idsToDelete = [id]
             }
             const uidsToDelete = idsToDelete.map((id) => {
-                return databaseAccounts.get(id)!.uid;
+                return databaseAccounts.get(id)?.uid;
             });
             adminService.deleteAccounts(uidsToDelete).then(
-                (accountDeletionStatus : any[]) => { 
+                (accountDeletionStatus) => { 
                     idsToDelete.forEach(    
-                        (idToDelete : number, index : number) => {
+                        (idToDelete, index) => {
                             const account = currentAccounts.get(idToDelete);
                             if (account !== undefined) {
                                 const message = accountDeletionStatus[index].status === "fulfilled" ? "SSuppression effectuée" : ("ESuppression non effectuée, raison : " + accountDeletionStatus[index].reason)
@@ -194,15 +195,27 @@ export default function UsersManager() {
         <displayService.FieldsDisplayTab fieldsData={fieldsData} setFieldData={setFieldData}/>
         <UsersFilters userFilters={userFilters} setUserFilters={setUserFilters} />
 
-        <p>
+        <div className="d-flex">
             <Button  
                 variant = "contained"
                 color = "info"
                 onClick={() => setMutable(!mutable)}>
                     {mutable ? "Sortir modifications": "Modifier"} 
             </Button>
-        </p>
-        
+            
+                <FormControl id="login-form">
+                    <TextField
+                        onChange={handleInputChange}
+                        onKeyDown={(e) => { if (e.key === "Enter") onLogin() }}
+                        name="login"
+                        value={formValues.login}
+                        autoCapitalize="none"
+                        autoCorrect="false"
+                        placeholder="login"
+                        size="small"
+                    />
+                </FormControl>
+        </div>
         {arrayOfChanges.length > 0 && <p>
             <Button  
                 variant = "contained"

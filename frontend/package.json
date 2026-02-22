@@ -10,6 +10,7 @@
     "@mui/icons-material": "^7.3.5",
     "@mui/material": "^7.3.5",
     "@mui/styled-engine-sc": "^5.5.2",
+    "@tanstack/react-query": "^5.90.21",
     "@types/file-saver": "^2.0.5",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.181",
@@ -37,6 +38,4 @@
     "build": "vite build",
     "preview": "vite preview"
   }
-
-
 }
