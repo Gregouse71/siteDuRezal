@@ -12,4 +12,4 @@ Le backend a été entièrement réécrit. Il est conçu pour réaliser l'authen
 
 ## Déploiement
 
-Pour utiliser les runner gitlab, il faut placer le script *update_site.sh* dans le répertoir */home/rezal*, et ajouter ceci au début de la ligne de la clé ssh de gitlab-runner : `command="/home/rezal/update_site",no-port-forwarding,no-agent-forwarding,no-X11-forwarding`
+Pour utiliser les runner gitlab, il faut placer le script *update_site.sh* dans le répertoir */home/rezal*, et ajouter ceci au début de la ligne de la clé ssh de gitlab-runner : `command="/home/rezal/update_site.sh",no-port-forwarding,no-agent-forwarding,no-X11-forwarding`
