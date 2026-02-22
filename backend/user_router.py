@@ -27,7 +27,7 @@ async def post_users (
     """
     Crée un utilisateur dans la db
     """
-
+    #TODO moyen : vérifier la promo (ou du moins l'appartenance aux Mines) avec l'email (alumni ou etu)
     user = add_new_user_db (user_to_create)
     send_premier_mail (user)
     return user

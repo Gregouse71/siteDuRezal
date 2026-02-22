@@ -14,6 +14,7 @@ app = FastAPI(
     root_path="/api"
 )
 
+#TODO fort : Mettre une origine qui est juste notre site, on n'est pas censé pouvoir utiliser l'API depuis n'importe où
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

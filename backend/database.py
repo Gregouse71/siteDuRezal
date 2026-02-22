@@ -130,6 +130,7 @@ def add_new_user_db (
         statement = select (User). where (User.uid == user.uid)
         collisions = session.exec (statement).all ()
 
+        #TODO faible : mettre un chiffre plutôt que juste append des underscore
         while collisions:
             user.uid = user.uid + "_"
             statement = select (User). where (User.uid == user.uid)

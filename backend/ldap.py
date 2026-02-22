@@ -75,6 +75,7 @@ def ldap_add_user (user: User, password: str) -> bool:
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             # Creation de l'utilisateur
+            #TODO moyen : ajouter la promo (pour pouvoir filtrer les baptisés et les autres)
             conn.add (distinguished_name, "inetOrgPerson", {
                 "sn": user.prenom,
                 "cn": user.nom,
