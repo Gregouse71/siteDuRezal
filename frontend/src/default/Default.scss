@@ -25,10 +25,14 @@
     text-align: center;
     padding: 4vh 1vw;
     min-width: 50%;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .image {
-    min-width: 50%;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
 }
 
 .btn-navigation {
