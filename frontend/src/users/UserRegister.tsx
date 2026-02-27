@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, FormControlLabel, TextField, Button, Select, MenuItem, Checkbox } from "@mui/material";
+import { FormControl, FormLabel, FormControlLabel, TextField, Button, Select, MenuItem, Checkbox, Box, Typography, Container, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { promotions } from "../assets/lists";
 import charte from "../assets/doc/Charte_VF.pdf";
@@ -17,7 +17,7 @@ export default function UserRegister() {
         prenom: "",
         nom: "",
         email: "",
-        promotion: "",
+        promotion: "XX",
         room: "",
         chartAccepted: false,
     }
@@ -65,125 +65,136 @@ export default function UserRegister() {
     }
 
     return <>
-        {mode === "Charter-accept" && <>
-            <h2> Charte d'utilisation du réseau par les étudiants </h2>
-            <iframe
-                title="file"
-                style={{ width: '70vw', height: '150vh' }}
-                src={charte}
-            />
+        {mode === "Charter-accept" &&
+            <Container maxWidth="md">
+                <Box sx={{ my: 4 }}>
+                    <Box sx={{ p: 2, border: '1px solid grey.300', borderRadius: 1 }}>
+                        <Typography variant="h4" component="h1" gutterBottom>
+                            Charte d'utilisation du réseau par les étudiants
+                        </Typography>
+                        <Box sx={{ height: '70vh', my: 2 }}>
+                            <iframe
+                                title="file"
+                                style={{ width: '100%', height: '100%' }}
+                                src={charte}
+                            />
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                            <FormControlLabel
+                                required
+                                control={<Checkbox checked={charteAccepted} onChange={() => setCharteAccepted(!charteAccepted)} />}
+                                label="J'ai lu et j'accepte la charte d'utilisation du réseau"
+                            />
+                        </Box>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            disabled={!charteAccepted}
+                            onClick={() => { setMode("Pre-registration") }}
+                            fullWidth
+                        >
+                            Confirmer
+                        </Button>
+                    </Box>
+                </Box>
+            </Container>
+        }
 
-            <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-                <FormControlLabel
-                    required
-                    control={<Checkbox />}
-                    label="J'ai lu et j'accepete la charte d'utilisation du réseau"
-                    checked={charteAccepted}
-                    onChange={() => setCharteAccepted(!charteAccepted)}
-                />
-            </div>
-            <Button
-                variant="contained"
-                className="btn btn-success"
-                disabled={!charteAccepted}
-                onClick={() => { setMode("Pre-registration") }}
-                style={{ margin: "5vh 0" }}
-            >
-                Confirmer
-            </Button>
-        </>}
+        {mode === "Pre-registration" &&
+            <Container maxWidth="sm">
+                <Box sx={{ my: 4 }}>
+                    <Box sx={{ p: 2, border: '1px solid grey.300', borderRadius: 1 }}>
+                        <Typography variant="h4" component="h1" gutterBottom>
+                            Création de compte
+                        </Typography>
+                        <Box component="form" noValidate autoComplete="off">
+                            <TextField
+                                label="Prénom"
+                                name="prenom"
+                                value={formValues.prenom}
+                                onChange={handleInputChange}
+                                fullWidth
+                                margin="normal"
+                                required
+                            />
+                            <TextField
+                                label="Nom"
+                                name="nom"
+                                value={formValues.nom}
+                                onChange={handleInputChange}
+                                fullWidth
+                                margin="normal"
+                                required
+                            />
+                            <TextField
+                                label="Email"
+                                name="email"
+                                type="email"
+                                value={formValues.email}
+                                onChange={handleInputChange}
+                                fullWidth
+                                margin="normal"
+                                required
+                                error={formValues.email !== "" && !isEmailCorrect()}
+                                helperText={(formValues.email !== "" && !isEmailCorrect()) ? "Email non valide" : ""}
+                            />
+                            <FormControl margin="normal">
+                                <Grid size={12} container>
+                                    <Grid size={6}><FormLabel>Promotion des Mines</FormLabel></Grid>
+                                    <Grid size={6}><Select
+                                        name="promotion"
+                                        value={formValues.promotion}
+                                        onChange={handleInputChange}
+                                        sx={{ textAlign: 'left', width: '1fr%' }}
+                                    >
+                                        {promotions.map((el, ind) => (
+                                            <MenuItem key={el} value={el}>
+                                                {el !== "XX" ? el : "Exterieur"}
+                                            </MenuItem>
+                                        ))}
+                                    </Select></Grid>
+                                </Grid>
+                            </FormControl>
+                            <TextField
+                                label="Chambre"
+                                name="room"
+                                value={formValues.room}
+                                onChange={handleInputChange}
+                                fullWidth
+                                margin="normal"
+                                placeholder="PAM | N° (ex : 666)"
+                                required
+                            />
+                            <Box sx={{ mt: 2 }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={onRegister}
+                                    disabled={!areValuesFilled() || !isEmailCorrect()}
+                                    fullWidth
+                                >
+                                    Confirmer
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
+            </Container>
+        }
 
-        {mode === "Pre-registration" && <>
-            <h2> Création de compte </h2>
-
-            <div>
-                <FormControl id="register-form" style={{ fontSize: "0.7rem" }}>
-                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Prénom</FormLabel>
-                    <TextField
-                        onChange={handleInputChange}
-                        size="small"
-                        name="prenom"
-                        value={formValues.prenom}
-                        autoCapitalize="none"
-                        autoCorrect="false"
-                        placeholder="prénom"
-                        label="Required"
-
-                    />
-
-                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Nom</FormLabel>
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
-                        size="small"
-                        name="nom"
-                        value={formValues.nom}
-                        placeholder="nom"
-                        label="Required"
-                    />
-
-                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Email</FormLabel>
-                    <TextField
-                        type="email"
-                        label="Required"
-                        onChange={(e) => handleInputChange(e)}
-                        size="small"
-                        name="email"
-                        value={formValues.email}
-                        placeholder="example@etu.minesparis.psl.eu"
-                        error={formValues.email !== "" && !formValues.email.match(regexEmail)}
-                        helperText={(formValues.email !== "" && !formValues.email.match(regexEmail)) ? "Email non valide" : ""}
-                    />
-
-                    {!isEmailFilled() && <p style={{ color: "red" }}>
-                        Email obligatoire
-                    </p>}
-
-                    <div id="promotion-field">
-                        <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Promotion des Mines <br /></FormLabel>
-                        <small>(XX si vous n'êtes pas de l'école des Mines)</small>
-                        <Select value={formValues.promotion}
-                            name="promotion"
-                            size="small"
-                            onChange={(e) => handleInputChange(e)} >
-
-                            {promotions.map(el => <MenuItem
-                                key={"promotion value choice " + el}
-                                value={el}
-                            >
-                                {el}
-                            </MenuItem>
-                            )}
-                        </Select>
-                    </div>
-
-
-                    <FormLabel style={{ fontSize: "2em", margin: "2vh 0" }}>Chambre</FormLabel>
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
-                        size="small"
-                        name="room"
-                        value={formValues.room}
-                        placeholder="PAM | N° (ex : 666)"
-                    />
-
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        className="btn btn-success"
-                        disabled={!areValuesFilled() || !isEmailCorrect()}
-                        onClick={onRegister}
-                        style={{ margin: "5vh 0" }}
-                    >
-                        Confirmer
-                    </Button>
-
-                </FormControl>
-            </div>
-        </>}
-
-        {mode === "Post-registration" && <div style={{ textAlign: "left", margin: "0 1vw 0 1vw" }}>
-            <h2>Création de compte réussi !</h2>
-            <p>Ton compte a bien été créé. Tu vas recevoir un mail d'ici quelques minutes dans lequel se trouve un lien qui te permettra de récupérer tes identifiants. Tu as une semaine pour cliquer dessus pour valider ton inscription.</p>
-        </div>}
+        {mode === "Post-registration" &&
+            <Container maxWidth="sm">
+                <Box sx={{ my: 4 }}>
+                    <Box sx={{ p: 2, border: '1px solid grey.300', borderRadius: 1 }}>
+                        <Typography variant="h4" component="h1" gutterBottom>
+                            Création de compte réussi !
+                        </Typography>
+                        <Typography variant="body1">
+                            Ton compte a bien été créé. Tu vas recevoir un mail d'ici quelques minutes dans lequel se trouve un lien qui te permettra de récupérer tes identifiants. Tu as une semaine pour cliquer dessus pour valider ton inscription.
+                        </Typography>
+                    </Box>
+                </Box>
+            </Container>
+        }
     </>
 }

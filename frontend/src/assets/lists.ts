@@ -5,6 +5,8 @@
 
 export const promotions = [
     "XX",
+    "28",
+    "27",
     "26",
     "25",
     "24",
