@@ -202,19 +202,6 @@ export default function UsersManager() {
                 onClick={() => setMutable(!mutable)}>
                     {mutable ? "Sortir modifications": "Modifier"} 
             </Button>
-            
-                <FormControl id="login-form">
-                    <TextField
-                        onChange={handleInputChange}
-                        onKeyDown={(e) => { if (e.key === "Enter") onLogin() }}
-                        name="login"
-                        value={formValues.login}
-                        autoCapitalize="none"
-                        autoCorrect="false"
-                        placeholder="login"
-                        size="small"
-                    />
-                </FormControl>
         </div>
         {arrayOfChanges.length > 0 && <p>
             <Button  
