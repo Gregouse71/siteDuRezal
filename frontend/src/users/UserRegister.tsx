@@ -139,7 +139,7 @@ export default function UserRegister() {
                                 helperText={(formValues.email !== "" && !isEmailCorrect()) ? "Email non valide" : ""}
                             />
                             <FormControl margin="normal">
-                                <Grid size={12} container>
+                                <Grid columns={12} container>
                                     <Grid size={6}><FormLabel>Promotion des Mines</FormLabel></Grid>
                                     <Grid size={6}><Select
                                         name="promotion"

@@ -120,38 +120,41 @@ export function useAuthService() {
 
         return <>
             <h2> {props.titre} </h2>
-
             <div>
                 <FormControl id="login-form">
-                    <FormLabel style={{ fontSize: "2rem", margin: "5vh 0" }}>Login</FormLabel>
-                    <TextField
-                        onChange={handleInputChange}
-                        onKeyDown={(e) => { if (e.key === "Enter") onLogin() }}
-                        name="login"
-                        value={formValues.login}
-                        autoCapitalize="none"
-                        autoCorrect="false"
-                        placeholder="login"
-                        size="small"
-                    />
+                    <div className="form-row">
+                        <FormLabel>Identifiant</FormLabel>
+                        <TextField
+                            onChange={handleInputChange}
+                            onKeyDown={(e) => { if (e.key === "Enter") onLogin() }}
+                            name="login"
+                            value={formValues.login}
+                            autoCapitalize="none"
+                            autoCorrect="false"
+                            placeholder="identifiant"
+                            size="small"
+                        />
+                    </div>
 
-                    <FormLabel style={{ fontSize: "2rem", margin: "5vh 0" }}>Mot de passe</FormLabel>
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
-                        onKeyDown={(e) => { if (e.key === "Enter") onLogin() }}
-                        name="password"
-                        type="password"
-                        value={formValues.password}
-                        placeholder="mot de passe"
-                        size="small"
-                    />
+                    <div className="form-row">
+                        <FormLabel>Mot de passe</FormLabel>
+                        <TextField
+                            onChange={(e) => handleInputChange(e)}
+                            onKeyDown={(e) => { if (e.key === "Enter") onLogin() }}
+                            name="password"
+                            type="password"
+                            value={formValues.password}
+                            placeholder="mot de passe"
+                            size="small"
+                        />
+                    </div>
 
                     <Button
                         variant="contained"
                         className="btn btn-success"
                         disabled={!areValuesFilled()}
                         onClick={onLogin}
-                        style={{ margin: "5vh 0" }}
+                        style={{ margin: "5vh auto" }}
                     >
                         Connexion
                     </Button>
