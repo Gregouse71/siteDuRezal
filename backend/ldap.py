@@ -1,6 +1,6 @@
 # Source : https://ldap3.readthedocs.io/en/latest/index.html
 
-from ldap3 import Server, Connection, ObjectDef, AttrDef, Reader, Writer, ALL, HASHED_SALTED_SHA512, MODIFY_DELETE
+from ldap3 import Server, Connection, ObjectDef, Reader, Writer, ALL, MODIFY_DELETE
 import os
 import re
 from dotenv import load_dotenv
@@ -58,7 +58,7 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
     try:
         with Connection (server, distinguished_name, password) as conn:
               # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon
-            if not conn.extend.standard.who_am_i () is None:
+            if conn.extend.standard.who_am_i () is not None:
                 return True
     except:
         pass

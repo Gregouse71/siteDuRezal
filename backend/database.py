@@ -18,6 +18,7 @@ class UserReceived(SQLModel):
     nom: str
     prenom: str
     email: EmailStr
+    room: str
     promotion: str  # 24, 25, XX pour ceux qui ne sont pas de l'école
 
 class UserUpdate (SQLModel, table=False):
@@ -32,6 +33,7 @@ class UserUpdate (SQLModel, table=False):
     is_admin: bool | None = None
     acces_wifi: bool | None = None
     email_verifie: bool | None = None
+    room: str | None = None
     credits: int | None = None
 
     cotizT1: bool | None = None
@@ -64,6 +66,7 @@ class User (SQLModel, table=True):
     nom: str
     prenom: str
     promotion: str
+    room: str
     email: EmailStr
     createdAt: datetime
     credits: int
@@ -93,6 +96,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  nom=user_rec.nom,
                  prenom=user_rec.prenom,
                  email=user_rec.email,
+                 room=user_rec.room,
                  is_admin=False,
                  acces_wifi=False,
                  email_verifie=False,
@@ -202,6 +206,7 @@ with Session (engine) as session:
             uid="admin",
             is_admin=True,
             promotion="XX",
+            room="",
 
             nom="Admin",
             prenom="Piche",
@@ -217,6 +222,7 @@ with Session (engine) as session:
             uid="24girardet",
             is_admin=True,
             promotion="24",
+            room="666",
 
             nom="Greg",
             prenom="Piche",
@@ -232,6 +238,7 @@ with Session (engine) as session:
             uid="24liens",
             is_admin=True,
             promotion="24",
+            room="666",
 
             nom="Liens",
             prenom="Mathis",
