@@ -13,8 +13,14 @@ export default function useDisplayService() {
 
     const dateService = useDateService();
     const conversionService = useConversionService();
-
+    /**
+     * LIRE LA FONCTION avant de l'utiliser
+     * @param field Un champ du tableau, formaté de la bonne manière
+     * @returns True si commence par t ou T ou est cotizT# où # est 1,2,3
+     */
     const isTrimester = (field: string) => {
+        //En gros dans la BDD, historiquement ça commençait par T
+        //Ça a été changé en cotizT dans la nouvelle, mais il reste des traces de l'ancienne, d'où les deux cas.
         if (["t", "T"].includes(field[0])) {
             return field[1];
         } if (["cotizT1", "cotizT2", "cotizT3"].includes(field)) {

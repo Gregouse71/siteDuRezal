@@ -26,6 +26,9 @@ export default function UsersManager() {
     const [IdsSelected, setIdsSelected] = useState([]);
     const [areAllIdsSelected, setAreAllIdsSelected] = useState(false);
 
+    //databaseAccounts est un miroir de l'état du serveur
+    //CurrentAccounts est l'état des comptes affichés, avec les modifications qui ont été faites
+
     const [databaseAccounts, setDatabaseAccounts] = useRecoilState(databaseAccountsState);
     const [currentAccounts, setCurrentAccouts] = useState(adminService.copyMapAccounts(databaseAccounts));
     const [accountFiltered, setAccountFiltered] = useState(adminService.filterAccounts(currentAccounts, userFilters));
@@ -60,7 +63,7 @@ export default function UsersManager() {
         if (IdsSelected.includes(idToggled)) setIdsSelected(IdsSelected.filter(id => id !== idToggled))
         else setIdsSelected([...IdsSelected, idToggled])
     }
-
+    
     const onSelectAll = () => {
         if (areAllIdsSelected) setIdsSelected([]);
         else setIdsSelected(accountFiltered.map(account => account.id))
