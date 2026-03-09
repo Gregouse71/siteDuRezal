@@ -6,7 +6,8 @@
     align-items: center;    /* Added to center items horizontally in column */
     flex-direction: column;
     margin : 10vh auto 0 auto; /* Added top margin to push it down */
-    width: 50%;
+    max-width: 600px;
+    max-width: 90%;
     min-height : 30vh;
     text-align: center;     /* Added to center text content like h2 and links */
 }
