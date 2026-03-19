@@ -3,9 +3,9 @@ export function useDateService() {
   const startFirstTrimester = new Date("09/10/2025 23:00") // Format mm/dd/yyyy hh:mm
   const endFirstTrimester = new Date("11/30/2025 23:00") // Format mm/dd/yyyy hh:mm
   const startSecondTrimester = new Date("11/17/2025 23:00") // Format mm/dd/yyyy hh:mm
-  const endSecondTrimester = new Date("02/22/2025 23:00") // Format mm/dd/yyyy hh:mm
-  const startThirdTrimester = new Date("02/16/2025 23:00") // Format mm/dd/yyyy hh:mm
-  const endThirdTrimester = new Date("07/15/2025 23:00") // Format mm/dd/yyyy hh:mm
+  const endSecondTrimester = new Date("02/22/2026 23:00") // Format mm/dd/yyyy hh:mm
+  const startThirdTrimester = new Date("02/16/2026 23:00") // Format mm/dd/yyyy hh:mm
+  const endThirdTrimester = new Date("07/15/2026 23:00") // Format mm/dd/yyyy hh:mm
 
   const dateTrimester = (numTrimester : number) => {
     switch(numTrimester) {

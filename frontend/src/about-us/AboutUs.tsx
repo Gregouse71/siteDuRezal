@@ -8,7 +8,7 @@ export function AboutUs() {
     return <div id="container-about-us" style={{ textAlign: "left" }}>
         <div>
             <h2>Le Rézal</h2>
-            <p>Le Rézal est l'association chargée de l'exploitation du réseau informatique de la Maison des Mines et des Ponts, par délégation de la direction.</p>
+            <p>Le Rézal est l'association chargée de l'exploitation du réseau informatique de la Maison des Mines et des Ponts, par délégation de la direction. Pour toute question, tu peux nous contacter à <a href="mailto:admin@rezal-mdm.com" style={{ color: "blue", fontSize: "1em" }}>admin@rezal-mdm.com</a>.</p>
         </div>
         <div>
             <h2>Se connecter au réseau</h2>
@@ -19,7 +19,7 @@ export function AboutUs() {
                 <li>Pour windows : cliquer sur Rezal, rentrez vos identifiants, et confirmez que vous vous attendez à voir Rezal à cet endroit.</li>
                 <li>Pour les Mac : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a>, allez dans <em>Réglages système</em>, cherchez <em>Profils</em>, double-cliquez sur le profil nommé Rézal, et sélectionnez <em>Installer</em>.</li>
                 <li>Pour les iPhones : téléchargez <a style={{ color: "blue", fontSize: "1em" }} href={`${BACKEND_BASE_URL}/apple_profile`}>ce profil</a> allez dans <em>Réglages</em>, <em>Profil téléchargé</em>, rentrez le code de votre téléphone, puis vos identifiants du Rézal.</li>
-                <li>Pour les appareils Android : lors de la connexion, il faut sélectionner TTLS en <em>Méthode EAP</em>, PAP en <em>Application étape 2</em>, et Faire confiance lors de la première connexion comme <em>Certificat CA</em>. Remplissez vos identifiants Rézal dans <em>Identité</em> et <em>Mot de passe</em>. Si vous ne pouvez pas Faire confiance à la première connexion, sélectionnez <em>Certificats du système</em> et choisisez de faire confiance au domaine <em>rezal-mdm.com</em></li>
+                <li>Pour les appareils Android et Linux : lors de la connexion, il faut sélectionner TTLS en <em>Méthode EAP</em>, PAP en <em>Application étape 2</em>, et Faire confiance lors de la première connexion comme <em>Certificat CA</em>. Remplissez vos identifiants Rézal dans <em>Identité</em> et <em>Mot de passe</em>. Si vous ne pouvez pas Faire confiance à la première connexion, sélectionnez <em>Certificats du système</em> et choisisez de faire confiance au domaine <em>rezal-mdm.com</em></li>
                 <li>Pour les chromebook : Renseignez les mêmes paramètres que pour Android. Pour le certificat, utiliser <em>Par défaut</em>. Pour <em>Correspondance du suffixe de domaine</em> renseignez <em>rezal-mdm.com</em></li>
             </ul>
             
