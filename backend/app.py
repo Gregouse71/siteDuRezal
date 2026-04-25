@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+import os
 
 from user_router import user_router
 from auth_router import auth_router
@@ -8,7 +9,9 @@ from wifi import wifi_router
 from listing_router import listing_router
 from helloasso import helloasso_router
 
+# TODO : passer à l'utilisation du certificat letsencrypt : il suffit de changer le fichier
 profile_file = "Rézal.mobileconfig"
+# profile_file = "Rézal-lets.mobileconfig"
 
 app = FastAPI(
     root_path="/api"
@@ -34,5 +37,5 @@ async def is_alive () -> bool:
     return True
 
 @app.get ("/apple_profile")
-async def get_apple_profile () -> bool:
+async def get_apple_profile ():
     return FileResponse (profile_file, media_type='application/octet-stream',filename=profile_file)
