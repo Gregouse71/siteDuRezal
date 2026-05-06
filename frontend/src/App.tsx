@@ -23,7 +23,7 @@ function App() {
           </Routes>
         </div>
         <Popup />
-        {/* <Footer/> */}
+        <Footer/>
     </div> 
   );
 }
