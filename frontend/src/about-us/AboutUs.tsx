@@ -41,8 +41,8 @@ export function AboutUs() {
                             <p>L'installation d'un profil de configuration est nécessaire :</p>
                             <ol>
                                 <li>Téléchargez le <a href={`${BACKEND_BASE_URL}/apple_profile`}>profil Rézal</a>.</li>
-                                <li><b>Sur Mac</b> : Allez dans <i>Réglages Système &gt; Profils</i> et cliquez sur "Installer".</li>
-                                <li><b>Sur iPhone/iPad</b> : Allez dans <i>Réglages &gt; Profil téléchargé</i>, sélectionnez le profil et procédez à l'installation.</li>
+                                <li><b>Sur Mac</b> : Allez dans <i>Réglages Système &gt; Profils</i> et procédez à l'installation du profil Rézal.</li>
+                                <li><b>Sur iPhone/iPad</b> : Allez dans <i>Réglages &gt; Profil téléchargé</i>, sélectionnez le profil et procédez à l'installation du profil Rézal.</li>
                             </ol>
                         </div>
 
