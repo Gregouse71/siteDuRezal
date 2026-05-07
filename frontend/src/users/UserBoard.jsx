@@ -47,28 +47,28 @@ export default function UserBoard() {
 
             <div className="board-columns-container">
                 <div className="user-info-card">
-                    <p className="title-part"> Informations générales </p>
+                    <p className="title-part">Informations générales</p>
 
                     <div id="container-table">
-                        <table className="table table-bordered table-centered">
+                        <table className="table table-centered">
                             <tbody>
                                 <tr>
-                                    <th>Accès au réseau</th>
-                                    <td style={{ backgroundColor: user.acces_wifi ? 'green' : 'red' }}>
-                                        <b style={{ color: "white" }}>{user.acces_wifi ? "Autorisé" : "Non autorisé"}</b>
+                                    <td>Accès au réseau</td>
+                                    <td>
+                                        <b style={{ color: user.acces_wifi ? 'green' : 'red' }}>{user.acces_wifi ? "Autorisé" : "Non autorisé"}</b>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Crédits</th>
+                                    <td>Crédits</td>
                                     <td>{user.credits ? user.credits : "0"}</td>
                                 </tr>
                                 <tr>
-                                    <th>Email</th>
-                                    <td>{user.email}</td>
+                                    <td>Email</td>
+                                    <td><div className="overflow-handler">{user.email}</div></td>
                                 </tr>
                                 <tr>
-                                    <th>Identifiant</th>
-                                    <td>{user.uid}</td>
+                                    <td>Identifiant</td>
+                                    <td><div className="overflow-handler">{user.uid}</div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -76,47 +76,47 @@ export default function UserBoard() {
                 </div>
 
                 <div className="cotisations-card">
-                    <p className="title-part"> Récapitulatif cotisations </p>
+                    <p className="title-part">Récapitulatif cotisations</p>
 
                     <div className="list-group">
-                        {crediter.map(([cotiz, deja], ind) =>
-                            <div key={ind} className={deja ? 'list-group-item list-group-item-success' : 'list-group-item list-group-item-danger'}>
-                                <div className="cotisation-info">
-                                    <span>T{ind + 1}</span>
-                                    <small>{dateService.dateTrimester(ind + 1)}</small>
-                                </div>
-                                <div className="cotisation-status">
-                                    {deja ?
-                                        <span className="status-yes">Oui</span> :
-                                        <>
-                                            <span className="status-no">Non</span>
-                                            <button className="cotisation-activate-btn" onClick={cotiz} disabled={user.credits < 1}>Activer</button>
-                                        </>
-                                    }
-                                </div>
-                            </div>
-
-                        )}
+                        <table className="table table-centered">
+                            <tbody>
+                                {crediter.map(([cotiz, deja], ind) =>
+                                    <tr key={ind} className='list-group-item'>
+                                        <td className="cotisation-info">
+                                            <div>T{ind + 1}</div>
+                                            <small>{dateService.dateTrimester(ind + 1)}</small>
+                                        </td>
+                                        <td className="cotisation-status">
+                                            {deja ?
+                                                <div className="status-yes">Oui</div> :
+                                                <>
+                                                    <div className="status-no">Non</div>
+                                                    <button className="cotisation-activate-btn" onClick={cotiz} disabled={user.credits < 1}>Activer</button>
+                                                </>
+                                            }
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
             <div className="guidance-section">
-                <p>Tu as un appareil Apple ? Tu n'arrives pas à te connecter ?
-                    <Link className="guidance-link" to="/about-us"
-                        replace>Comment se connecter ?
-                    </Link>
+                <p>Tu as un appareil Apple ? Tu n'arrives pas à te connecter ? <Link className="guidance-link" to="/about-us" replace>Comment se connecter ?</Link>
                 </p>
                 <p>
-                    Comment cotiser ? Rends toi vite sur
-                    <Link className="guidance-link" to="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
+                    Comment cotiser ? Rends toi vite sur <Link
+                        className="guidance-link" to="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
                         target="_blank" // Open in new tab
                         rel="noopener noreferrer" // Security best practice
                         replace>HelloAsso
                     </Link>. Penses bien à indiquer le même mail pour le paiement sur HelloAsso.
                 </p>
                 <div>
-                    Si tu as des questions, n'hésite pas à nous contacter avec l'adresse <u>admin@rezal-mdm.com</u> ! <br />
+                    Si tu as des questions, n'hésite pas à nous contacter avec l'adresse <a href="mailto:admin@rezal-mdm.com">admin@rezal-mdm.com</a> ! <br />
                     S'il s'agit d'un problème de connexion, vérifie qu'il y a bien écrit Accés au réseau "autorisé" en haut de cette page (si ce n'est pas le cas il faut peut-être que tu actives tes crédits) et que tu utilises les bons identifiants/mot de passe (les même que pour ce site). S'il y a bien un problème, n'hésite pas à nous écrire, en spécifiant le type d'appareil qui a des problème, tout message d'erreur qui pourrait être utile, et la chambre dans laquelle tu résides.
                 </div>
             </div>

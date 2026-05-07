@@ -1,69 +1,61 @@
 // General for users
 
-.title-part{
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #333;
-    padding: 10px 0;
-    margin-bottom: 15px;
-    background-color: #f0f0f0;
-}
-
 /* User board - Minimalistic style */
 .user-board-container {
-    max-width: 90%;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    max-width: 1000px;
+    margin: 40px auto;
 
     @media (max-width: 768px) {
-        max-width: 95%; /* Adjusted max-width for small screens */
+        max-width: 95%;
+        /* Adjusted max-width for small screens */
         margin: 15px auto;
         padding: 15px;
     }
 }
 
 .welcome-section {
-    text-align: center;
+    text-align: left;
     margin-bottom: 10px;
-    padding: 10px;
-    background-color: #f5f5f5; /* Light grey from Default.scss */
-    border: 1px solid #e5e5e5;
 
     h1 {
         color: #333;
         margin-bottom: 5px;
         font-size: 1.8em;
+
         @media (max-width: 768px) {
             font-size: 1.8em;
         }
     }
+
     div {
         color: #555;
+
         @media (max-width: 768px) {
             font-size: 0.95em;
         }
     }
 }
 
-.user-info-card, .cotisations-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    margin-bottom: 10px;
-    flex: 1; /* Allow cards to grow and shrink */
+.user-info-card,
+.cotisations-card {
+    flex: 1;
 
     .title-part {
-        margin-top: 0;
         margin-bottom: 0;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 2px solid #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+
+        text-align: left;
+        font-size: 1.5em;
+        font-weight: bold;
     }
 }
 
 .board-columns-container {
     display: flex;
-    gap: 20px; /* Space between columns */
+    gap: 20px;
+    /* Space between columns */
     margin-bottom: 25px;
 
     @media (max-width: 768px) {
@@ -73,28 +65,24 @@
 
 .user-info-card table {
     width: 100%;
+    max-width: 100%;
     margin: 0;
-    border-collapse: collapse;
+    // border-collapse: collapse;
 
-    th, td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-        @media (max-width: 768px) {
-            padding: 10px;
-            font-size: 0.9em;
-        }
-    }
-    th {
-        background-color: #f8f8f8;
-        font-weight: 600;
-        color: #444;
-    }
+    margin-bottom: 10px;
+
     td {
-        background-color: #fff;
-    }
-    tr:last-child td {
-        border-bottom: none;
+        padding: 10px 15px;
+        border: 1px solid #eee;
+        font-size: 0.95em;
+        overflow: scroll;
+
+        &:first-child {
+            background-color: #fcfcfc;
+            width: 1%;
+            white-space: nowrap;
+            color: #666;
+        }
     }
 }
 
@@ -103,38 +91,28 @@
     width: 100%;
     margin: 0;
     border: none;
+
     .list-group-item {
-        border-bottom: 1px solid #ddd;
-        padding: 12px 15px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: #fff;
-        color: #333;
-        &:last-child {
-            border-bottom: none;
-        }
-    }
-    .list-group-item-success {
-        background-color: #e6ffe6; /* Lighter green for success */
-        color: #1a661a;
-    }
-    .list-group-item-danger {
-        background-color: #fff0f0; /* Lighter red for danger */
-        color: #cc0000;
     }
 
     .cotisation-info {
+        border: none;
         display: flex;
         flex-direction: column;
-        span {
+
+        div {
+            border-bottom: none;
             font-weight: bold;
-            margin-right: 0; /* No margin on span within info */
         }
+
         small {
             font-size: 0.8em;
             color: #777;
         }
+
         @media (max-width: 768px) {
             margin-bottom: 5px;
         }
@@ -143,63 +121,54 @@
     .cotisation-status {
         display: flex;
         align-items: center;
+        font-weight: 600;
+        border: none;
+
         .status-yes {
             color: #1a661a;
-            font-weight: 600;
         }
+
         .status-no {
             color: #cc0000;
-            font-weight: 600;
         }
-    }
 
-    span {
-        margin-right: 10px;
-    }
-    br {
-        display: none;
-    }
-}
+        .cotisation-activate-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.95em;
+            margin-left: 15px;
 
-.cotisation-activate-btn {
-    background-color: #28a745; /* Vibrant green */
-    color: white;
-    border: none;
-    padding: 8px 15px; /* Added padding */
-    cursor: pointer;
-    font-size: 0.95em;
-    font-weight: bold; /* Make button text bolder */
-    margin-left: 15px; /* Added margin */
-    transition: background-color 0.2s ease;
+            &:disabled {
+                background-color: #cccccc;
+                color: #666666;
+                cursor: not-allowed;
+            }
 
-    &:hover {
-        background-color: #218838; /* Darker green on hover */
-    }
-    &:disabled {
-        background-color: #cccccc; /* Greyed out background */
-        color: #666666; /* Darker text */
-        cursor: not-allowed; /* Indicate unclickable */
-    }
-    @media (max-width: 768px) {
-        margin-left: 10px;
-        padding: 6px 12px;
-        font-size: 0.85em;
+            @media (max-width: 768px) {
+                margin-left: 10px;
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+        }
     }
 }
 
 .guidance-section {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
     padding: 10px;
-    color: #343a40;
+    text-align: left;
 
-    p, div {
+    p,
+    div {
         margin-bottom: 15px;
         line-height: 1.6;
+
         @media (max-width: 768px) {
             font-size: 0.9em;
         }
     }
+
     u {
         font-weight: bold;
         color: #333;
@@ -207,31 +176,14 @@
     }
 }
 
-.guidance-link {
-    color: #007bff !important;
-    text-decoration: underline;
-    margin-left: 5px;
-    font-weight: 500;
-
-    &:hover {
-        color: #0056b3 !important;
-    }
-    @media (max-width: 768px) {
-        display: block; /* Make link block-level on small screens */
-        margin-left: 0;
-        margin-top: 5px;
-    }
-}
-
 /* UserRegister */
-
 #register-form {
-    display : flex;
+    display: flex;
     flex-direction: column;
-    justify-content : space-around;
-    margin : auto;
+    justify-content: space-around;
+    margin: auto;
     width: 50%;
-    min-height : 30vh;
+    min-height: 30vh;
 }
 
 #column-container {
@@ -240,15 +192,15 @@
 }
 
 #university-field {
-    display : flex;
+    display: flex;
     flex-direction: column;
-    justify-content : space-around;
+    justify-content: space-around;
     width: 100%;
 }
 
 #promotion-field {
-    display : flex;
+    display: flex;
     flex-direction: column;
-    justify-content : space-around;
+    justify-content: space-around;
     width: 100%;
 }

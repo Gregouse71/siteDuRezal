@@ -31,6 +31,7 @@ export default function AdminBoard(props: any) {
             <li>PVE2 (ancien serveur) : <a href="https://10.100.1.57:8006">https://10.100.1.57:8006</a></li>
             <li>Nuclias (gestion des bornes) : <a href="https://10.100.1.74:30001">https://10.100.1.74:30001</a></li>
             <li>Grafana (monitoring, uniquement de l'intérieur) : <a href="https://clio.rezal-mdm.com/grafana">https://clio.rezal-mdm.com/grafana</a></li>
+            <li>Doc : <a href="http://gitlab.rezal-mdm.com/root/administrator">https://clio.rezal-mdm.com/doc</a></li>
             <li>Doc (pas à jour, uniquement de l'intérieur) : <a href="https://clio.rezal-mdm.com/doc">https://clio.rezal-mdm.com/doc</a></li>
         </ul>
     </>)

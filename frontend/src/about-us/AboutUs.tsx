@@ -7,12 +7,11 @@ export function AboutUs() {
         <div className="about-us-layout">
             <nav className="toc-sidebar">
                 <div className="toc-sticky">
-                    <p className="toc-title">Sommaire</p>
                     <ul>
-                        <li><a href="#association">L'Association</a></li>
-                        <li><a href="#connexion">La Connexion</a></li>
-                        <li><a href="#cotisation">La Cotisation</a></li>
-                        <li><a href="#materiel">Le Matériel</a></li>
+                        <li><a href="#association">Le Rézal</a></li>
+                        <li><a href="#connexion">Connexion</a></li>
+                        <li><a href="#cotisation">Cotisation</a></li>
+                        <li><a href="#materiel">Préts</a></li>
                         <li><a href="#bureau">Le Bureau</a></li>
                     </ul>
                 </div>
@@ -26,7 +25,7 @@ export function AboutUs() {
 
                 <div id="connexion">
                     <h2>Connexion</h2>
-                    <p>Il est nécessaire de disposer d'un compte Rézal pour se connecter au réseau. Pour cela, rendez-vous <Link to="/resident/register">ici</Link>.</p>
+                    <p>Il est nécessaire de disposer d'un compte Rézal pour se connecter au réseau, et d'être cotisant pour le trimestre. Pour vous créer un compte, rendez-vous <Link to="/resident/register">ici</Link>.</p>
                     <p>Pour la connexion en filaire, seules certaines prises RJ45 se trouvant dans les chambres sont fonctionnelles. Elles sont généralement marquées <i>Info</i> ou <i>PC</i>, les autres étant souvent marquées <i>PTT</i>.</p>
                     <p>Pour la WiFi, le réseau principal est nommé <b>Rezal</b>. En cas de connexion instable, utilisez <b>Rezal-2.4GHz</b>.</p>
 
@@ -82,7 +81,7 @@ export function AboutUs() {
                     <div className="reflexe-box">
                         <strong>Cotiser maintenant :</strong> Rendez-vous sur <a href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26" target="_blank" rel="noopener noreferrer">HelloAsso</a>, et cotisez avec la <b>même adresse mail</b> qu'utilisée pour créer votre compte.
                     </div>
-                    <p>La cotisation est de <b>5€ par trimestre</b>. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau.</p>
+                    <p>La cotisation est de <b>5€ par trimestre</b>. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Une fois que vous avez cotisé pour un trimestre sur HelloAsso, vous pouvez activer votre accès à internet pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
                     <h3>Calendrier 2025-2026</h3>
                     <ul>
                         <li><b>Trimestre 1</b> : 10 septembre - 30 novembre</li>

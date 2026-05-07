@@ -6,13 +6,13 @@
 
 .main-section {
     padding: 60px 0;
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
 
     .main-title {
         font-size: 3.5rem;
-        font-weight: 600;
+        font-weight: 400;
     }
 
     .main-subtitle {
@@ -44,54 +44,64 @@
 }
 
 // Services Section
-.services-section {
-    margin-bottom: 30px;
+.services-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .section-title {
-        margin-bottom: 10px;
-        border-bottom: 2px solid #333;
+    .services-section {
+        margin-bottom: 30px;
 
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #212529;
-        margin-bottom: 10px;
-    }
-
-    .service-card-link {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-    }
-
-    .feature-card {
-        padding: 40px 30px;
-        border: 1px solid #ddd;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-
-        .card-icon {
-            margin-bottom: 25px;
-            color: #495057;
+        @media (min-width: 990px) {
+            width: 900px;
         }
 
-        .card-title {
-            font-size: 1.25rem;
+        .section-title {
+            margin-bottom: 10px;
+            border-bottom: 2px solid #333;
+
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 15px;
             color: #212529;
+            margin-bottom: 10px;
         }
 
-        .card-text {
-            color: #6c757d;
-            font-size: 0.95rem;
+        .service-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
 
-            a {
-                color: #007bff;
-                text-decoration: none;
+        .feature-card {
+            padding: 40px 30px;
+            border: 1px solid #ddd;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
 
-                &:hover {
-                    text-decoration: underline;
+            .card-icon {
+                margin-bottom: 25px;
+                color: #495057;
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+                font-weight: 700;
+                margin-bottom: 15px;
+                color: #212529;
+            }
+
+            .card-text {
+                color: #6c757d;
+                font-size: 0.95rem;
+
+                a {
+                    color: #007bff;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
             }
         }
@@ -99,9 +109,8 @@
 }
 
 // Responsive Adjustments
-@media (max-width: 991.98px) {
+@media (max-width: 990px) {
     .main-section {
-        padding: 60px 0;
         text-align: center;
 
         .main-title {
