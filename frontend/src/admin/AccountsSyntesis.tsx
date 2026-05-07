@@ -43,7 +43,7 @@ export default function AccountsSyntesis() {
 
     }
 
-    return <table className="table table-bordered table-striped table-sm" style={{textAlign : "center", margin : "auto", width : "80%"}}>
+    return <table className="table table-bordered table-striped table-sm" style={{textAlign : "center", width : "80%", margin: 0}}>
         <thead className="align-middle">
             <tr>
                 <th scope="col" rowSpan={3}> Période</th>

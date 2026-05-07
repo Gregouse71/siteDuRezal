@@ -6,6 +6,8 @@ import UserCreation from './admin-features/UserCreation';
 import UsersManager from './admin-features/UsersManager';
 import AdminBoard from './AdminBoard';
 import { useEffect } from 'react';
+import { faUsers, faUserPlus, faNetworkWired, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const adminBasePath = "/admin/login";
 
@@ -71,7 +73,7 @@ export default function Admin(){
             component : UserCreation
         },
         {
-            name : "Voir les comptes inscrits sur le radius", 
+            name : "Comptes Radius", 
             description : "Pour avoir la liste des comptes inscrits en temps réel sur le radius",
             routeName : "list-radius",
             component : ListRadiusUsers
@@ -79,13 +81,17 @@ export default function Admin(){
     ]
 
     const featureComponent = (feature : any) => {
-        return (<>
-            <h4 className="retour-board-admin" onClick={() => {navigate("/admin/board", {replace : true})}}> Retour </h4>
-            <h2 className="titre-page-admin"> {feature.name} </h2>
-            <div className="feature-view">
-                <feature.component />
+        return (
+            <div className="admin-feature-container">
+                <span className="retour-board-admin" onClick={() => {navigate("/admin/board", {replace : true})}}>
+                    <FontAwesomeIcon icon={faArrowLeft} /> Retour
+                </span>
+                <h2 className="titre-page-admin"> {feature.name} </h2>
+                <div className="feature-view">
+                    <feature.component />
+                </div>
             </div>
-        </>)
+        )
     }
 
     const FeaturesRoutes = featuresDefinition.map(

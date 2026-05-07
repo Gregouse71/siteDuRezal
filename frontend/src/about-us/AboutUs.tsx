@@ -78,17 +78,13 @@ export function AboutUs() {
 
                 <div id="cotisation">
                     <h2>Cotisation</h2>
-                    <div className="reflexe-box">
-                        <strong>Cotiser maintenant :</strong> Rendez-vous sur <a href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26" target="_blank" rel="noopener noreferrer">HelloAsso</a>, et cotisez avec la <b>même adresse mail</b> qu'utilisée pour créer votre compte.
-                    </div>
-                    <p>La cotisation est de <b>5€ par trimestre</b>. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Une fois que vous avez cotisé pour un trimestre sur HelloAsso, vous pouvez activer votre accès à internet pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
+                    <p>La cotisation est de 5€ par trimestre. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Elle peut être réglée par <a href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26" target="_blank" rel="noopener noreferrer">HelloAsso</a> <b>avec la même adresse mail qu'utilisée pour créer votre compte</b>, ou en espèces directement aurpès du trésorier. Une fois que vous avez cotisé pour un trimestre, vous pouvez <b>activer votre accès à internet</b> pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
                     <h3>Calendrier 2025-2026</h3>
                     <ul>
                         <li><b>Trimestre 1</b> : 10 septembre - 30 novembre</li>
                         <li><b>Trimestre 2</b> : 17 novembre - 22 février</li>
                         <li><b>Trimestre 3</b> : 16 février - 15 juillet</li>
                     </ul>
-                    <p>N'oubliez pas d'activer vos crédits dans l'onglet <b>Résident</b> pour activer votre accès une fois que vous avez payé.</p>
                 </div>
 
                 <div id="materiel">
