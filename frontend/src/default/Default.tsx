@@ -38,7 +38,7 @@ export function Default() {
                             Le but premier de l'association est de fournir un accès internet à ses adhérents résidents de la Maison des Mines et des Ponts, par WiFi et en filaire, pour 5€ par trimestre. Tous nos services sont hébergés dans les locaux de la résidence, nous utilisons des logiciels libres, et nous ne collectons que les données requises pour le fonctionnement des services et pour notre conformité réglementaire.
                             <div className="network-visuals">
                                 <div className="map-container">
-                                    <iframe width="425" height="300" src="https://www.openstreetmap.org/export/embed.html?bbox=2.3207330703735356%2C48.831334126213896%2C2.360901832580567%2C48.85248907447689&amp;layer=mapnik&amp;marker=48.8419041%2C2.3407878"></iframe>
+                                    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=2.3207330703735356%2C48.831334126213896%2C2.360901832580567%2C48.85248907447689&amp;layer=mapnik&amp;marker=48.8419041%2C2.3407878"></iframe>
                                 </div>
                                 <div className="mdm-image-container">
                                     <img src={mdmImg} alt="Maison des Mines" className="img-fluid mdm-img" />
