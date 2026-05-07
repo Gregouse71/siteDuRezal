@@ -78,7 +78,7 @@ export function AboutUs() {
 
                 <div id="cotisation">
                     <h2>Cotisation</h2>
-                    <p>La cotisation est de 5€ par trimestre. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Elle peut être réglée par <a href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26" target="_blank" rel="noopener noreferrer">HelloAsso</a> <b>avec la même adresse mail qu'utilisée pour créer votre compte</b>, ou en espèces directement aurpès du trésorier. Une fois que vous avez cotisé pour un trimestre, vous pouvez <b>activer votre accès à internet</b> pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
+                    <p>La cotisation est de 5€ par trimestre. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Elle peut être réglée par <a href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-fin-annee-2025-2026" target="_blank" rel="noopener noreferrer">HelloAsso</a> <b>avec la même adresse mail qu'utilisée pour créer votre compte</b>, ou en espèces directement aurpès du trésorier. Une fois que vous avez cotisé pour un trimestre, vous pouvez <b>activer votre accès à internet</b> pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
                     <h3>Calendrier 2025-2026</h3>
                     <ul>
                         <li><b>Trimestre 1</b> : 10 septembre - 30 novembre</li>
@@ -96,9 +96,9 @@ export function AboutUs() {
                     <h2>Le Bureau</h2>
                     <p>Le bureau de l'association est constitué de :</p>
                     <ul>
-                        <li><b>Grégoire Girardet</b> : Président</li>
-                        <li><b>Adrien Martinez</b> : Trésorier</li>
-                        <li><b>Mathis Liens</b> : Secrétaire Général</li>
+                        <li><b>Vicente Spada</b> : Président</li>
+                        <li><b>Rémy Level</b> : Trésorier</li>
+                        <li><b>Romain Giunta</b> : Secrétaire Général</li>
                     </ul>
                     <p>Vous pouvez nous contacter directement en cas de besoin.</p>
                     <p>La passaction a lieu à la fin du premier semestre. Peuvent se présenter au bureau tous les élève sde l'École des Mines de Paris, de l'École des Ponts et Chaussées et de l'ENSTA.</p>
