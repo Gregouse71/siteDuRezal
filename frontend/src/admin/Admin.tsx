@@ -1,13 +1,16 @@
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthService } from '../services/auth.service';
 import usePopupService from '../services/popup.service';
-import ListRadiusUsers from './admin-features/ListRadiusUsers/ListRadiusUsers';
-import UserCreation from './admin-features/UserCreation';
-import UsersManager from './admin-features/UsersManager';
-import AdminBoard from './AdminBoard';
-import { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { faUsers, faUserPlus, faNetworkWired, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const AdminBoard = lazy(() => import('./AdminBoard'));
+const ListRadiusUsers = lazy(() => import('./admin-features/ListRadiusUsers/ListRadiusUsers'));
+const UserCreation = lazy(() => import('./admin-features/UserCreation'));
+const UsersManager = lazy(() => import('./admin-features/UsersManager'));
+
+const Loading = () => <div style={{ padding: '20px', textAlign: 'center' }}>Chargement...</div>;
 
 const adminBasePath = "/admin/login";
 
@@ -98,14 +101,18 @@ export default function Admin(){
         feature => <Route key={feature.name + " route"} path={feature.routeName} element={<ProtectedRoute path={"/admin/" + feature.routeName} child={featureComponent(feature)}/>}/>
     )
 
-    return <Routes>
-        <Route path="login" element={<authService.LoginFormComponent redirectionPathIfSuccess="/admin/board" title="Connexion administrateur" displayAccountCreationLink={false}/>}></Route>
-        <Route path="board" element={<ProtectedRoute path="/admin/board" child={<AdminBoard featuresDefinition={featuresDefinition}/>}/> }/>
-            
-        {FeaturesRoutes}
-        <Route
-            path=""
-            element={<Navigate to="/admin/board" replace />}
-        />
-    </Routes>
-}
+    return (
+        <Suspense fallback={<Loading />}>
+            <Routes>
+                <Route path="login" element={<authService.LoginFormComponent redirectionPathIfSuccess="/admin/board" title="Connexion administrateur" displayAccountCreationLink={false}/>}></Route>
+                <Route path="board" element={<ProtectedRoute path="/admin/board" child={<AdminBoard featuresDefinition={featuresDefinition}/>}/> }/>
+
+                {FeaturesRoutes}
+                <Route
+                    path=""
+                    element={<Navigate to="/admin/board" replace />}
+                />
+            </Routes>
+        </Suspense>
+    )
+    }

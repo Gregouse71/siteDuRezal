@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import './Default.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faCodeBranch, faTicketAlt, faGamepad, faGlobe, faBook } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faCodeBranch, faTicketAlt, faGamepad, faGlobe, faBook, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import logoRezal from "../assets/img/logo rezal.png";
 import logoFederez from "../assets/img/federez.png"
+import mdmImg from "../assets/img/mdm.jpg";
 
 export function Default() {
     return (
@@ -14,7 +15,7 @@ export function Default() {
                         <div className="col-lg-6 main-content">
                             <h1 className="main-title">Bienvenue au Rézal</h1>
                             <p className="main-subtitle">
-                                Le Rézal est l'association chargée de l'exploitation du réseau informatique de la Maison des Mines et des Ponts.
+                                Le Rézal est l'association chargée de l'exploitation du réseau informatique de la <i><a style={{textDecoration: "inherit", color: "inherit"}} href="https://www.maisondesmines.com/">Maison des Mines et des Ponts</a></i>.
                             </p>
                             <div className="main-buttons">
                                 <Link to="resident/register" className="btn btn-success btn-lg">Inscription</Link>
@@ -33,14 +34,24 @@ export function Default() {
                 <div className="services-section">
                     <div className="container">
                         <h2 className="section-title">Le réseau</h2>
-                        <div className="section-subtitle">Le but premier de l'association est de fournir un accès internet à ses adhérents résidents de la Maison des Mines et des Ponts, par WiFi et en filaire, pour 5€ par trimestre. Nous proposons aussi un accès à des services web.</div>
+                        <div className="section-subtitle">
+                            Le but premier de l'association est de fournir un accès internet à ses adhérents résidents de la Maison des Mines et des Ponts, par WiFi et en filaire, pour 5€ par trimestre. Tous nos services sont hébergés dans les locaux de la résidence, nous utilisons des logiciels libres, et nous ne collectons que les données requises pour le fonctionnement des services et pour notre conformité réglementaire.
+                            <div className="network-visuals">
+                                <div className="map-container">
+                                    <iframe width="425" height="300" src="https://www.openstreetmap.org/export/embed.html?bbox=2.3207330703735356%2C48.831334126213896%2C2.360901832580567%2C48.85248907447689&amp;layer=mapnik&amp;marker=48.8419041%2C2.3407878"></iframe>
+                                </div>
+                                <div className="mdm-image-container">
+                                    <img src={mdmImg} alt="Maison des Mines" className="img-fluid mdm-img" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div className="services-section">
                     <div className="container">
                         <h2 className="section-title">Les Services</h2>
-                        <div className="section-subtitle">Le Rézal héberge différents services et projets des élèves de l'École des Mines.</div>
+                        <div className="section-subtitle">Le Rézal héberge différents services et projets des élèves de l'École des Mines dans le but de promouvoir l'indépendance des activités des élèves. Ces services sont hébergés sur nos propres serveurs, ne collectent pas de données personnelles et ne participent pas au financement d'activité nuisibles.</div>
 
                         <div className="row g-4 justify-content-center mt-2">
                             <div className="col-md-6 col-lg-3">

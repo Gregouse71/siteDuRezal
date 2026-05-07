@@ -1,11 +1,15 @@
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuthService } from "../services/auth.service"
 import usePopupService from "../services/popup.service";
-import UserBoard from "./UserBoard";
-import UserRegister from "./UserRegister";
-import UserVerifyEmail from "./UserVerifyEmail";
-import UserNewPassword from "./PasseOublie";
-import DisplayID from "./IdDisplay";
+import React, { Suspense, lazy } from "react";
+
+const UserBoard = lazy(() => import("./UserBoard"));
+const UserRegister = lazy(() => import("./UserRegister"));
+const UserVerifyEmail = lazy(() => import("./UserVerifyEmail"));
+const UserNewPassword = lazy(() => import("./PasseOublie"));
+const DisplayID = lazy(() => import("./IdDisplay"));
+
+const Loading = () => <div style={{ padding: '20px', textAlign: 'center' }}>Chargement...</div>;
 
 const pathBaseUsers = "/resident/login"
 
@@ -47,18 +51,21 @@ export default function Users() {
 
     const authService = useAuthService();
 
-    return <Routes>
-        <Route path="login" element={<authService.LoginFormComponent redirectionPathIfSuccess="/resident/board" title="Connexion résident" displayAccountCreationLink={true}/>}/>
-        <Route path="board" element={<ProtectedRoute path="/resident/board" child={<UserBoard/>}/>}/>
-        <Route path="register" element={<UserRegister/>}/>
-        <Route path="verify-email/:idString/:verificationCode" element={<UserVerifyEmail/>}/>
-        <Route path="new-password" element={<UserNewPassword/>}/>
-        <Route path="get-password/:token" element={<DisplayID/>}/>
+    return (
+        <Suspense fallback={<Loading />}>
+            <Routes>
+                <Route path="login" element={<authService.LoginFormComponent redirectionPathIfSuccess="/resident/board" title="Connexion résident" displayAccountCreationLink={true}/>}/>
+                <Route path="board" element={<ProtectedRoute path="/resident/board" child={<UserBoard/>}/>}/>
+                <Route path="register" element={<UserRegister/>}/>
+                <Route path="verify-email/:idString/:verificationCode" element={<UserVerifyEmail/>}/>
+                <Route path="new-password" element={<UserNewPassword/>}/>
+                <Route path="get-password/:token" element={<DisplayID/>}/>
 
-        <Route
-            path="*"
-            element={<Navigate to="/resident/board" replace />}
-        />
-    </Routes>
-
-}
+                <Route
+                    path="*"
+                    element={<Navigate to="/resident/board" replace />}
+                />
+            </Routes>
+        </Suspense>
+    )
+    }

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import toNumber from "lodash/toNumber";
 import { promotions, paymentTypes } from "../assets/lists";
 
 
@@ -26,24 +26,24 @@ export class AccountXLSX {
     "Date de creation": string;         // Format : dd/mm/yyyy
 
     constructor(data : any) { // Data comes from an excel sheet, every value is a string in the data object
-        this["#"] = data["#"] !== undefined ? _.toNumber(data["#"]) : -1;
-        this["Acces a internet"] = data["Acces a internet"] !== undefined ? _.toNumber(data["Acces a internet"]) : 0;
-        this.Admin = data.Admin !== undefined ? _.toNumber(data.Admin) : 0;
+        this["#"] = data["#"] !== undefined ? toNumber(data["#"]) : -1;
+        this["Acces a internet"] = data["Acces a internet"] !== undefined ? toNumber(data["Acces a internet"]) : 0;
+        this.Admin = data.Admin !== undefined ? toNumber(data.Admin) : 0;
         this.Prenom = data.Prenom !== undefined ? data.Prenom : "";
         this.Nom = data.Nom !== undefined ? data.Nom : "";
         this.Login = data.Login !== undefined ? data.Login : "";
         this["Mot de passe"] = data["Mot de passe"] !== undefined ? data["Mot de passe"] : "";
         this.Email = data.Email !== undefined ? data.Email : "";
-        this["Email verifie"] = data["Email verifie"] !== undefined ? _.toNumber(data["Email verifie"]) : 0;
+        this["Email verifie"] = data["Email verifie"] !== undefined ? toNumber(data["Email verifie"]) : 0;
         this.Chambre = data.Chambre !== undefined ? data.Chambre : "";
         this.Promotion = data.Promotion !== undefined ? (promotions.includes(data.Promotion) ? data.Promotion : promotions[0]) : promotions[0];
         this["Moyen de paiement T1"] = data["Moyen de paiement T1"] !== undefined ? (paymentTypes.includes(data["Moyen de paiement T1"]) ? data["Moyen de paiement T1"] : paymentTypes[0]) : paymentTypes[0];
-        this["T1 paye"] = data["T1 paye"] !== undefined ? _.toNumber(data["T1 paye"]) : 0;
+        this["T1 paye"] = data["T1 paye"] !== undefined ? toNumber(data["T1 paye"]) : 0;
         this["Date paiement T1"] = data["Date paiement T1"] !== undefined ? data["Date paiement T1"] : "";
-        this["T2 paye"] = data["T2 paye"] !== undefined ? _.toNumber(data["T2 paye"]) : 0;
+        this["T2 paye"] = data["T2 paye"] !== undefined ? toNumber(data["T2 paye"]) : 0;
         this["Moyen de paiement T2"] = data["Moyen de paiement T2"] !== undefined ? (paymentTypes.includes(data["Moyen de paiement T2"]) ? data["Moyen de paiement T2"] : paymentTypes[0]) : paymentTypes[0];
         this["Date paiement T2"] = data["Date paiement T2"] !== undefined ? data["Date paiement T2"] : "";
-        this["T3 paye"] = data["T3 paye"] !== undefined ? _.toNumber(data["T3 paye"]) : 0;
+        this["T3 paye"] = data["T3 paye"] !== undefined ? toNumber(data["T3 paye"]) : 0;
         this["Moyen de paiement T3"] = data["Moyen de paiement T3"] !== undefined ? (paymentTypes.includes(data["Moyen de paiement T3"]) ? data["Moyen de paiement T3"] : paymentTypes[0]) : paymentTypes[0];
         this["Date paiement T3"] = data["Date paiement T3"] !== undefined ? data["Date paiement T3"] : "";
         this["Date de creation"] = data["Date de creation"] !== undefined ? data["Date de creation"] : "";

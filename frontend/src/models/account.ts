@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { promotions, paymentTypes } from "../assets/lists";
 
 export class Account {
@@ -59,7 +59,7 @@ export class Account {
         Object.keys(this)
           .filter(key => key !== "message") // Don't want comparaison on the message field
           .forEach(
-            key => {if (!_.isEqual((this as any)[key], (otherAccount as any)[key])) (diff as any)[key] = (this as any)[key]}
+            key => {if (!isEqual((this as any)[key], (otherAccount as any)[key])) (diff as any)[key] = (this as any)[key]}
           )
         return diff
       }

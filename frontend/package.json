@@ -1,6 +1,7 @@
 {
   "name": "site_rezal",
   "version": "2.1-2025",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -20,11 +21,9 @@
     "axios": "^1.11.0",
     "bootstrap": "^5.1.3",
     "file-saver": "^2.0.5",
-    "font-awesome": "^4.7.0",
     "lodash": "^4.17.21",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-markdown": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "recoil": "^0.7.0",
     "sass": "^1.50.0",
