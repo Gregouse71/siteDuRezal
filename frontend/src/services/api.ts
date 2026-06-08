@@ -21,11 +21,9 @@ httpInstance.interceptors.request.use(
 
 httpInstance.interceptors.response.use(
   (response : any) => {
-    console.log({ responseReceivedd : response });
     return response
   },
   error => {
-    console.log({ errorReceived : error });
     return Promise.reject(error)
   }
 );

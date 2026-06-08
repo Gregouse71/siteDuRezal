@@ -16,8 +16,6 @@ const adminBasePath = "/admin/login";
 
 
 function ProtectedRoute(props : any) {
-    console.log("Render protected route")
-
     const authService = useAuthService();
     const popupService = usePopupService();
     const navigate = useNavigate();

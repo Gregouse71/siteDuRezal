@@ -7,11 +7,29 @@ import { Account } from "../models/account";
 import usePopupService from "../services/popup.service";
 import httpInstance from "../services/api";
 import './Users.scss'
+import { useQuery } from "@tanstack/react-query";
 
 export default function UserBoard() {
     const { user, setUser } = useAuthService();
     const dateService = useDateService();
     const popupService = usePopupService();
+
+    const getMyIp = () => {
+            return new Promise((resolve, reject) => {
+                httpInstance.get('my_ip')
+                .then(response => {
+                    const myIp = response.data;
+                    resolve(myIp);
+                })
+                .catch(error => reject(error))
+            })
+        };
+
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['loginsInRadius'],
+        queryFn: getMyIp,
+    });
+    const myIp = isLoading ? "Chargement..." : isError ? "Erreur" : data.client_ip;
 
     const cotiser = (trimestre) => {
         httpInstance.post('wifi/cotiser', trimestre)
@@ -35,8 +53,7 @@ export default function UserBoard() {
         [() => cotiser({ T1: true }), user.cotizT1],
         [() => cotiser({ T2: true }), user.cotizT2],
         [() => cotiser({ T3: true }), user.cotizT3],
-    ]
-    console.log(crediter)
+    ];
 
     return <>
         <div className="user-board-container">
@@ -69,6 +86,10 @@ export default function UserBoard() {
                                 <tr>
                                     <td>Identifiant</td>
                                     <td><div className="overflow-handler">{user.uid}</div></td>
+                                </tr>
+                                <tr>
+                                    <td>Adresse IP</td>
+                                    <td>{myIp}</td>
                                 </tr>
                             </tbody>
                         </table>

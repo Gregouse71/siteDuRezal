@@ -35,8 +35,6 @@ export default function UsersManager() {
 
     const [query, setQuery] = useState("");
 
-    // console.log({newCurrentsAccounts : currentAccounts, accountFiltered : accountFiltered, databaseAccounts : databaseAccounts});
-
     useEffect(() => { // Will only trigger when UsersManager is called for the first time
         adminService.updateDatabaseView()
             .then(() => {})

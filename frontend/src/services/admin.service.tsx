@@ -75,7 +75,6 @@ export function useAdminService() {
         const promiseArray = uidsToDelete.map((toDelete) =>
             httpInstance.delete('users/'+toDelete)
         );
-        console.log(promiseArray);
         return Promise.allSettled(promiseArray);
     }
 

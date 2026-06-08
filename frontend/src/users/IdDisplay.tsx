@@ -63,7 +63,6 @@ export default function DisplayID() {
         accountService.setNewPassword({ token: token, password: password })
             .then((response: any) => {
                 popupService.changePopup({ status: "success", message: "Mot de passe créé" })
-                console.log(response);
                 navigate("/");
             })
             .catch(error => {

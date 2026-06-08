@@ -14,7 +14,6 @@ export default function UserNewPassword() {
 
     const handleInputChange = (e: any) => {
         const { value } = e.target;
-        console.log (value);
         setEmail( value );
     };
 

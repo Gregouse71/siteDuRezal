@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
@@ -39,3 +39,8 @@ async def is_alive () -> bool:
 @app.get ("/apple_profile")
 async def get_apple_profile ():
     return FileResponse (profile_file, media_type='application/octet-stream',filename=profile_file)
+
+@app.get ("/my_ip")
+async def my_ip (request: Request):
+    client_ip = request.client.host
+    return {"client_ip": client_ip} 
