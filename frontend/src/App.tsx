@@ -3,9 +3,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './header_footer/Header';
 import { Footer } from './header_footer/Footer';
 import Popup from './popup/popup';
+import ScrollToTop from './components/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
 
-const Default = lazy(() => import('./default/Default').then(m => ({ default: m.Default })));
+const Default = lazy(() => import('./default/Default'));
 const AboutUs = lazy(() => import('./about-us/AboutUs').then(m => ({ default: m.AboutUs })));
 const Admin = lazy(() => import('./admin/Admin'));
 const Users = lazy(() => import('./users/Users'));
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className="App">
+        <ScrollToTop />
         <Header/>
         <div id="main-view">
           <Suspense fallback={<Loading />}>

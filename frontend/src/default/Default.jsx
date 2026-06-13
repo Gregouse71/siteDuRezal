@@ -1,12 +1,21 @@
 import { Link } from 'react-router-dom';
 import './Default.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faCodeBranch, faTicketAlt, faGamepad, faGlobe, faBook, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faCodeBranch, faGamepad, faBrush, faTicket } from '@fortawesome/free-solid-svg-icons';
 import logoRezal from "../assets/img/logo rezal.png";
 import logoFederez from "../assets/img/federez.png"
 import mdmImg from "../assets/img/mdm.jpg";
 
-export function Default() {
+const Default = () => {
+    const elements = [
+        { icon: faUsers, title: <a href="https://eleves.rezal-mdm.com/public" target="_blank" rel="noreferrer" className="service-card-link">Portail des élèves</a>, content: <>Toutes les infos sur les élèves, les assos, et les événements de l'école.</> },
+        { icon: faCodeBranch, title: <a href="https://gitlab.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Instance GitLab</a>, content: <>Pour héberger tous les projets et collaborer avec git.</> },
+        { icon: faUsers, title: <a href="https://bda.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Site web du BDA</a>, content: <>Pour PAPSer les places pour tous les événements. Retrouvez aussi tous les livres de la <a href="https://bibliotheque-bda.rezal-mdm.com" target="_blank" rel="noreferrer">bibliothèque du BDA</a>.</> },
+        { icon: faBrush, title: <a href="https://mail-colorer.rezal-mdm.com/" target="_blank" rel="noreferrer" className="service-card-link">Colorieur de mails du BDA</a>, content: <>Pour créer plus facilement des mails de toutes les couleurs.</> },
+        { icon: faTicket, title: <a href="https://www.partycrasher.fr/" target="_blank" rel="noreferrer" className="service-card-link">Partycrasher</a>, content: <>Pour revendre les billets de soirées dont vous ne voulez plus.</> },
+        { icon: faGamepad, title: <>Serveur de jeu de Proga'min</>, content: <>Pour jouer à Minecraft, Factorio et autres jeux en LAN et à distance.</> },
+    ];
+
     return (
         <div className="home-wrapper">
             <div className="main-section">
@@ -15,7 +24,7 @@ export function Default() {
                         <div className="col-lg-6 main-content">
                             <h1 className="main-title">Bienvenue au Rézal</h1>
                             <p className="main-subtitle">
-                                Le Rézal est l'association chargée de l'exploitation du réseau informatique de la <i><a style={{textDecoration: "inherit", color: "inherit"}} href="https://www.maisondesmines.com/">Maison des Mines et des Ponts</a></i>.
+                                Le Rézal est l'association chargée de l'exploitation du réseau informatique de la <i><a style={{ textDecoration: "inherit", color: "inherit" }} href="https://www.maisondesmines.com/">Maison des Mines et des Ponts</a></i>.
                             </p>
                             <div className="main-buttons">
                                 <Link to="resident/register" className="btn btn-success btn-lg">Inscription</Link>
@@ -54,47 +63,18 @@ export function Default() {
                         <div className="section-subtitle">Le Rézal héberge différents services et projets des élèves de l'École des Mines dans le but de promouvoir l'indépendance des activités des élèves. Ces services sont hébergés sur nos propres serveurs, ne collectent pas de données personnelles et ne participent pas au financement d'activité nuisibles.</div>
 
                         <div className="row g-4 justify-content-center mt-2">
-                            <div className="col-md-6 col-lg-3">
+                            {elements.map(({ icon, title, content }, i) => <>
+                            <div className="col-md-6 col-lg-3" key={i}>
                                 <div className="feature-card h-100">
                                     <div className="card-icon">
-                                        <FontAwesomeIcon icon={faUsers} size="3x" />
+                                        <FontAwesomeIcon icon={icon} size="3x" />
                                     </div>
-                                    <h4 className="card-title"><a href="https://eleves.rezal-mdm.com/public" target="_blank" rel="noreferrer" className="service-card-link">Portail des élèves</a></h4>
-                                    <p className="card-text">Toutes les infos sur les élèves, les assos, et les événements de l'école.</p>
+                                    <h4 className="card-title">{title}</h4>
+                                    <p className="card-text">{content}</p>
                                 </div>
                             </div>
-
-                            <div className="col-md-6 col-lg-3">
-                                <div className="feature-card h-100">
-                                    <div className="card-icon">
-                                        <FontAwesomeIcon icon={faCodeBranch} size="3x" />
-                                    </div>
-                                    <h4 className="card-title"><a href="https://gitlab.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Instance GitLab</a></h4>
-                                    <p className="card-text">Pour héberger tous les projets et collaborer avec git.</p>
-                                </div>
-                            </div>
-
-                            <div className="col-md-6 col-lg-3">
-                                <div className="feature-card h-100">
-                                    <div className="card-icon">
-                                        <FontAwesomeIcon icon={faTicketAlt} size="3x" />
-                                    </div>
-                                    <h4 className="card-title"><a href="https://bda.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Site web du BDA</a></h4>
-                                    <p className="card-text">
-                                        Pour PAPSer les places pour tous les événements. Retroubez aussi tous les livres de la <a href="https://bibliotheque-bda.rezal-mdm.com" target="_blank" rel="noreferrer">bibliothèque du BDA</a>.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="col-md-6 col-lg-3">
-                                <div className="feature-card h-100">
-                                    <div className="card-icon">
-                                        <FontAwesomeIcon icon={faGamepad} size="3x" />
-                                    </div>
-                                    <h4 className="card-title">Serveur de jeu de Proga'min</h4>
-                                    <p className="card-text">Pour jouer à Minecraft, Factorio et autres jeux en LAN et à distance.</p>
-                                </div>
-                            </div>
+                        </>
+                        )}
                         </div>
                     </div>
                 </div>
@@ -110,3 +90,5 @@ export function Default() {
         </div>
     );
 }
+
+export default Default;
