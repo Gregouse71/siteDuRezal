@@ -5,6 +5,7 @@ import { Footer } from './header_footer/Footer';
 import Popup from './popup/popup';
 import ScrollToTop from './components/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
+import FAQ from './faq/FAQ';
 
 const Default = lazy(() => import('./default/Default'));
 const AboutUs = lazy(() => import('./about-us/AboutUs').then(m => ({ default: m.AboutUs })));
@@ -25,7 +26,8 @@ function App() {
               <Route path="" element={<Default />}></Route>
               <Route path="about-us/*" element={<AboutUs/>}></Route> 
               <Route path="admin/*" element={<Admin/>}></Route> 
-              <Route path="resident/*" element={<Users/>}></Route> 
+              <Route path="resident/*" element={<Users/>}></Route>
+              <Route path="faq/" element={<FAQ/>}></Route>
               <Route path="*" element={<Navigate to="" replace />}></Route> 
             </Routes>
           </Suspense>
