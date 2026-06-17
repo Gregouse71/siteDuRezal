@@ -1,3 +1,7 @@
+stages:
+  - build
+  - deploy
+
 pages:
   stage: deploy
   script:
@@ -8,3 +12,11 @@ pages:
 
   rules:
     - if: $CI_COMMIT_BRANCH == "prod"
+
+build-front:
+  stage: build #Actually it does not build for now, it only lints
+  image: node
+  script:
+    - cd frontend
+    - npm ci
+    - npx eslint
