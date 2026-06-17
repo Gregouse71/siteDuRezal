@@ -15,6 +15,7 @@ pages:
 
 build-front:
   stage: build #Actually it does not build for now, it only lints
+  tags: ["docker"]
   image: node
   script:
     - cd frontend
