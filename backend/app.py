@@ -10,8 +10,8 @@ from listing_router import listing_router
 from helloasso import helloasso_router
 
 # TODO : passer à l'utilisation du certificat letsencrypt : il suffit de changer le fichier
-profile_file = "Rézal.mobileconfig"
-# profile_file = "Rézal-lets.mobileconfig"
+#profile_file = "Rézal.mobileconfig"
+profile_file = "Rézal-lets.mobileconfig"
 
 app = FastAPI(
     root_path="/api"
@@ -20,7 +20,15 @@ app = FastAPI(
 #TODO fort : Mettre une origine qui est juste notre site, on n'est pas censé pouvoir utiliser l'API depuis n'importe où
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins = [
+    # prod
+    "https://www.rezal-mdm.com",
+    "https://rezal-mdm.com",
+    
+    # local
+    "http://localhost:5173",
+    "http://localhost:3000",
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
