@@ -1,4 +1,4 @@
-@import "../index.scss";
+@use "../index.scss";
 
 .about-us-layout {
     display: flex;
@@ -13,16 +13,6 @@
     }
 }
 
-
-.about-us-content {
-    div {
-        h3 {
-            font-size: 1.2em;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-    }
-}
 
 .method-item {
     h3 {

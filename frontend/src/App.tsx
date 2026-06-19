@@ -4,12 +4,12 @@ import { Footer } from './header_footer/Footer';
 import Popup from './popup/popup';
 import ScrollToTop from './components/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
-import FAQ from './faq/FAQ';
 
 const Default = lazy(() => import('./default/Default'));
 const AboutUs = lazy(() => import('./about-us/AboutUs').then(m => ({ default: m.AboutUs })));
 const Admin = lazy(() => import('./admin/Admin'));
 const Users = lazy(() => import('./users/Users'));
+const FAQ = lazy(() => import('./faq/FAQ'));
 
 const Loading = () => <div style={{ padding: '20px', textAlign: 'center' }}>Chargement...</div>;
 

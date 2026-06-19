@@ -20,7 +20,7 @@ export function Header() {
                     <NavLink to="/about-us">Infos</NavLink>
                 </div>
                 <div className="item">
-                    <NavLink to="/faq">FAQ</NavLink>
+                    <NavLink to="/faq">Besoin d'aide ?</NavLink>
                 </div>
                 <div className="item">
                     <NavLink to="/resident">Résident</NavLink>

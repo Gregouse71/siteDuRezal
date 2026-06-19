@@ -40,6 +40,12 @@ p {
     text-align: left;
 }
 
+.about-us-content div h3 {
+    font-size: 1.2em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
 .board-columns-container h3 {
     font-size: 1.6em;
     border-bottom: 2px solid $dark-grey;
@@ -68,12 +74,17 @@ p {
     }
 }
 
+
+.about-us-layout {
+    display: flex;
+    align-items: flex-start;
+}
+
 // Tables
 .config-table,
 .user-info-card table {
     width: 100%;
     margin-bottom: 10px;
-    
     td {
         padding: 10px 15px;
         border: 1px solid $lighter-grey;
