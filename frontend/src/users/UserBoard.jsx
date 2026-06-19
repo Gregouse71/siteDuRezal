@@ -62,7 +62,7 @@ export default function UserBoard() {
 
             <div className="board-columns-container">
                 <div className="user-info-card">
-                    <p className="title-part">Informations générales</p>
+                    <h3>Informations générales</h3>
 
                     <div id="container-table">
                         <table className="table table-centered">
@@ -95,7 +95,7 @@ export default function UserBoard() {
                 </div>
 
                 <div className="cotisations-card">
-                    <p className="title-part">Récapitulatif cotisations</p>
+                    <h3>Récapitulatif cotisations</h3>
 
                     <div className="list-group">
                         <table className="table table-centered">

@@ -1,17 +1,5 @@
 // General for users
 
-/* User board - Minimalistic style */
-.user-board-container {
-    max-width: 1000px;
-    margin: 40px auto;
-
-    @media (max-width: 768px) {
-        max-width: 95%;
-        /* Adjusted max-width for small screens */
-        margin: 15px auto;
-        padding: 15px;
-    }
-}
 
 .welcome-section {
     text-align: left;
@@ -39,17 +27,6 @@
 .user-info-card,
 .cotisations-card {
     flex: 1;
-
-    .title-part {
-        margin-bottom: 0;
-        border-bottom: 2px solid #333;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-
-        text-align: left;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
 }
 
 .board-columns-container {
@@ -64,24 +41,12 @@
 }
 
 .user-info-card table {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    // border-collapse: collapse;
-
-    margin-bottom: 10px;
-
     td {
-        padding: 10px 15px;
-        border: 1px solid #eee;
-        font-size: 0.95em;
         overflow: scroll;
 
         &:first-child {
-            background-color: #fcfcfc;
             width: 1%;
             white-space: nowrap;
-            color: #666;
         }
     }
 }

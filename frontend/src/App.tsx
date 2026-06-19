@@ -1,4 +1,3 @@
-import './App.scss';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './header_footer/Header';
 import { Footer } from './header_footer/Footer';
