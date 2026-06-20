@@ -79,7 +79,7 @@ export function useAdminService() {
     }
 
     const filterAccounts = (accounts : Map<number, Account>, userFilters : any) => {
-        var selectedAccounts : Account[] = [];
+        const selectedAccounts : Account[] = [];
         accounts.forEach(account => {
             if (doesAccountVerifyAllFilters(account, userFilters)) selectedAccounts.push(account)
         })

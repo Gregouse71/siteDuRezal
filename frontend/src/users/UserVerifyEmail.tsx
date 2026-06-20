@@ -6,7 +6,7 @@ import usePopupService from "../services/popup.service";
 
 export default function UserVerifyEmail() {
 
-    let { idString, verificationCode } = useParams();
+    const { idString, verificationCode } = useParams();
     const accountService = useAccountService();
     const navigate = useNavigate();
     const popupService = usePopupService();

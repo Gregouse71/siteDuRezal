@@ -2,8 +2,15 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthService } from '../services/auth.service';
 import usePopupService from '../services/popup.service';
 import React, { Suspense, lazy, useEffect } from 'react';
-import { faUsers, faUserPlus, faNetworkWired, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+export interface FeatureDefinition {            
+    name : string, 
+    description : string,
+    routeName : string,
+    component : React.ComponentType,
+}
 
 const AdminBoard = lazy(() => import('./AdminBoard'));
 const ListRadiusUsers = lazy(() => import('./admin-features/ListRadiusUsers/ListRadiusUsers'));
@@ -15,7 +22,7 @@ const Loading = () => <div style={{ padding: '20px', textAlign: 'center' }}>Char
 const adminBasePath = "/admin/login";
 
 
-function ProtectedRoute(props : any) {
+function ProtectedRoute(props : {path:string, child:React.ReactNode}) {
     const authService = useAuthService();
     const popupService = usePopupService();
     const navigate = useNavigate();
@@ -60,7 +67,7 @@ export default function Admin(){
     const authService = useAuthService();
     const navigate = useNavigate();
 
-    const featuresDefinition = [ // Name, description & component to display
+    const featuresDefinition :FeatureDefinition[]= [ // Name, description & component to display
         {
             name : "Gestion des comptes", 
             description : "Pour gérer les comptes présents sur la base de données",
@@ -81,7 +88,7 @@ export default function Admin(){
         },
     ]
 
-    const featureComponent = (feature : any) => {
+    const featureComponent = (feature : FeatureDefinition) => {
         return (
             <div className="admin-feature-container">
                 <span className="retour-board-admin" onClick={() => {navigate("/admin/board", {replace : true})}}>

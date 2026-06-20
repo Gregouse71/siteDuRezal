@@ -62,10 +62,6 @@ export function useAuthService() {
         resetUser();
     }
 
-    const updateUser = () => {
-
-    }
-
     const LoginFormComponent = (props: any) => {
 
         const popupService = usePopupService();

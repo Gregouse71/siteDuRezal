@@ -70,7 +70,7 @@ export default function useConversionService() {
     }
 
     const AccountToXLSXAccount = (account : Account) => {
-        var newAccountXLSX = new AccountXLSX({});
+        const newAccountXLSX = new AccountXLSX({});
         newAccountXLSX["#"] = account.id;
         newAccountXLSX["Acces a internet"] = account.acces_wifi? 1 : 0;
         newAccountXLSX.Admin = account.is_admin? 1 : 0;
@@ -96,7 +96,7 @@ export default function useConversionService() {
       }
   
       const XLSXAccountToAccount = (accountXLSX : AccountXLSX) => {
-        var newAccount = new Account({});
+        const newAccount = new Account({});
         newAccount.id = accountXLSX["#"];
         newAccount.acces_wifi = accountXLSX["Acces a internet"] === 1 ? true : false;
         newAccount.is_admin = accountXLSX.Admin === 1 ? true : false;

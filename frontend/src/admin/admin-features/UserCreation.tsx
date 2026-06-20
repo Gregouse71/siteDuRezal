@@ -85,7 +85,7 @@ export default function UserCreation() {
     const onCreationNewAccounts = () => {
         adminService.createAccounts(users)
             .then(response => {
-                var isSucessForAll = true;
+                let isSucessForAll = true;
                 const accountCreationDataArray = response.data;
                 const newComputedUsers = users
                     .map((account, index) => {
@@ -120,7 +120,7 @@ export default function UserCreation() {
                             "Email" : account.email
                         }
                     })
-                    .filter((accData, index) => accountCreationDataArray[index].success)
+                    .filter((_accData, index) => accountCreationDataArray[index].success)
 
                 if (usersSuccessfullyCreated.length > 0) CSVService.exportAsCSV(usersSuccessfullyCreated, "Compte créés");
 

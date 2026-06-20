@@ -13,7 +13,7 @@ const Loading = () => <div style={{ padding: '20px', textAlign: 'center' }}>Char
 
 const pathBaseUsers = "/resident/login"
 
-function ProtectedRoute(props : any) {
+function ProtectedRoute(props : {path:string, child:React.ReactNode}) {
 
     const authService = useAuthService();
     const popupService = usePopupService();
