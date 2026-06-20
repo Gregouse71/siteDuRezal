@@ -12,7 +12,7 @@ export default function useCSVService() {
     }
 
     const importCSVToList = (event : any) => {
-        return new Promise<any[]>(async (resolve, _) => {
+        return new Promise<any[]>((resolve) => {
 
             const [file] = event.target.files;
             const reader = new FileReader();

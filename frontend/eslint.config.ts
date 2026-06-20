@@ -12,7 +12,13 @@ export default defineConfig([
     rules: {
       "react/react-in-jsx-scope": "off",
       "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}],
-      "@typescript-eslint/no-unused-vars" : "warn",
+      "@typescript-eslint/no-unused-vars" : ["error",{
+        "args":"all",
+        "argsIgnorePattern": "^_", 
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+      }],
+      "@typescript-eslint/no-explicit-any" : "warn",
     },
   },
 ]);

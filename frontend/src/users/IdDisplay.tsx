@@ -45,7 +45,7 @@ const calculatePasswordStrength = (password: string) => {
 };
 
 export default function DisplayID() {
-    let { token } = useParams();
+    const { token } = useParams();
     const navigate = useNavigate();
 
     const accountService = useAccountService();
@@ -61,7 +61,7 @@ export default function DisplayID() {
 
     const onChange = () => {
         accountService.setNewPassword({ token: token, password: password })
-            .then((response: any) => {
+            .then((_response: any) => {
                 popupService.changePopup({ status: "success", message: "Mot de passe créé" })
                 navigate("/");
             })

@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { useAdminService } from "../services/admin.service";
-import { universities, paymentTypes, promotions } from "../assets/lists";
+import { paymentTypes, promotions } from "../assets/lists";
 import { useEffect } from "react";
 
 export default function AccountsSyntesis() {
@@ -12,7 +12,7 @@ export default function AccountsSyntesis() {
         adminService.updateDatabaseView()
     }, [])
 
-    const TrimesterRow = (props : any) => {
+    const TrimesterRow = (props : {trimesterNum: number}) => {
         const trimesterNum = props.trimesterNum.toString();
         const accountThatHavePaid = accounts
                                         .map(IdAndAccount => IdAndAccount[1])

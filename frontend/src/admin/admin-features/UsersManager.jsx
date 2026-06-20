@@ -1,4 +1,4 @@
-import { Button, FormControl, TextField } from "@mui/material";
+import { Button, } from "@mui/material";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -32,8 +32,6 @@ export default function UsersManager() {
     const [databaseAccounts, setDatabaseAccounts] = useRecoilState(databaseAccountsState);
     const [currentAccounts, setCurrentAccouts] = useState(adminService.copyMapAccounts(databaseAccounts));
     const [accountFiltered, setAccountFiltered] = useState(adminService.filterAccounts(currentAccounts, userFilters));
-
-    const [query, setQuery] = useState("");
 
     useEffect(() => { // Will only trigger when UsersManager is called for the first time
         adminService.updateDatabaseView()

@@ -55,7 +55,7 @@ export class Account {
     differenceWith(otherAccount : Account | undefined) {
       if (otherAccount === undefined) return {}
       else {
-        var diff = {};
+        const diff = {};
         Object.keys(this)
           .filter(key => key !== "message") // Don't want comparaison on the message field
           .forEach(

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import AccountsSyntesis from "./AccountsSyntesis"
+import { FeatureDefinition } from "./Admin"
 import "./Admin.scss"
 
 export default function AdminBoard(props: any) {
@@ -10,7 +11,7 @@ export default function AdminBoard(props: any) {
                 <section id="features">
                     <h2>Fonctionnalités</h2>
                     <div className="admin-features-grid">
-                        {props?.featuresDefinition.map((feature: any) => (
+                        {props?.featuresDefinition.map((feature: FeatureDefinition) => (
                             <Link key={feature.name + " lien"} to={"/admin/" + feature.routeName} className="feature-card-link">
                                 <div className="admin-feature-card">
                                     <h3 className="feature-title">{feature.name}</h3>

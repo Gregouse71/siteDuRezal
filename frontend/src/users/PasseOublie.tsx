@@ -20,7 +20,7 @@ export default function UserNewPassword() {
     const sendMail = () => {
         setPostAsk(true);
         accountService.getNewPasswordMail({ email: email })
-            .then((response: any) => {
+            .then(() => {
                 popupService.changePopup({ status: "success", message: "Mail envoyé" })
                 setPostAsk(true);
             })

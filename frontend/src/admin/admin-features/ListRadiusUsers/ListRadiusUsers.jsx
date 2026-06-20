@@ -2,7 +2,6 @@ import { faFileExcel, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { useEffect } from "react";
 import { useAdminService } from "../../../services/admin.service"
 import useCSVService from "../../../services/csv.service";
 import usePopupService from "../../../services/popup.service";
@@ -65,7 +64,7 @@ export default function ListRadiusUsers() {
         <div style={{ columns: columnsNum + " auto", columnGap: "0px" }}>
             {loginsInRadius
                 .filter(login => login.includes(stringFilter))
-                .map(login => <div style={{ border: "1px solid black", textAlign: "center", padding: "2px" }}>
+                .map((login, idx) => <div key={idx} style={{ border: "1px solid black", textAlign: "center", padding: "2px" }}>
                     {login}
                 </div>)}
         </div>

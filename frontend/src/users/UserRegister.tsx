@@ -1,5 +1,5 @@
 import { FormControl, FormLabel, FormControlLabel, TextField, Button, Select, MenuItem, Checkbox, Box, Typography, Container, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { promotions } from "../assets/lists";
 import charte from "../assets/doc/Charte_VF.pdf";
 import useAccountService from "../services/account.service";
@@ -32,10 +32,6 @@ export default function UserRegister() {
             formValues.room !== ""
     }
 
-    const isEmailFilled = () => {
-        return formValues.email !== ""
-    }
-
     const isEmailCorrect = () => formValues.email.match(regexEmail);
 
     const handleInputChange = (e: any) => {
@@ -48,7 +44,7 @@ export default function UserRegister() {
 
     const onRegister = () => {
         accountService.register(formValues)
-            .then((response: any) => {
+            .then((_response) => {
                 popupService.changePopup({ status: "success", message: "Création du compte réussie" })
                 setMode("Post-registration")
             })
@@ -147,7 +143,7 @@ export default function UserRegister() {
                                         onChange={handleInputChange}
                                         sx={{ textAlign: 'left', width: '1fr%' }}
                                     >
-                                        {promotions.map((el, ind) => (
+                                        {promotions.map((el) => (
                                             <MenuItem key={el} value={el}>
                                                 {el !== "XX" ? el : "Exterieur"}
                                             </MenuItem>

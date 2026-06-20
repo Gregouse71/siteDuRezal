@@ -45,13 +45,13 @@ export default function UsersFilters(props : any) {
     }, [props.userFilters]);
 
     const deleteUserFilter = (fieldName : string) => {
-        var newUserFilters = userFilters;
+        const newUserFilters = userFilters;
         delete newUserFilters[fieldName];
         props.setUserFilters({...newUserFilters});
     }
 
     const setUserFilterName = (oldFieldName : string, newFieldName : string) => {
-        var newUserFilters = userFilters;
+        const newUserFilters = userFilters;
         delete newUserFilters[oldFieldName];
         props.setUserFilters({
             ...newUserFilters,  

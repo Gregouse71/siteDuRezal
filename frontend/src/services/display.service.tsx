@@ -8,6 +8,8 @@ import { databaseAccountsState } from "./admin.service";
 import useConversionService from "./conversion.service";
 import { useDateService } from "./date.service";
 
+/* eslint-disable react/prop-types  -- Je sais pas pourquoi il se plaint d'un missing prop valisation là, mais bon */
+
 
 export default function useDisplayService() {
 
@@ -158,8 +160,9 @@ export default function useDisplayService() {
             const isTrimesterField = isTrimester(innerProps.field);
             const databaseAccountFieldValue = dateService.tranformToDateIfPossible(databaseAccount?.get(innerProps.field));
             const accountFieldValue = dateService.tranformToDateIfPossible(account.get(innerProps.field));
-            const backgroundColor = props.highlightChangesRespectedToDatabaseAccount ? ((databaseAccount && !_.isEqual(databaseAccountFieldValue, accountFieldValue)) ? "orange" : "") : "";
+            const backgroundColor = props.highlightChangesRespectedToDatabaseAccount ? ((databaseAccount && !_.isEqual(databaseAccountFieldValue, accountFieldValue)) ? "orange" : "") : ""; // eslint-disable react/prop-types  -- Je sais pas pourquoi il se plaint d'un missing prop valisation là, mais bon
             return <>
+
                 {fieldDisplayData[isTrimesterField ? ("T" + isTrimesterField) : innerProps.field] &&
                     <td style={{ backgroundColor: backgroundColor }}>
                         <AccountFieldDisplay
@@ -180,7 +183,7 @@ export default function useDisplayService() {
             </td>}
             {conversionService
                 .accountFieldsNameInEnglish
-                .map(field => <FieldDisplayedWithComponent field={field} />)
+                .map((field,idx) => <FieldDisplayedWithComponent field={field} key={`jgubgkuy-${idx}`}/>)
             }
             <td>
                 {account.id !== -1 && <button className="btn btn-error" onClick={props.onDeleteAccount}> Supprimer </button>}
