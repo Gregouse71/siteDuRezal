@@ -1,35 +1,38 @@
+import { helloAssoURL } from "../helloasso";
 import "./FAQ.scss"
 import { Link } from "react-router-dom";
 
 const questions = [
     {
-        question: "Mon wifi marche pas, que faire ?",
-        reponse: "Continuer à lire la FAQ à la recherche d'une meilleure réponse, s'il n'y en a pas ou qu'elle ne marche pas faire un mail.\n\
-        D'abord, est-ce que tu as le bon identifiant ? Il est de la forme XXnomdefamille. C'est pas le mail.",
-        key: "a"
+        question: "Ma connexion WiFi est instable",
+        reponse: <>Si ta chambre est loin des bornes, nous ne pouvons pas faire grand chose pour améliorer la connexion. Essaie de te connecter au réseau <b>Rezal-2.4GHz</b> pour mieux capter. En cas de trop mauvais signal, il est possible d'obtenir une petite borne à placer dans ta chambre.</>,
+        key: "wifi-instable"
     },
     {
-        question: "Je veux rejoindre le Rézal pour réparer mon wifi ! Je fais comment ?",
-        reponse: <>Va dire bonjour au bureau (<Link to="/about-us">infos</Link>), et si tu sais pas les trouver fait un mail.</>,
-        key: "b"
+        question: "Ma prise ethernet ne marche pas",
+        reponse: <>Certaines chambres disposent d'une prise ethernet fonctionnelle qui marche (souvent marquée d'une étiquette <i>Info</i> ou <i>PC</i>). Si la tienne ne fonctionne pas, nous ne pouvons pas la rendre fonctionnelle.</>,
+        key: "ethernet-absent"
     },
     {
-        question: "Quelle est la politique de sécurité du réseau ?",
-        reponse: "Aux Mines, on pense qu'on est une grande famille. Alors le réseau n'est pas séparé entre les différents utilisateurs, vous pouvez vous connecter pour faire une partie de Minecraft en LAN avec votre voisin, partager des fichier avec un simple \"python -m http.server\", ou d'autres choses. Cela fait aussi qu'il faut configurer correctement votre ordinateur si par exemple vous avez un partage de photos d'activé pour chez vous, pensez à le désactiver pour la Meuh",
-        key: "c"
+        question: "Je n'arrive pas à me connecter au WiFi",
+        reponse: <>Pour se connecter, il faut avoir <b>créé un compte sur notre site</b>, <b>cotisé sur <a href={helloAssoURL} target="_blank" rel="noopener noreferrer">HelloAsso</a></b>, et <b><Link to="/resident/board">activé ta cotisation pour le trimestre</Link></b>. Si tu n'as toujours pas accès au réseau, assure toi d'utiliser le <b>bon identifiant et mot de passe</b>, et d'avoir correctement suivi les consignes de connexion <Link to="/about-us">ici</Link>.</>,
+        key: "wifi-impossible"
     },
     {
-        question: "Ma prise Ethernet ne marche pas du tout",
-        reponse: "Il n'y en a qu'une de raccordée par chambre, celle étiquetée INFO. L'autre ne l'est pas, faut négocier avec son co.",
-        key: "d"
+        question: "J'ai oublié mon mot de passe",
+        reponse: <>Réinitialise le <Link to="/resident/login">ici</Link>.</>,
+        key: "mot-de-passe"
     },
     {
-        question: "J'ai du mal à me connecter à l'Ethernet",
-        reponse: "On a quelques lenteurs à l'initialisation de la connexion Ethernet... Ça peut prendre jusqu'à une ou deux minutes avant que la connexion s'établisse. Ensuite il y a un portail captif qui s'ouvre (ou juste ouvrez un navigateur internet.",
-        key: "e"
+        question: "Mon crédit n'apparaît pas sur ma page alors que j'ai cotisé sur HelloAsso",
+        reponse: <>Si tu n'as pas utilisé le même mail pour cotiser sur HelloAsso et pour créer ton compte, ou si tu as cotisé avant de créer ton compte, ton crédit n'apparaîtra pas. Il faut que tu nous <a href="mailto:admin@rezal-mdm.com">contacte</a>.</>,
+        key: "credit-absent"
     },
-    // QuestionItem("Encore en cours...", "")
-
+    {
+        question: "Je suis connecté au wifi mais je n'ai pas accès à internet",
+        reponse: <>Si tu as utilisé des protocoles de téléchargement en pair à pair (P2P), tu as probablement été bloqué par notre pare-feux. Tu seras débloqué automatiquement sous 12h, ne t'avise pas de recommencer.</>,
+        key: "pas-internet"
+    }
 ];
 
 export default function FAQ() {
