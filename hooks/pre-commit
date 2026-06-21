@@ -33,7 +33,7 @@ if [ "$allownonascii" != "true" ] &&
 	test $(git diff-index --cached --name-only --diff-filter=A -z $against |
 	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
 then
-	cat <<\EOF
+	cat <<EOF
 Error: Attempt to add a non-ASCII file name.
 
 This can cause random problems.
@@ -51,4 +51,6 @@ fi
 # TODOs : add prettier; execution conditionnel si on a effectivement touché le front
 # Add autofix to eslint
 cd frontend
-npx eslint || exit 1 #TODO : run all tests and save it in a file
+npm exec -- eslint --fix || exit 1 #TODO : run all tests and save it in a file
+cd ..
+npm exec -- prettier --write frontend || (echo Vos fichiers ont été modifié par prettier. Veuillez les réajouter au commit. && exit 2)
