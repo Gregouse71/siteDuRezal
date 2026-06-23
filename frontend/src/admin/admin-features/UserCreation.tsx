@@ -21,6 +21,12 @@ export default function UserCreation() {
     const [users, setUsers] = useState<Array<Account>>([]); 
 
     const [errorsDetected, setErrorsDetected] = useState<string[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [users.length]);
 
     useEffect(() => {
         detectErrorsInUsers(users);
@@ -196,6 +202,10 @@ export default function UserCreation() {
             onSelectAccount={() => {}}
             onSelectAll={() => {}}
             highlightChangesRespectedToDatabaseAccount={false}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
         />
 
         <div style={{display: "flex", justifyContent : "space-around"}}>

@@ -75,7 +75,7 @@ export default function UsersFilters(props : any) {
 
         const userFiltersList = userFilterNames.map(
             (userFilterName) => <>
-                <td><input type="checkbox" onClick={() => deleteUserFilter(userFilterName)} /></td>
+                <td><button onClick={() => deleteUserFilter(userFilterName)} >x</button></td>
                 <td>
                     <FilterFieldNameSelection
                         filterFieldName={userFilterName}
@@ -118,8 +118,7 @@ export default function UsersFilters(props : any) {
                 </tbody>
             </Table>}
             <Button 
-                variant="contained" 
-                color='info' 
+                className="btn-flat btn-primary"
                 onClick={() => props.setUserFilters({...userFilters, [defaultFilterName] : defaultFilter})} 
                 disabled={userFilterNames.includes(defaultFilterName)}> 
                     Ajouter un filtre 

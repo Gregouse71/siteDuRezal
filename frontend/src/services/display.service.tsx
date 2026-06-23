@@ -7,6 +7,7 @@ import { Account } from "../models/account";
 import { databaseAccountsState } from "./admin.service";
 import useConversionService from "./conversion.service";
 import { useDateService } from "./date.service";
+import "./services.scss";
 
 /* eslint-disable react/prop-types  -- Je sais pas pourquoi il se plaint d'un missing prop valisation là, mais bon */
 
@@ -194,11 +195,36 @@ export default function useDisplayService() {
     const UsersTab = (props: any) => {
         const [fieldDisplayData, setFieldsData] = useState(props.fieldsData);
         const [users, setUsers] = useState<Account[]>(props.users);
+        const [internalCurrentPage, setInternalCurrentPage] = useState(1);
+        const [internalPageSize, setInternalPageSize] = useState<number | "all">(20);
+
+        const currentPage = props.currentPage !== undefined ? props.currentPage : internalCurrentPage;
+        const setCurrentPage = props.setCurrentPage !== undefined ? props.setCurrentPage : setInternalCurrentPage;
+        const pageSize = props.pageSize !== undefined ? props.pageSize : internalPageSize;
+        const setPageSize = props.setPageSize !== undefined ? props.setPageSize : setInternalPageSize;
+
+        const userIdsString = props.users.map((u: Account) => u.id).join(",");
+        const [prevUserIds, setPrevUserIds] = useState(userIdsString);
+
+        if (userIdsString !== prevUserIds) {
+            setPrevUserIds(userIdsString);
+            if (props.currentPage === undefined) {
+                setInternalCurrentPage(1);
+            }
+        }
 
         useEffect(() => {
             setFieldsData(props.fieldsData);
             setUsers(props.users);
         }, [props.fieldsData, props.users])
+
+        const totalItems = users.length;
+        const totalPages = pageSize === "all" ? 1 : Math.ceil(totalItems / pageSize);
+        const activePage = Math.min(currentPage, totalPages || 1);
+
+        const paginatedUsers = pageSize === "all"
+            ? users
+            : users.slice((activePage - 1) * pageSize, activePage * pageSize);
 
         const TableHeadFirstRow = () => {
             const selectionHead = <th rowSpan={2}><input type="checkbox" checked={props.areAllIdsSelected} onChange={props.onSelectAll} /></th>
@@ -228,7 +254,82 @@ export default function useDisplayService() {
                 </>
             })
 
+        const PaginationControl = () => {
+            if (totalItems === 0) return null;
+
+            return (
+                <div className="pagination-control-container">
+                    <div className="d-flex align-items-center">
+                        <span className="pagination-control-label me-2"></span>
+                        <select
+                            className="pagination-control-select form-select form-select-sm"
+                            value={pageSize}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                setPageSize(val === "all" ? "all" : Number(val));
+                            }}
+                        >
+                            {/* <option value={2}>2</option> */}
+                            <option value={20}>20</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                            <option value="all">Tout</option>
+                        </select>
+                        <span className="pagination-control-total-text text-muted"> par page (total: {totalItems})
+                        </span>
+                    </div>
+
+                    {pageSize !== "all" && totalPages > 1 && (
+                        <div className="pagination-control-buttons">
+                            <Button
+                                className="pagination-control-btn"
+                                size="small"
+                                variant="outlined"
+                                disabled={activePage === 1}
+                                onClick={() => setCurrentPage(1)}
+                            >
+                                &lt;&lt;
+                            </Button>
+                            <Button
+                                className="pagination-control-btn"
+                                size="small"
+                                variant="outlined"
+                                disabled={activePage === 1}
+                                onClick={() => setCurrentPage(activePage - 1)}
+                            >
+                                &lt;
+                            </Button>
+                            
+                            <span className="pagination-control-page-info">
+                                Page {activePage} / {totalPages}
+                            </span>
+
+                            <Button
+                                className="pagination-control-btn"
+                                size="small"
+                                variant="outlined"
+                                disabled={activePage === totalPages}
+                                onClick={() => setCurrentPage(activePage + 1)}
+                            >
+                                &gt;
+                            </Button>
+                            <Button
+                                className="pagination-control-btn"
+                                size="small"
+                                variant="outlined"
+                                disabled={activePage === totalPages}
+                                onClick={() => setCurrentPage(totalPages)}
+                            >
+                                &gt;&gt;
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         return <>
+            <PaginationControl />
             <table className="table table-bordered table-striped table-sm table-editable" style={{ textAlign: "center" }}>
                 <thead className="align-middle">
                     <tr>
@@ -239,8 +340,8 @@ export default function useDisplayService() {
                     </tr>
                 </thead>
                 <tbody className="align-middle">
-                    {users.length === 0 && <tr></tr>}
-                    {users.map(
+                    {paginatedUsers.length === 0 && <tr></tr>}
+                    {paginatedUsers.map(
                         account => <tr key={"Account " + account.id}  >
                             <UserAdminDisplay
                                 account={account}
@@ -257,6 +358,7 @@ export default function useDisplayService() {
                     )}
                 </tbody>
             </table>
+            <PaginationControl />
         </>
     }
 

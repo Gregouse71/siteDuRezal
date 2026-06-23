@@ -6,8 +6,9 @@ import { Account } from "../../models/account";
 import { databaseAccountsState, useAdminService } from "../../services/admin.service";
 import useDisplayService from "../../services/display.service";
 import usePopupService from "../../services/popup.service";
-import UsersCSV from "./UsersManagement/UsersCSV";
 import UsersFilters from "./UsersManagement/UsersFilters";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faSave, faUndo, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 //Aux futurs qui liront ce code,
 //Il avait en têtes des ID nombres pour chaque compte
@@ -32,6 +33,14 @@ export default function UsersManager() {
     const [databaseAccounts, setDatabaseAccounts] = useRecoilState(databaseAccountsState);
     const [currentAccounts, setCurrentAccouts] = useState(adminService.copyMapAccounts(databaseAccounts));
     const [accountFiltered, setAccountFiltered] = useState(adminService.filterAccounts(currentAccounts, userFilters));
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+
+    const filteredIdsStr = accountFiltered.map(a => a.id).join(",");
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filteredIdsStr]);
 
     useEffect(() => { // Will only trigger when UsersManager is called for the first time
         adminService.updateDatabaseView()
@@ -194,28 +203,39 @@ export default function UsersManager() {
         <displayService.FieldsDisplayTab fieldsData={fieldsData} setFieldData={setFieldData}/>
         <UsersFilters userFilters={userFilters} setUserFilters={setUserFilters} />
 
-        <div className="d-flex">
-            <Button  
-                variant = "contained"
-                color = "info"
-                onClick={() => setMutable(!mutable)}>
-                    {mutable ? "Sortir modifications": "Modifier"} 
-            </Button>
+        <div className="user-manager-control-panel">
+            <div className="control-group-left">
+                <Button  
+                    className={`btn-flat btn-primary ${mutable ? "active-mode" : ""}`}
+                    onClick={() => setMutable(!mutable)}
+                    startIcon={<FontAwesomeIcon icon={mutable ? faSignOutAlt : faPen} />}
+                >
+                    {mutable ? "Sortir modifications" : "Modifier"} 
+                </Button>
+
+                {arrayOfChanges.length > 0 && (
+                    <>
+                        <Button  
+                            className="btn-flat btn-success"
+                            onClick={onCommitChanges}
+                            startIcon={<FontAwesomeIcon icon={faSave} />}
+                        >
+                            Sauvegarder
+                        </Button>
+                        <Button  
+                            className="btn-flat btn-danger"
+                            onClick={onStashChanges}
+                            startIcon={<FontAwesomeIcon icon={faUndo} />}
+                        >
+                            Annuler
+                        </Button>
+                        <span className="changes-label">
+                            {arrayOfChanges.length} modification{arrayOfChanges.length > 1 ? "s" : ""} en attente
+                        </span>
+                    </>
+                )}
+            </div>
         </div>
-        {arrayOfChanges.length > 0 && <p>
-            <Button  
-                variant = "contained"
-                color = "warning"
-                onClick={onCommitChanges}>
-                    {"Sauvegarder modifications"} 
-            </Button>
-            <Button  
-                variant = "contained"
-                color = "warning"
-                onClick={onStashChanges}>
-                    {"Annuler modifications"} 
-            </Button>
-        </p>}
 
         <displayService.UsersTab
             users={accountFiltered}
@@ -229,8 +249,10 @@ export default function UsersManager() {
             onSelectAccount={onSelectAccount}
             onSelectAll={onSelectAll}
             highlightChangesRespectedToDatabaseAccount={true}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
         />
-        <UsersCSV currentAccounts={currentAccounts} setCurrentAccouts={setCurrentAccouts}/>
-
     </div>
 }

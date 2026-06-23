@@ -1,3 +1,48 @@
+// Display service
+.pagination-control-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+
+    .pagination-control-label {
+        font-weight: 500;
+    }
+
+    .pagination-control-select {
+        width: auto;
+        display: inline-block;
+    }
+
+    .pagination-control-total-text {
+        margin-left: 5px;
+        font-size: 0.9rem;
+    }
+
+    .pagination-control-buttons {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .pagination-control-btn {
+            min-width: 36px !important;
+            height: 30px !important;
+            padding: 0 !important;
+        }
+
+        .pagination-control-page-info {
+            font-size: 0.9rem;
+            min-width: 100px;
+            text-align: center;
+        }
+    }
+}
+
 // Auth service
 
 #login-form {
