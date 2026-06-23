@@ -41,7 +41,7 @@ export default function FAQ() {
             <nav className="toc-sidebar">
                 <div className="toc-sticky">
                     <ul>
-                        {questions.map(({ question, key }, ind) => <li><a href={`#${key}`}>{question}</a></li>)}
+                        {questions.map(({ question, key }, ind) => <li key={ind}><a href={`#${key}`}>{question}</a></li>)}
                     </ul>
                 </div>
             </nav>

@@ -12,14 +12,15 @@ export default defineConfig([
   {
     rules: {
       "react/react-in-jsx-scope": "off",
-      "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}],
-      "@typescript-eslint/no-unused-vars" : ["error",{
-        "args":"all",
-        "argsIgnorePattern": "^_", 
+      "react/no-unescaped-entities": ["error", { "forbid": [">", "}"] }],
+      "@typescript-eslint/no-unused-vars": ["error", {
+        "args": "all",
+        "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_",
         "caughtErrorsIgnorePattern": "^_",
       }],
-      "@typescript-eslint/no-explicit-any" : "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "react/prop-types": "off"
     },
   },
 ]);
