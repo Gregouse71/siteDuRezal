@@ -1,6 +1,7 @@
 import "./AboutUs.scss"
 import { BACKEND_BASE_URL } from "../base_url.js"
 import { Link } from "react-router-dom"
+import { helloAssoURL } from "../helloasso"
 
 export function AboutUs() {
     return (
@@ -78,7 +79,7 @@ export function AboutUs() {
 
                 <div id="cotisation">
                     <h2>Cotisation</h2>
-                    <p>La cotisation est de 5€ par trimestre. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Elle peut être réglée par <a href="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-fin-annee-2025-2026" target="_blank" rel="noopener noreferrer">HelloAsso</a> <b>avec la même adresse mail qu'utilisée pour créer votre compte</b>, ou en espèces directement aurpès du trésorier. Une fois que vous avez cotisé pour un trimestre, vous pouvez <b>activer votre accès à internet</b> pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
+                    <p>La cotisation est de 5€ par trimestre. Elle permet de financer les abonnements fibre et l'entretien du matériel réseau. Elle peut être réglée par <a href={helloAssoURL} target="_blank" rel="noopener noreferrer">HelloAsso</a> <b>avec la même adresse mail qu'utilisée pour créer votre compte</b>, ou en espèces directement aurpès du trésorier. Une fois que vous avez cotisé pour un trimestre, vous pouvez <b>activer votre accès à internet</b> pour ce trimestre sur votre page <Link to="/resident/board">résident</Link>.</p>
                     <h3>Calendrier 2025-2026</h3>
                     <ul>
                         <li><b>Trimestre 1</b> : 10 septembre - 30 novembre</li>

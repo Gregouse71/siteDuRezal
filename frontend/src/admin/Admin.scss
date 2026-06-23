@@ -1,39 +1,11 @@
-// Board Layout (Inspired by AboutUs)
-.admin-board-layout {
-    display: flex;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-    gap: 40px;
-    text-align: left;
-
-    @media (max-width: 900px) {
-        flex-direction: column;
-        align-items: stretch;
-        margin: 20px auto;
-        gap: 30px;
-    }
-}
 
 .admin-main-content {
-    flex-grow: 1;
-    min-width: 0;
-
     section {
         margin-bottom: 30px;
 
         &:last-child {
             margin-bottom: 0;
         }
-    }
-
-    h2 {
-        font-size: 1.8em;
-        border-bottom: 2px solid #333;
-        padding-bottom: 10px;
-        margin-bottom: 25px;
-        letter-spacing: 0.02em;
     }
 }
 
@@ -106,15 +78,6 @@
     svg {
         font-size: 0.8rem;
     }
-}
-
-.titre-page-admin {
-    text-align: left;
-    font-size: 1.8em;
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    letter-spacing: 0.02em;
 }
 
 // User manager

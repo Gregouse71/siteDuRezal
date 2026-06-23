@@ -6,6 +6,7 @@ import usePopupService from "../services/popup.service";
 import httpInstance from "../services/api";
 import './Users.scss'
 import { useQuery } from "@tanstack/react-query";
+import { helloAssoURL } from "../helloasso";
 
 export default function UserBoard() {
     const { user, setUser } = useAuthService();
@@ -62,7 +63,7 @@ export default function UserBoard() {
 
             <div className="board-columns-container">
                 <div className="user-info-card">
-                    <p className="title-part">Informations générales</p>
+                    <h3>Informations générales</h3>
 
                     <div id="container-table">
                         <table className="table table-centered">
@@ -95,7 +96,7 @@ export default function UserBoard() {
                 </div>
 
                 <div className="cotisations-card">
-                    <p className="title-part">Récapitulatif cotisations</p>
+                    <h3>Récapitulatif cotisations</h3>
 
                     <div className="list-group">
                         <table className="table table-centered">
@@ -128,7 +129,7 @@ export default function UserBoard() {
                 </p>
                 <p>
                     Comment cotiser ? Rends toi vite sur <Link
-                        className="guidance-link" to="https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-25-26"
+                        className="guidance-link" to={helloAssoURL}
                         target="_blank" // Open in new tab
                         rel="noopener noreferrer" // Security best practice
                         replace>HelloAsso
