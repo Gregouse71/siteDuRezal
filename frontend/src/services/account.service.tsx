@@ -8,7 +8,7 @@ export default function useAccountService() {
     switch (fieldName) {
       case "id": return ""
       case "acces_wifi": return false
-      case "admin": return false
+      case "is_admin": return false
       case "firstName": return ""
       case "lastName": return ""
       case "login": return ""

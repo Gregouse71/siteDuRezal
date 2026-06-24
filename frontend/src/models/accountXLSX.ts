@@ -12,6 +12,7 @@ export class AccountXLSX {
     "Mot de passe" : string;
     Email: string;
     "Email verifie": number;
+    Credits: number;
     Chambre: string;
     Promotion: string;
     "T1 paye": number;                  // Format : dd/mm/yyyy
@@ -35,6 +36,7 @@ export class AccountXLSX {
         this["Mot de passe"] = data["Mot de passe"] !== undefined ? data["Mot de passe"] : "";
         this.Email = data.Email !== undefined ? data.Email : "";
         this["Email verifie"] = data["Email verifie"] !== undefined ? toNumber(data["Email verifie"]) : 0;
+        this.Credits = data.Credits !== undefined ? toNumber(data.Credits) : 0;
         this.Chambre = data.Chambre !== undefined ? data.Chambre : "";
         this.Promotion = data.Promotion !== undefined ? (promotions.includes(data.Promotion) ? data.Promotion : promotions[0]) : promotions[0];
         this["Moyen de paiement T1"] = data["Moyen de paiement T1"] !== undefined ? (paymentTypes.includes(data["Moyen de paiement T1"]) ? data["Moyen de paiement T1"] : paymentTypes[0]) : paymentTypes[0];

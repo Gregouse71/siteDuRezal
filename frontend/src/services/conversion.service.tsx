@@ -13,15 +13,15 @@ export default function useConversionService() {
       switch(field) {
         case "id" : return "#"
         case "acces_wifi" : return "Acces a internet"
-        case "admin" : return "Admin"
+        case "is_admin" : return "Admin"
         case "firstName" : return "Prenom"
         case "lastName" : return "Nom"
         case "login" : return "Login"
         case "password" : return "Mot de passe"
         case "email" : return "Email"
         case "email_verifie" : return "Courriel vérifié"
+        case "credits" : return "Crédit"
         case "room" : return "Chambre"
-        case "credits" : return "Crédits"
         case "university" : return "Ecole"
         case "promotion" : return "Promotion"
         case "cotizT1" : return "T1 paye"
@@ -44,10 +44,10 @@ export default function useConversionService() {
       switch(field) {
         case "#" : return "id"
         case "Acces a internet" : return "acces_wifi"
-        case "Admin" : return "admin"
-        case "Prenom" : return "firstName"
-        case "Nom" : return "lastName"
-        case "Login" : return "login"
+        case "Admin" : return "is_admin"
+        case "Prenom" : return "prenom"
+        case "Nom" : return "nom"
+        case "Login" : return "uid"
         case "Mot de passe" : return "password"
         case "Email" : return "email"
         case "Courriel vérifié" : return "email_verifie"
@@ -79,9 +79,10 @@ export default function useConversionService() {
         newAccountXLSX.Login = account.uid !== null ? account.uid : "";
         newAccountXLSX["Mot de passe"] = account.password !== null ? account.password : "";
         newAccountXLSX.Email = account.email !== null ? account.email : "";
-        newAccountXLSX["Email verifie"] = account.is_admin? 1 : 0;
+        newAccountXLSX["Email verifie"] = account.email_verifie? 1 : 0;
         newAccountXLSX.Chambre = account.room !== null ? account.room : "";
         newAccountXLSX.Promotion = account.promotion;
+        newAccountXLSX.Credits = account.credits;
         newAccountXLSX["T1 paye"] = account.cotizT1? 1 : 0;
         newAccountXLSX["Moyen de paiement T1"] = account.t1PaymentType;
         newAccountXLSX["Date paiement T1"] = dateService.dateToString(account.t1PaidAt);

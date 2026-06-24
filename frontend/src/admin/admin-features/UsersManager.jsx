@@ -9,6 +9,7 @@ import usePopupService from "../../services/popup.service";
 import UsersFilters from "./UsersManagement/UsersFilters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faSave, faUndo, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import UsersCSV from "./UsersManagement/UsersCSV";
 
 //Aux futurs qui liront ce code,
 //Il avait en têtes des ID nombres pour chaque compte
@@ -254,5 +255,6 @@ export default function UsersManager() {
             pageSize={pageSize}
             setPageSize={setPageSize}
         />
+        <UsersCSV currentAccounts={currentAccounts} setCurrentAccouts={setCurrentAccouts}/>
     </div>
 }

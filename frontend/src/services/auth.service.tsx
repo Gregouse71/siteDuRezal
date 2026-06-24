@@ -45,7 +45,7 @@ export function useAuthService() {
                 httpInstance.get("users/me")
                     .then((response_user_info: any) => {
                         setUser(new Account(response_user_info.data))
-                        resolve(response_user_info.data.admin);
+                        resolve(response_user_info.data.is_admin);
                     })
                     .catch(error => {
 

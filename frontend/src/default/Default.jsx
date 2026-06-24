@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Default.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faCodeBranch, faGamepad, faBrush, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faCodeBranch, faGamepad, faBrush, faTicket, faMasksTheater, faNetworkWired } from '@fortawesome/free-solid-svg-icons';
 import logoRezal from "../assets/img/logo rezal.png";
 import logoFederez from "../assets/img/federez.png"
 import mdmImg from "../assets/img/mdm.jpg";
@@ -10,7 +10,8 @@ const Default = () => {
     const elements = [
         { icon: faUsers, title: <a href="https://eleves.rezal-mdm.com/public" target="_blank" rel="noreferrer" className="service-card-link">Portail des élèves</a>, content: <>Toutes les infos sur les élèves, les assos, et les événements de l'école.</> },
         { icon: faCodeBranch, title: <a href="https://gitlab.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Instance GitLab</a>, content: <>Pour héberger tous les projets et collaborer avec git.</> },
-        { icon: faUsers, title: <a href="https://bda.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Site web du BDA</a>, content: <>Pour PAPSer les places pour tous les événements. Retrouvez aussi tous les livres de la <a href="https://bibliotheque-bda.rezal-mdm.com" target="_blank" rel="noreferrer">bibliothèque du BDA</a>.</> },
+        { icon: faMasksTheater, title: <a href="https://bda.rezal-mdm.com" target="_blank" rel="noreferrer" className="service-card-link">Site web du BDA</a>, content: <>Pour PAPSer les places pour tous les événements. Retrouvez aussi tous les livres de la <a href="https://bibliotheque-bda.rezal-mdm.com" target="_blank" rel="noreferrer">bibliothèque du BDA</a>.</> },
+        { icon: faNetworkWired, title: <a href="https://www.rezal-mdm.com/" target="_blank" rel="noreferrer" className="service-card-link">Portail du Rézal</a>, content: <>Pour gérer ton compte associatif Rézal, ton accès au réseau et tes cotisations.</> },
         { icon: faBrush, title: <a href="https://mail-colorer.rezal-mdm.com/" target="_blank" rel="noreferrer" className="service-card-link">Colorieur de mails du BDA</a>, content: <>Pour créer plus facilement des mails de toutes les couleurs.</> },
         { icon: faTicket, title: <a href="https://www.partycrasher.fr/" target="_blank" rel="noreferrer" className="service-card-link">Partycrasher</a>, content: <>Pour revendre les billets de soirées dont vous ne voulez plus.</> },
         { icon: faGamepad, title: <>Serveur de jeu de Proga'min</>, content: <>Pour jouer à Minecraft, Factorio et autres jeux en LAN et à distance.</> },
