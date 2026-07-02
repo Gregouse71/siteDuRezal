@@ -3,12 +3,14 @@
 Le frontend est écrit en React. Je vous laisse apprécier l'abondance de commentaires et la structure de dossiers des plus claires.
 
 On commence par installer les packets avec npm :
+
 ```bash
 npm install -g serve  # Webserveur pour servir le site
 npm install
 ```
 
 On peut ensuite réaliser la compilation du site, et le servir :
+
 ```bash
 npm run dev
 ```

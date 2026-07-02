@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./popup.scss"
+import "./popup.scss";
 import usePopupService from "../services/popup.service";
 
 export default function Popup() {
@@ -16,14 +16,22 @@ export default function Popup() {
             setMessage(popupService.message);
             setShowIt(true);
             setOpacity(1);
-            setTimeout(function() {
+            setTimeout(function () {
                 setOpacity(0);
             }, 2000);
             popupService.changeDisplayed();
         }
-    }, [popupService])
+    }, [popupService]);
 
-    return showIt ? <p id="popup" style={{backgroundColor : popupService.colorAccordingToSucessState(status), opacity : opacity}} onClick={() => setShowIt(false)}>
-        {message}
-    </p> : <></>
+    return showIt ? (
+        <p
+            id="popup"
+            style={{ backgroundColor: popupService.colorAccordingToSucessState(status), opacity: opacity }}
+            onClick={() => setShowIt(false)}
+        >
+            {message}
+        </p>
+    ) : (
+        <></>
+    );
 }
