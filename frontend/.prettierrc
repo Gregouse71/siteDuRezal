@@ -1,3 +1,23 @@
 {
-	"useTabs": true
+    "useTabs": false,
+    "tabWidth": 4,
+    "printWidth": 120,
+    "singleAttributePerLine": false,
+    "jsxBracketSameLine": true,
+    "overrides": [
+        {
+            "files": ["*.json", "*.html", "*.md"],
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": ["vite.config.js", "eslint.config.ts"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
+
+
