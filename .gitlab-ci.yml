@@ -20,4 +20,5 @@ build-front:
   script:
     - cd frontend
     - npm ci
-    - npx eslint
+    - npm --offline exec -- eslint .
+    - npm --offline exec -- prettier --ignore-path ../.gitignore --check .

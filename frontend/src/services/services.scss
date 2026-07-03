@@ -46,15 +46,15 @@
 // Auth service
 
 #login-form {
-    display : flex;
-    justify-content : center; /* Changed from space-around */
-    align-items: center;    /* Added to center items horizontally in column */
+    display: flex;
+    justify-content: center; /* Changed from space-around */
+    align-items: center; /* Added to center items horizontally in column */
     flex-direction: column;
-    margin : 10vh auto 0 auto; /* Added top margin to push it down */
+    margin: 10vh auto 0 auto; /* Added top margin to push it down */
     max-width: 600px;
     max-width: 90%;
-    min-height : 30vh;
-    text-align: center;     /* Added to center text content like h2 and links */
+    min-height: 30vh;
+    text-align: center; /* Added to center text content like h2 and links */
 }
 
 .form-row {
@@ -70,7 +70,8 @@
     font-weight: bold; /* Make the labels bolder */
 }
 
-.form-row .MuiTextField-root { /* Target the root of TextField for flex-grow */
+.form-row .MuiTextField-root {
+    /* Target the root of TextField for flex-grow */
     max-width: 250px; /* Make the fields fixed width, adjust as needed */
 }
 

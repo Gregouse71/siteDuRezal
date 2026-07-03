@@ -3,100 +3,147 @@ import { AccountXLSX } from "../models/accountXLSX";
 import { useDateService } from "./date.service";
 
 export default function useConversionService() {
-
-    const dateService = useDateService()
+    const dateService = useDateService();
 
     const accountFieldsNameInEnglish = Object.keys(new Account({}));
-    const accountFieldsNameInEnglishWithoutPassword = Object.keys(new Account({})).filter(key => key !== "password");
+    const accountFieldsNameInEnglishWithoutPassword = Object.keys(new Account({})).filter((key) => key !== "password");
 
-    const translateAccountFieldNameInFrench = (field : string) => {
-      switch(field) {
-        case "id" : return "#"
-        case "acces_wifi" : return "Acces a internet"
-        case "is_admin" : return "Admin"
-        case "firstName" : return "Prenom"
-        case "lastName" : return "Nom"
-        case "login" : return "Login"
-        case "password" : return "Mot de passe"
-        case "email" : return "Email"
-        case "email_verifie" : return "Courriel vérifié"
-        case "credits" : return "Crédit"
-        case "room" : return "Chambre"
-        case "university" : return "Ecole"
-        case "promotion" : return "Promotion"
-        case "cotizT1" : return "T1 paye"
-        case "t1PaymentType" : return "Moyen de paiement T1"
-        case "t1PaidAt" : return "Date paiement T1"
-        case "cotizT2" : return "T2 paye"
-        case "t2PaymentType" : return "Moyen de paiement T2"
-        case "t2PaidAt" : return "Date paiement T2"
-        case "cotizT3" : return "T3 paye"
-        case "t3PaymentType" : return "Moyen de paiement T3"
-        case "t3PaidAt" : return "Date paiement T3"
-        case "createdAt" : return "Date de creation"
-        default : return field
-      }
-    }
+    const translateAccountFieldNameInFrench = (field: string) => {
+        switch (field) {
+            case "id":
+                return "#";
+            case "acces_wifi":
+                return "Acces a internet";
+            case "is_admin":
+                return "Admin";
+            case "firstName":
+                return "Prenom";
+            case "lastName":
+                return "Nom";
+            case "login":
+                return "Login";
+            case "password":
+                return "Mot de passe";
+            case "email":
+                return "Email";
+            case "email_verifie":
+                return "Courriel vérifié";
+            case "credits":
+                return "Crédit";
+            case "room":
+                return "Chambre";
+            case "university":
+                return "Ecole";
+            case "promotion":
+                return "Promotion";
+            case "cotizT1":
+                return "T1 paye";
+            case "t1PaymentType":
+                return "Moyen de paiement T1";
+            case "t1PaidAt":
+                return "Date paiement T1";
+            case "cotizT2":
+                return "T2 paye";
+            case "t2PaymentType":
+                return "Moyen de paiement T2";
+            case "t2PaidAt":
+                return "Date paiement T2";
+            case "cotizT3":
+                return "T3 paye";
+            case "t3PaymentType":
+                return "Moyen de paiement T3";
+            case "t3PaidAt":
+                return "Date paiement T3";
+            case "createdAt":
+                return "Date de creation";
+            default:
+                return field;
+        }
+    };
 
-    const accountFieldsNameInFrench = Object.keys(new Account({})).map(key => translateAccountFieldNameInFrench(key));
-    
-    const translateAccountFieldNameInEnglish = (field : string) => {
-      switch(field) {
-        case "#" : return "id"
-        case "Acces a internet" : return "acces_wifi"
-        case "Admin" : return "is_admin"
-        case "Prenom" : return "prenom"
-        case "Nom" : return "nom"
-        case "Login" : return "uid"
-        case "Mot de passe" : return "password"
-        case "Email" : return "email"
-        case "Courriel vérifié" : return "email_verifie"
-        case "Crédits" : return "credits"
-        case "Chambre" : return "room"
-        case "Ecole" : return "university"
-        case "Promotion" : return "promotion"
-        case "T1 paye" : return "cotizT1"
-        case "Moyen de paiement T1" : return "t1PaymentType"
-        case "Date paiement T1" : return "t1PaidAt"
-        case "T2 paye" : return "cotizT2"
-        case "Moyen de paiement T2" : return "t2PaymentType"
-        case "Date paiement T2" : return "t2PaidAt"
-        case "T3 paye" : return "cotizT3"
-        case "Moyen de paiement T3" : return "t3PaymentType"
-        case "Date paiement T3" : return "t3PaidAt"
-        case "Date de creation" : return "createdAt"
-        default : return field
-      }
-    }
+    const accountFieldsNameInFrench = Object.keys(new Account({})).map((key) => translateAccountFieldNameInFrench(key));
 
-    const AccountToXLSXAccount = (account : Account) => {
+    const translateAccountFieldNameInEnglish = (field: string) => {
+        switch (field) {
+            case "#":
+                return "id";
+            case "Acces a internet":
+                return "acces_wifi";
+            case "Admin":
+                return "is_admin";
+            case "Prenom":
+                return "prenom";
+            case "Nom":
+                return "nom";
+            case "Login":
+                return "uid";
+            case "Mot de passe":
+                return "password";
+            case "Email":
+                return "email";
+            case "Courriel vérifié":
+                return "email_verifie";
+            case "Crédits":
+                return "credits";
+            case "Chambre":
+                return "room";
+            case "Ecole":
+                return "university";
+            case "Promotion":
+                return "promotion";
+            case "T1 paye":
+                return "cotizT1";
+            case "Moyen de paiement T1":
+                return "t1PaymentType";
+            case "Date paiement T1":
+                return "t1PaidAt";
+            case "T2 paye":
+                return "cotizT2";
+            case "Moyen de paiement T2":
+                return "t2PaymentType";
+            case "Date paiement T2":
+                return "t2PaidAt";
+            case "T3 paye":
+                return "cotizT3";
+            case "Moyen de paiement T3":
+                return "t3PaymentType";
+            case "Date paiement T3":
+                return "t3PaidAt";
+            case "Date de creation":
+                return "createdAt";
+            default:
+                return field;
+        }
+    };
+
+    const AccountToXLSXAccount = (account: Account) => {
         const newAccountXLSX = new AccountXLSX({});
         newAccountXLSX["#"] = account.id;
-        newAccountXLSX["Acces a internet"] = account.acces_wifi? 1 : 0;
-        newAccountXLSX.Admin = account.is_admin? 1 : 0;
+        newAccountXLSX["Acces a internet"] = account.acces_wifi ? 1 : 0;
+        newAccountXLSX.Admin = account.is_admin ? 1 : 0;
         newAccountXLSX.Prenom = account.prenom !== null ? account.prenom : "";
         newAccountXLSX.Nom = account.nom !== null ? account.nom : "";
         newAccountXLSX.Login = account.uid !== null ? account.uid : "";
         newAccountXLSX["Mot de passe"] = account.password !== null ? account.password : "";
         newAccountXLSX.Email = account.email !== null ? account.email : "";
-        newAccountXLSX["Email verifie"] = account.email_verifie? 1 : 0;
+        newAccountXLSX["Email verifie"] = account.email_verifie ? 1 : 0;
         newAccountXLSX.Chambre = account.room !== null ? account.room : "";
         newAccountXLSX.Promotion = account.promotion;
         newAccountXLSX.Credits = account.credits;
-        newAccountXLSX["T1 paye"] = account.cotizT1? 1 : 0;
+        newAccountXLSX["T1 paye"] = account.cotizT1 ? 1 : 0;
         newAccountXLSX["Moyen de paiement T1"] = account.t1PaymentType;
         newAccountXLSX["Date paiement T1"] = dateService.dateToString(account.t1PaidAt);
-        newAccountXLSX["T2 paye"] = account.cotizT2? 1 : 0;
+        newAccountXLSX["T2 paye"] = account.cotizT2 ? 1 : 0;
         newAccountXLSX["Moyen de paiement T2"] = account.t2PaymentType;
         newAccountXLSX["Date paiement T2"] = dateService.dateToString(account.t2PaidAt);
-        newAccountXLSX["T3 paye"] = account.cotizT3? 1 : 0;
+        newAccountXLSX["T3 paye"] = account.cotizT3 ? 1 : 0;
         newAccountXLSX["Moyen de paiement T3"] = account.t3PaymentType;
         newAccountXLSX["Date paiement T3"] = dateService.dateToString(account.t3PaidAt);
         newAccountXLSX["Date de creation"] = dateService.dateToString(account.createdAt);
         return newAccountXLSX;
-      }
-  
-      const XLSXAccountToAccount = (accountXLSX : AccountXLSX) => {
+    };
+
+    const XLSXAccountToAccount = (accountXLSX: AccountXLSX) => {
         const newAccount = new Account({});
         newAccount.id = accountXLSX["#"];
         newAccount.acces_wifi = accountXLSX["Acces a internet"] === 1 ? true : false;
@@ -120,16 +167,15 @@ export default function useConversionService() {
         newAccount.t3PaidAt = dateService.stringToDate(accountXLSX["Date paiement T3"]);
         newAccount.createdAt = dateService.stringToDate(accountXLSX["Date de creation"]);
         return newAccount;
-      }
+    };
 
-      return {
-        accountFieldsNameInEnglish : accountFieldsNameInEnglish,
-        accountFieldsNameInEnglishWithoutPassword : accountFieldsNameInEnglishWithoutPassword,
-        accountFieldsNameInFrench : accountFieldsNameInFrench,
-        translateAccountFieldNameInEnglish : translateAccountFieldNameInEnglish,
-        translateAccountFieldNameInFrench : translateAccountFieldNameInFrench,
-        AccountToXLSXAccount : AccountToXLSXAccount,
-        XLSXAccountToAccount : XLSXAccountToAccount,
-      }
-
+    return {
+        accountFieldsNameInEnglish: accountFieldsNameInEnglish,
+        accountFieldsNameInEnglishWithoutPassword: accountFieldsNameInEnglishWithoutPassword,
+        accountFieldsNameInFrench: accountFieldsNameInFrench,
+        translateAccountFieldNameInEnglish: translateAccountFieldNameInEnglish,
+        translateAccountFieldNameInFrench: translateAccountFieldNameInFrench,
+        AccountToXLSXAccount: AccountToXLSXAccount,
+        XLSXAccountToAccount: XLSXAccountToAccount,
+    };
 }

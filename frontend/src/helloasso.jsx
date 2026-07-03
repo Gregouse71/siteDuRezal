@@ -1,1 +1,2 @@
-export const helloAssoURL = 'https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-fin-annee-2025-2026'
+export const helloAssoURL =
+    "https://www.helloasso.com/associations/rezal/adhesions/cotisations-rezal-fin-annee-2025-2026";
