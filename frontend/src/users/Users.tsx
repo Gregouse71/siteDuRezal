@@ -5,7 +5,6 @@ import React, { Suspense, lazy } from "react";
 
 const UserBoard = lazy(() => import("./UserBoard"));
 const UserRegister = lazy(() => import("./UserRegister"));
-const UserVerifyEmail = lazy(() => import("./UserVerifyEmail"));
 const UserNewPassword = lazy(() => import("./PasseOublie"));
 const DisplayID = lazy(() => import("./IdDisplay"));
 
@@ -69,7 +68,6 @@ export default function Users() {
                 />
                 <Route path="board" element={<ProtectedRoute path="/resident/board" child={<UserBoard />} />} />
                 <Route path="register" element={<UserRegister />} />
-                <Route path="verify-email/:idString/:verificationCode" element={<UserVerifyEmail />} />
                 <Route path="new-password" element={<UserNewPassword />} />
                 <Route path="get-password/:token" element={<DisplayID />} />
 

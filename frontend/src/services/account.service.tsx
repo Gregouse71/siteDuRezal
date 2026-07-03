@@ -74,15 +74,6 @@ export default function useAccountService() {
         });
     };
 
-    const emailVerification = (verificationInfos: any) => {
-        return new Promise<void>((resolve, reject) => {
-            httpInstance
-                .post(`auth/verify_email/${verificationInfos.uid}/${verificationInfos.token}`)
-                .then(() => resolve())
-                .catch((error) => reject(error));
-        });
-    };
-
     const getNewPasswordMail = (verificationInfos: any) => {
         return new Promise<void>((resolve, reject) => {
             httpInstance
@@ -105,7 +96,6 @@ export default function useAccountService() {
         defaultValueOfAccountField: defaultValueOfAccountField,
         createPassword: createPassword,
         register: register,
-        emailVerification: emailVerification,
         getNewPasswordMail: getNewPasswordMail,
         setNewPassword: setNewPassword,
     };

@@ -38,7 +38,7 @@ class Token (BaseModel):
     access_token: str
     token_type: str
 
-class ReceivedPassowrd (BaseModel):
+class ReceivedPassword (BaseModel):
     """
     Mot de passe reçu
     """
@@ -112,7 +112,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> T
     if not user.email_verifie:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Email non vérifié",
+            detail="Email not verified",
             )
 
     access_token = create_access_token(
@@ -152,7 +152,7 @@ async def get_new_password_mail (
 @auth_router.post ("/new_password/{token}")
 async def obtain_new_password (
     token: str,
-    mdp: ReceivedPassowrd
+    mdp: ReceivedPassword
 ):
     """
     Change le mdp de l'utilisateur

@@ -113,13 +113,13 @@ async def set_wifi_state (
         session.commit ()
         session.refresh (user)
 
-        if WiFiUpdate.state:
-            success = allow_ldap_wifi (WiFiUpdate.uid)
+        if req.state:
+            success = allow_ldap_wifi (req.uid)
         else:
-            success = disallow_ldap_wifi (WiFiUpdate.uid)
+            success = disallow_ldap_wifi (req.uid)
         if not success:
             raise HTTPException (
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Impossible de modifier l'acces au wifi pour cet uid"
             )
 

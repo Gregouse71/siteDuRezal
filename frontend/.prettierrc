@@ -3,7 +3,6 @@
     "tabWidth": 4,
     "printWidth": 120,
     "singleAttributePerLine": false,
-    "jsxBracketSameLine": true,
     "overrides": [
         {
             "files": ["*.json", "*.html", "*.md"],
