@@ -12,11 +12,13 @@ async def post_helloasso (
     request: Request
 ):
     req = await request.json ()
-    data = req["data"]
+    data = req.get("data")
     if not (
-        req["eventType"] == "Payment"
-        and data["cashOutState"] == "Transfered"
+        req.get("eventType") == "Payment"
+        and data.get("cashOutState") == "Transfered"
+        and request.client.host == "51.138.206.200"
     ):
+        print(f"Mauvaise ip : {request.client.host}")
         pass
     else:
         with Session (engine) as session:
