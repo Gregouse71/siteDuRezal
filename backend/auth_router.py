@@ -4,8 +4,7 @@ from fastapi import Depends, HTTPException, status, APIRouter
 from sqlmodel import Session, select
 
 import urllib
-import random, string
-from datetime import timedelta, timezone
+from datetime import timedelta
 import jwt
 from jwt.exceptions import InvalidTokenError
 import os
@@ -44,12 +43,6 @@ class ReceivedPassword (BaseModel):
     """
     password: str
 
-class TokenData (BaseModel):
-    """
-    Données contenues dans un token
-    """
-    uid: str
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def authenticate_user(username: str, password: str) -> User:
@@ -83,7 +76,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
         uid = payload.get("sub")
         if uid is None:  # S'il n'y en a pas, c'est un jeton invalide
             raise credentials_exception
-        token_data = TokenData(uid=uid)
 
     except InvalidTokenError:
         raise credentials_exception

@@ -22,3 +22,16 @@ build-front:
     - npm ci
     - npm --offline exec -- eslint .
     - npm --offline exec -- prettier --ignore-path ../.gitignore --check .
+
+build-back:
+  stage: build #En fait il fait que linter aussi
+  tags: ["docker"]
+  image: anaconda/miniconda
+  variables:
+    #conda a des term of service a accepter
+    #Mais si, vous l'avez fait en installant conda. Bah la faut le faire aussi
+    CONDA_PLUGINS_AUTO_ACCEPT_TOS: "true" 
+  script:
+    - cd backend
+    - conda env create --file environment.yml
+    - conda run -n site_rezal -- ruff check 

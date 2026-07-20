@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
-from datetime import datetime
 
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
-from ldap import ldap_add_user, ldap_delete_user, allow_ldap_wifi, disallow_ldap_wifi
+from ldap import ldap_delete_user, allow_ldap_wifi, disallow_ldap_wifi
 from auth_router import get_current_user
 from mail import send_premier_mail
 
@@ -85,7 +84,7 @@ async def patch_users (
     user = patch_user_db (user[0], user_update)
     if user.acces_wifi:
         allow_ldap_wifi (user.uid)
-    elif (not user.acces_wifi is None) and (not user.acces_wifi):
+    elif (user.acces_wifi is not None) and (not user.acces_wifi):
         disallow_ldap_wifi (user.uid)
     return user
 
@@ -108,7 +107,7 @@ async def delete_users (
     user = get_user_db (uid)
     if not user:
         raise HTTPException (
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="L'utilisateur recherché n'existe pas"
         )
 
