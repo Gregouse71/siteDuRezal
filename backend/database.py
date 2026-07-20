@@ -145,7 +145,7 @@ def add_new_user_db (
             session.commit ()
             session.refresh (user)
             return user
-        except:
+        except Exception:
             session.rollback ()
             raise HTTPException (
                 status_code=status.HTTP_400_BAD_REQUEST,

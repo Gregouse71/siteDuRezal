@@ -11,3 +11,4 @@ dependencies:
   - ldap3
   - pymysql
   - unidecode
+  - ruff

@@ -9,8 +9,6 @@ import useConversionService from "./conversion.service";
 import { useDateService } from "./date.service";
 import "./services.scss";
 
-/* eslint-disable react/prop-types  -- Je sais pas pourquoi il se plaint d'un missing prop valisation là, mais bon */
-
 export default function useDisplayService() {
     const dateService = useDateService();
     const conversionService = useConversionService();

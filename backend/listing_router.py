@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import SQLModel, Session, select, col
+from sqlmodel import SQLModel, Session, select
 from typing import Annotated
 from dotenv import load_dotenv
 from pydantic import EmailStr
 import os
 
-from database import UserReceived, User, user_from_received, engine
+from database import User, engine
 from ldap import ldap_group_members
 from auth_router import get_current_user
 
@@ -54,7 +54,7 @@ async def get_all (
 
 
 @listing_router.get ("/radius_users")
-async def get_radiusèusers (
+async def get_radius_users (
     current_user: Annotated[User, Depends(get_current_user)]
 ) -> list [str]:
     """

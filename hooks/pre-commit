@@ -7,6 +7,8 @@
 #
 # To enable this hook, rename this file to "pre-commit".
 
+set -o pipefail
+
 echo Veuillez patientez, vérificaton de votre code...
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
@@ -50,6 +52,58 @@ fi
 # frontend linting
 # TODOs : add prettier; execution conditionnel si on a effectivement touché le front
 # Add autofix to eslint
-cd frontend
-npm --offline exec -- eslint --fix . || exit 1 #TODO : run all tests and save it in a file
-npm --offline exec -- prettier --ignore-path ../.gitignore --write . || (echo Vos fichiers ont été modifié par prettier. Veuillez les réajouter au commit. && exit 2)
+ERRORED=0
+
+# On stash pour ne pas perturber les linters avec ce que vous ne voulez pas commit
+# En fait ça n'apporte pas grand chose, donc je vais commenter ça
+git stash push --include-untracked --keep-index --quiet -m "Stash de pre-commit"
+
+goToRepoRoot () {
+	cd $(git rev-parse --show-toplevel)
+}
+diffcontains () {
+	git diff --staged --name-only | grep "$1" >/dev/null
+}
+
+#On ne fait le frontend que si vous y avez touché
+goToRepoRoot
+if diffcontains "frontend/" ; then
+	echo "Vérification des modification frontend..."
+	cd frontend
+	npm --offline exec -- eslint --fix . || ERRORED=1
+	npm --offline exec -- prettier --cache --ignore-path ../.gitignore --write . || ERRORED=1 
+else
+	echo "Pas de frontend à vérifier"
+fi
+
+goToRepoRoot
+if diffcontains "backend" ; then
+	echo "Vérification des modifications du backend..."
+	cd backend
+	conda run -n site_rezal -- ruff check --fix --respect-gitignore || ERRORED=1
+else
+	echo "Pas de backend à vérifier"
+fi
+
+
+goToRepoRoot
+git diff --exit-code --quiet || ERRORED=1
+if [ $ERRORED -gt 0 ]
+then
+	echo
+	echo Les fichiers suivant ont été modifiés. Veuillez les ré ajouter puis réessayer le commit
+	git diff --name-only
+fi
+
+# Les guillemets autour du EOF sont importants, sinon les commandes git sont exécutées.
+git stash pop --quiet >/dev/null 2>&1 || {
+	{ cat <<"EOF"
+Les corrections automatiques ont générés des conflits avec les modifications non indexées. Elles ont été abandonné.
+EOF
+ 	} && 
+	ERRORED=1;
+	git restore --source stash@{0} . --quiet
+	git stash drop --quiet
+}
+
+exit $ERRORED

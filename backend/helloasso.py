@@ -1,7 +1,7 @@
-from fastapi import Depends, HTTPException, status, APIRouter, Request
-from sqlmodel import SQLModel, Session, select
+from fastapi import APIRouter, Request
+from sqlmodel import Session, select
 
-from database import User, engine, UserUpdate, patch_user_db
+from database import User, engine
 
 helloasso_router = APIRouter (
     prefix="/helloasso"

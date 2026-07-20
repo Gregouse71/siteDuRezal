@@ -60,7 +60,7 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
               # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon
             if conn.extend.standard.who_am_i () is not None:
                 return True
-    except:
+    except Exception:
         pass
     # Dans tous les autres cas, l'utilisateur n'est pas bien authentifié
     return False
@@ -87,7 +87,7 @@ def ldap_add_user (user: User, password: str) -> bool:
             conn.extend.standard.modify_password (distinguished_name, None, password)
         return True
 
-    except:
+    except Exception:
         return False
 
 
@@ -102,7 +102,7 @@ def ldap_change_pwd (uid: str, password: str):
             conn.extend.standard.modify_password (distinguished_name, None, password)
         return True
 
-    except:
+    except Exception:
         return False
 
 
@@ -114,7 +114,7 @@ def ldap_delete_user (uid: str):
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             return conn.delete (distinguished_name)
-    except:
+    except Exception:
         return False
 
 
@@ -132,7 +132,7 @@ def ldap_add_user_to_group (uid: str, group: str):
             w[0].member += distinguished_name
             w.commit ()
         return True
-    except:
+    except Exception:
         return False
 
 
@@ -145,7 +145,7 @@ def ldap_delete_user_from_group (uid: str, group: str):
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             conn.modify (group, {"member": [(MODIFY_DELETE, [distinguished_name])]})
         return True
-    except:
+    except Exception:
         return False
 
 
@@ -160,7 +160,7 @@ def ldap_user_in_group (uid: str, group: str):
             r = Reader(conn, obj, group)
             r.search ()
             return distinguished_name_from_uid (uid) in r[0].member
-    except:
+    except Exception:
         return False
 
 
@@ -175,7 +175,7 @@ def ldap_group_members (group: str):
             r = Reader(conn, obj, group)
             r.search ()
             return [p.search(m).group(1) for m in r[0].member]
-    except:
+    except Exception:
         return False
 
 
