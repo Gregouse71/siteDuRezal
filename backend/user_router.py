@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
 
 from database import UserReceived, UserUpdate, User, add_new_user_db, get_user_db, patch_user_db, delete_user_db
-from ldap import ldap_delete_user, allow_ldap_wifi, disallow_ldap_wifi
+from ldap import ldap_delete_user, allow_ldap_wifi, disallow_ldap_wifi, allow_ldap_admin, disallow_ldap_admin
 from auth_router import get_current_user
 from mail import send_premier_mail
 
@@ -86,6 +86,12 @@ async def patch_users (
         allow_ldap_wifi (user.uid)
     elif (user.acces_wifi is not None) and (not user.acces_wifi):
         disallow_ldap_wifi (user.uid)
+
+    if user.is_admin:
+        allow_ldap_admin (user.uid)
+    elif (user.is_admin is not None) and (not user.is_admin):
+        disallow_ldap_admin (user.uid)
+
     return user
 
 

@@ -43,6 +43,18 @@ def has_ldap_wifi (uid:str):
     return ldap_user_in_group (uid, GROUPE_WIFI)
 
 
+def allow_ldap_admin (uid: str):
+    """
+    Autorise l'acces admin à l'utilisateur *uid*
+    """
+    return ldap_add_user_to_group (uid.replace(" ", ""), GROUPE_ADMIN)
+
+def disallow_ldap_admin (uid: str):
+    """
+    N'autorise plus l'acces admin à l'utilisateur dont l'uid est *uid*
+    """
+    return ldap_delete_user_from_group (uid.replace(" ", ""), GROUPE_ADMIN)
+
 def has_ldap_site_admin (uid:str):
     """
     Détermine si l'utilisateur *uid* est admin du site
