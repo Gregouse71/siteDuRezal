@@ -27,7 +27,6 @@ build-back:
   stage: build #En fait il fait que linter aussi
   tags: ["docker"]
   image: anaconda/miniconda
-  allow_failure: true
   variables:
     #conda a des term of service a accepter
     #Mais si, vous l'avez fait en installant conda. Bah la faut le faire aussi

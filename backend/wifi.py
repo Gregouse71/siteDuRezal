@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Session, select
 from fastapi import APIRouter, HTTPException, Depends, status
 from typing import Annotated
 
-from datetime import datetime
+from datetime import datetime, timezone
 from database import User, engine, UserUpdate, patch_user_db
 from auth_router import get_current_user
 from ldap import allow_ldap_wifi, disallow_ldap_wifi
@@ -11,9 +11,9 @@ wifi_router = APIRouter (
     prefix="/wifi"
 )
 
-DEBUT_T1 = datetime (2025, 9, 1)
-DEBUT_T2 = datetime (2025, 11, 17)
-DEBUT_T3 = datetime (2026, 2, 16)
+DEBUT_T1 = datetime(2025, 9, 1, tzinfo=timezone.utc)
+DEBUT_T2 = datetime(2025, 11, 17, tzinfo=timezone.utc)
+DEBUT_T3 = datetime(2026, 2, 16, tzinfo=timezone.utc)
 
 class WiFiUpdate (SQLModel):
     uid: str
@@ -44,10 +44,10 @@ def ajouter_credits_trimestre (
     if req.T1:
         update = UserUpdate (
             credits=current_user.credits - 1,
-            cotizT1=True, t1PaidAt=datetime.now(),
+            cotizT1=True, t1PaidAt=datetime.now(timezone.utc),
             t1PaymentType="Autocredits",
         )
-        if DEBUT_T2 > datetime.now () > DEBUT_T1:
+        if DEBUT_T2 > datetime.now(timezone.utc) > DEBUT_T1:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 
@@ -57,10 +57,10 @@ def ajouter_credits_trimestre (
     if req.T2:
         update = UserUpdate (
             credits=current_user.credits - 1,
-            cotizT2=True, t2PaidAt=datetime.now(),
+            cotizT2=True, t2PaidAt=datetime.now(timezone.utc),
             t2PaymentType="Autocredits",
         )
-        if DEBUT_T3 > datetime.now () > DEBUT_T2:
+        if DEBUT_T3 > datetime.now(timezone.utc) > DEBUT_T2:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 
@@ -70,10 +70,10 @@ def ajouter_credits_trimestre (
     if req.T3:
         update = UserUpdate (
             credits=current_user.credits - 1,
-            cotizT3=True, t3PaidAt=datetime.now(),
+            cotizT3=True, t3PaidAt=datetime.now(timezone.utc),
             t3PaymentType="Autocredits",
         )
-        if datetime.now () > DEBUT_T3:
+        if datetime.now(timezone.utc) > DEBUT_T3:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 

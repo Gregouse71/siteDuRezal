@@ -72,7 +72,7 @@ def ldap_verify_username_password (username: str, password: str) -> bool:
               # Si l'utilisateur avec cet username et password peut s'authentifier, c'est bon
             if conn.extend.standard.who_am_i () is not None:
                 return True
-    except Exception:
+    except Exception: # noqa: S110  -- Refuse the except - pass combination
         pass
     # Dans tous les autres cas, l'utilisateur n'est pas bien authentifié
     return False

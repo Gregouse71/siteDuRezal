@@ -1,0 +1,5 @@
+[tool.ruff.lint]
+ignore=[
+	"I001",		# Tri des imports
+	"BLE001",	# except une liste précise d'exception, pas toutes
+]

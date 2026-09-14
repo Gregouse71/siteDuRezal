@@ -19,7 +19,6 @@ async def post_helloasso (
         and request.client.host == "51.138.206.200"
     ):
         print(f"Mauvaise ip : {request.client.host}")
-        pass
     else:
         with Session (engine) as session:
             statement = select (User).where (User.email == data["payer"]["email"])
