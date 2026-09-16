@@ -60,6 +60,7 @@ export default function useDisplayService() {
         const IntInput = () => (
             <input
                 type="number"
+                style={{ width: "3em" }}
                 value={value}
                 onChange={(event) => {
                     setValue(event.target.value);
@@ -77,8 +78,8 @@ export default function useDisplayService() {
             <input
                 type="text"
                 pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}"
-                placeholder="Format : JJ/MM/AAAA"
-                style={{ borderColor: isValueValid ? "" : "red" }}
+                placeholder="JJ/MM/AAAA"
+                style={{ borderColor: isValueValid ? "" : "red", width: "6em" }}
                 value={value}
                 onChange={(event) => {
                     setValue(event.target.value);
@@ -113,13 +114,10 @@ export default function useDisplayService() {
         };
 
         const BinaryList = () => (
-            <select value={String(value)} onChange={(event) => onValueChange(event.target.value === "true")}>
-                <option value="true"> Oui </option>
-                <option value="false"> Non </option>
-            </select>
+            <input type="checkbox" onChange={(e) => onValueChange(e.target.checked)} checked={value} />
         );
 
-        const valueUnmutable = <span>{value?.toString()}</span>;
+        const valueUnmutable = typeof value === "boolean" ? value ? "✔️" : "❌" : <span>{value?.toString()}</span>;
 
         const MessageDisplay = () => {
             const message = value;
@@ -135,44 +133,31 @@ export default function useDisplayService() {
         switch (field) {
             case "id":
                 return valueUnmutable;
-            case "acces_wifi":
-                return props.mutable ? BinaryList() : valueUnmutable;
-            case "is_admin":
-                return props.mutable ? BinaryList() : valueUnmutable;
-            case "email_verifie":
-                return props.mutable ? BinaryList() : valueUnmutable;
+            case "uid":
+                return props.isFilter ? StringInput() : valueUnmutable;
             case "credits":
                 return props.mutable ? IntInput() : valueUnmutable;
             case "prenom":
-                return props.mutable ? StringInput() : valueUnmutable;
             case "nom":
-                return props.mutable ? StringInput() : valueUnmutable;
-            case "uid":
-                return valueUnmutable;
             case "password":
-                return props.mutable ? StringInput() : valueUnmutable;
             case "email":
-                return props.mutable ? StringInput() : valueUnmutable;
             case "room":
                 return props.mutable ? StringInput() : valueUnmutable;
             case "promotion":
                 return props.mutable ? createOptionsForLists(promotions) : valueUnmutable;
+            case "acces_wifi":
+            case "is_admin":
+            case "email_verifie":
             case "cotizT1":
-                return props.mutable ? BinaryList() : valueUnmutable;
-            case "t1PaymentType":
-                return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable;
-            case "t1PaidAt":
-                return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable;
             case "cotizT2":
-                return props.mutable ? BinaryList() : valueUnmutable;
-            case "t2PaymentType":
-                return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable;
-            case "t2PaidAt":
-                return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable;
             case "cotizT3":
                 return props.mutable ? BinaryList() : valueUnmutable;
+            case "t1PaymentType":
+            case "t2PaymentType":
             case "t3PaymentType":
                 return props.mutable ? createOptionsForLists(paymentTypes) : valueUnmutable;
+            case "t1PaidAt":
+            case "t2PaidAt":
             case "t3PaidAt":
                 return props.mutable ? (props.imposeDateFormat ? DateInput() : StringInput()) : valueUnmutable;
             case "createdAt":
@@ -282,9 +267,9 @@ export default function useDisplayService() {
                 ))}
                 <td>
                     {account.id !== -1 && (
-                        <button className="btn btn-error" onClick={props.onDeleteAccount}>
+                        <button className="btn btn-error" title="Supprimer" onClick={props.onDeleteAccount}>
                             {" "}
-                            Supprimer{" "}
+                            X{" "}
                         </button>
                     )}
                 </td>
@@ -337,7 +322,7 @@ export default function useDisplayService() {
                     return (
                         fieldDisplayData[fieldName] && (
                             <th key={"User head " + fieldName} colSpan={3}>
-                                {conversionService.translateAccountFieldNameInFrench(fieldName)}
+                                {conversionService.translateAccountFieldNameInFrenchForHeader(fieldName)}
                             </th>
                         )
                     );
@@ -345,25 +330,25 @@ export default function useDisplayService() {
                     return (
                         fieldDisplayData[fieldName] && (
                             <th key={"User head " + fieldName} rowSpan={2}>
-                                {conversionService.translateAccountFieldNameInFrench(fieldName)}
+                                {conversionService.translateAccountFieldNameInFrenchForHeader(fieldName)}
                             </th>
                         )
                     );
                 }
             });
-            const actionsHead = <th rowSpan={2}>Actions</th>;
+            const actionsHead = <th rowSpan={2}> </th>;
 
             if (props.hasSelectionColumn) return [selectionHead, ...rowElements, actionsHead];
             else return [...rowElements, actionsHead];
         };
 
-        const TableHeadSecondRow = conversionService.accountFieldsNameInEnglish.map((fieldName, ind) => {
+        const TableHeadSecondRow = conversionService.accountFieldsNameInEnglish.map((fieldName) => {
             const isTrimesterField = isTrimester(fieldName);
             return (
                 <>
                     {isTrimesterField && fieldDisplayData["T" + isTrimesterField] && (
-                        <th key={"User head " + fieldName} >
-                            {conversionService.translateAccountFieldNameInFrench(fieldName)}
+                        <th key={"User head " + fieldName}>
+                            {conversionService.translateAccountFieldNameInFrenchForHeader(fieldName)}
                         </th>
                     )}
                 </>
@@ -449,37 +434,39 @@ export default function useDisplayService() {
         return (
             <>
                 <PaginationControl />
-                <table
-                    className="table table-bordered table-striped table-sm table-editable"
-                    style={{ textAlign: "center" }}
-                >
-                    <thead className="align-middle">
-                        <tr>{TableHeadFirstRow()}</tr>
-                        <tr>{TableHeadSecondRow}</tr>
-                    </thead>
-                    <tbody className="align-middle">
-                        {paginatedUsers.length === 0 && <tr></tr>}
-                        {paginatedUsers.map((account) => (
-                            <tr key={"Account " + account.id}>
-                                <UserAdminDisplay
-                                    account={account}
-                                    hasSelectionColumn={props.hasSelectionColumn}
-                                    IdsSelected={props.IdsSelected}
-                                    fieldsData={fieldDisplayData}
-                                    mutable={props.mutable}
-                                    onValueChange={(field: string, newValue: any) =>
-                                        props.onAccountValueChange(account.id, field, newValue)
-                                    }
-                                    onDeleteAccount={() => props.onDeleteAccount(account.id)}
-                                    onSelectAccount={() => props.onSelectAccount(account.id)}
-                                    highlightChangesRespectedToDatabaseAccount={
-                                        props.highlightChangesRespectedToDatabaseAccount
-                                    }
-                                />
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div id="container-table" style={{ overflowX: "auto" }}>
+                    <table
+                        className="table table-bordered table-striped table-sm table-editable"
+                        style={{ textAlign: "center", width: "auto" }}
+                    >
+                        <thead className="align-middle">
+                            <tr>{TableHeadFirstRow()}</tr>
+                            <tr>{TableHeadSecondRow}</tr>
+                        </thead>
+                        <tbody className="align-middle">
+                            {paginatedUsers.length === 0 && <tr></tr>}
+                            {paginatedUsers.map((account) => (
+                                <tr key={"Account " + account.id}>
+                                    <UserAdminDisplay
+                                        account={account}
+                                        hasSelectionColumn={props.hasSelectionColumn}
+                                        IdsSelected={props.IdsSelected}
+                                        fieldsData={fieldDisplayData}
+                                        mutable={props.mutable}
+                                        onValueChange={(field: string, newValue: any) =>
+                                            props.onAccountValueChange(account.id, field, newValue)
+                                        }
+                                        onDeleteAccount={() => props.onDeleteAccount(account.id)}
+                                        onSelectAccount={() => props.onSelectAccount(account.id)}
+                                        highlightChangesRespectedToDatabaseAccount={
+                                            props.highlightChangesRespectedToDatabaseAccount
+                                        }
+                                    />
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
                 <PaginationControl />
             </>
         );

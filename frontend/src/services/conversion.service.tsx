@@ -8,6 +8,53 @@ export default function useConversionService() {
     const accountFieldsNameInEnglish = Object.keys(new Account({}));
     const accountFieldsNameInEnglishWithoutPassword = Object.keys(new Account({})).filter((key) => key !== "password");
 
+    const translateAccountFieldNameInFrenchForHeader = (field: string) => {
+        switch (field) {
+            case "id":
+                return "#";
+            case "acces_wifi":
+                return "Acces a internet";
+            case "is_admin":
+                return "Admin";
+            case "firstName":
+                return "Prenom";
+            case "lastName":
+                return "Nom";
+            case "login":
+                return "Login";
+            case "password":
+                return "Mot de passe";
+            case "email":
+                return "Email";
+            case "email_verifie":
+                return "Courriel vérifié";
+            case "credits":
+                return "Crédits";
+            case "room":
+                return "Chambre";
+            case "university":
+                return "Ecole";
+            case "promotion":
+                return "Promotion";
+            case "cotizT1":
+            case "cotizT2":
+            case "cotizT3":
+                return "Payé";
+            case "t1PaymentType":
+            case "t2PaymentType":
+            case "t3PaymentType":
+                return "Moyen de paiement";
+            case "t1PaidAt":
+            case "t2PaidAt":
+            case "t3PaidAt":
+                return "Date paiement";
+            case "createdAt":
+                return "Date de creation";
+            default:
+                return field;
+        }
+    };
+
     const translateAccountFieldNameInFrench = (field: string) => {
         switch (field) {
             case "id":
@@ -60,8 +107,6 @@ export default function useConversionService() {
                 return field;
         }
     };
-
-    const accountFieldsNameInFrench = Object.keys(new Account({})).map((key) => translateAccountFieldNameInFrench(key));
 
     const translateAccountFieldNameInEnglish = (field: string) => {
         switch (field) {
@@ -172,7 +217,7 @@ export default function useConversionService() {
     return {
         accountFieldsNameInEnglish: accountFieldsNameInEnglish,
         accountFieldsNameInEnglishWithoutPassword: accountFieldsNameInEnglishWithoutPassword,
-        accountFieldsNameInFrench: accountFieldsNameInFrench,
+        translateAccountFieldNameInFrenchForHeader: translateAccountFieldNameInFrenchForHeader,
         translateAccountFieldNameInEnglish: translateAccountFieldNameInEnglish,
         translateAccountFieldNameInFrench: translateAccountFieldNameInFrench,
         AccountToXLSXAccount: AccountToXLSXAccount,

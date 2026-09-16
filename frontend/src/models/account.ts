@@ -44,14 +44,16 @@ export class Account {
                     ? data.promotion
                     : promotions[0]
                 : promotions[0];
+
+        this.cotizT1 = data.cotizT1 ? true : false;
         this.t1PaymentType =
             data.t1PaymentType !== undefined
                 ? paymentTypes.includes(data.t1PaymentType)
                     ? data.t1PaymentType
                     : paymentTypes[0]
                 : paymentTypes[0];
-        this.cotizT1 = data.cotizT1 ? true : false;
         this.t1PaidAt = data.t1PaidAt ? new Date(data.t1PaidAt) : null;
+
         this.cotizT2 = data.cotizT2 ? true : false;
         this.t2PaymentType =
             data.t2PaymentType !== undefined
@@ -60,6 +62,7 @@ export class Account {
                     : paymentTypes[0]
                 : paymentTypes[0];
         this.t2PaidAt = data.t2PaidAt ? new Date(data.t2PaidAt) : null;
+
         this.cotizT3 = data.cotizT3 ? true : false;
         this.t3PaymentType =
             data.t3PaymentType !== undefined
@@ -68,6 +71,7 @@ export class Account {
                     : paymentTypes[0]
                 : paymentTypes[0];
         this.t3PaidAt = data.t3PaidAt ? new Date(data.t3PaidAt) : null;
+
         this.createdAt = data.createdAt ? new Date(data.createdAt) : null;
         this.message = data.message || null; // Format : First character is E (for Error) or S (for Success)
     }

@@ -99,6 +99,7 @@ export default function UsersFilters(props: any) {
                     value={userFilters[userFilterName].value}
                     field={userFilterName}
                     mutable={true}
+                    isFilter={true}
                     imposeDateFormat={false}
                     onValueChange={setFilterValue}
                 />
