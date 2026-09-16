@@ -148,7 +148,7 @@ export default function useDisplayService() {
             case "nom":
                 return props.mutable ? StringInput() : valueUnmutable;
             case "uid":
-                return props.mutable ? StringInput() : valueUnmutable;
+                return valueUnmutable;
             case "password":
                 return props.mutable ? StringInput() : valueUnmutable;
             case "email":
@@ -211,14 +211,14 @@ export default function useDisplayService() {
                         <tbody>
                             <tr>
                                 {Object.keys(props.fieldsData).map((fieldName) => (
-                                    <th key={"body " + fieldName}>
+                                    <td key={"body " + fieldName}>
                                         <Button
                                             style={{ margin: "auto" }}
                                             variant="outlined"
                                             color={props.fieldsData[fieldName] ? "success" : "error"}
                                             onClick={() => changeStatusDisplayOfField(fieldName)}
                                         />
-                                    </th>
+                                    </td>
                                 ))}
                             </tr>
                         </tbody>
@@ -357,12 +357,12 @@ export default function useDisplayService() {
             else return [...rowElements, actionsHead];
         };
 
-        const TableHeadSecondRow = conversionService.accountFieldsNameInEnglish.map((fieldName) => {
+        const TableHeadSecondRow = conversionService.accountFieldsNameInEnglish.map((fieldName, ind) => {
             const isTrimesterField = isTrimester(fieldName);
             return (
                 <>
                     {isTrimesterField && fieldDisplayData["T" + isTrimesterField] && (
-                        <th key={"User head " + fieldName}>
+                        <th key={"User head " + fieldName} >
                             {conversionService.translateAccountFieldNameInFrench(fieldName)}
                         </th>
                     )}

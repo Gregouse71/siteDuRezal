@@ -29,7 +29,7 @@ export default function useConversionService() {
             case "email_verifie":
                 return "Courriel vérifié";
             case "credits":
-                return "Crédit";
+                return "Crédits";
             case "room":
                 return "Chambre";
             case "university":
