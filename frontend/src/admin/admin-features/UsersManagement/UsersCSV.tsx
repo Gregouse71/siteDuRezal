@@ -52,7 +52,15 @@ export default function UsersCSV(props: any) {
     };
 
     return (
-        <div style={{ textAlign: "center", margin: "1vw", display: "flex", justifyContent: "space-around" }}>
+        <div
+            style={{
+                textAlign: "center",
+                margin: "1vw",
+                display: "flex",
+                justifyContent: "space-around",
+                overflowX: "auto",
+            }}
+        >
             <button className="btn btn-outline-success" onClick={() => uploadCSVUsers()}>
                 Télécharger les comptes
                 <FontAwesomeIcon icon={faFileExcel} size="2x" style={{ margin: "0 1vw 0 1vw" }} />

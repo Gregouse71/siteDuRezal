@@ -1,4 +1,4 @@
-import { Button, Table } from "@mui/material";
+import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import useAccountService from "../../../services/account.service";
 import useConversionService from "../../../services/conversion.service";
@@ -85,9 +85,6 @@ export default function UsersFilters(props: any) {
     const userFiltersList = userFilterNames.map((userFilterName) => (
         <>
             <td>
-                <button onClick={() => deleteUserFilter(userFilterName)}>x</button>
-            </td>
-            <td>
                 <FilterFieldNameSelection
                     filterFieldName={userFilterName}
                     allFilterFieldNames={userFilterNames}
@@ -111,6 +108,12 @@ export default function UsersFilters(props: any) {
                     checked={userFilters[userFilterName]?.inverted}
                 />
             </td>
+            <td>
+                <button className="btn btn-error" onClick={() => deleteUserFilter(userFilterName)} title="Supprimer">
+                    {" "}
+                    X{" "}
+                </button>
+            </td>
         </>
     ));
 
@@ -118,21 +121,26 @@ export default function UsersFilters(props: any) {
         <>
             <h2> Filtres de comptes </h2>
             {userFiltersList.length > 0 && (
-                <Table id="user-filter-table" size="small">
-                    <thead>
-                        <tr>
-                            <th>Enlever</th>
-                            <th>Champ</th>
-                            <th>Valeur</th>
-                            <th>Inverser</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userFiltersList.map((filter, index) => (
-                            <tr key={"filter " + userFilterNames[index]}>{filter}</tr>
-                        ))}
-                    </tbody>
-                </Table>
+                <div id="container-table" style={{ overflowX: "auto" }}>
+                    <table
+                        className="table table-bordered table-striped table-sm table-editable"
+                        id="user-filter-table"
+                    >
+                        <thead>
+                            <tr>
+                                <th>Champ</th>
+                                <th>Valeur</th>
+                                <th>Inverser</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userFiltersList.map((filter, index) => (
+                                <tr key={"filter " + userFilterNames[index]}>{filter}</tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
             <Button
                 className="btn-flat btn-primary"

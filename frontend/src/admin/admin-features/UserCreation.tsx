@@ -236,7 +236,7 @@ export default function UserCreation() {
                 setPageSize={setPageSize}
             />
 
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <div style={{ display: "flex", justifyContent: "space-around", overflowX: "auto" }}>
                 <Button variant="outlined" color="success" onClick={onAddUserManually}>
                     Ajouter un compte à créer
                 </Button>

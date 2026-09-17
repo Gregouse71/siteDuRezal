@@ -175,7 +175,7 @@ export default function useDisplayService() {
             props.setFieldData({ ...props.fieldsData, [field]: !props.fieldsData[field] });
 
         return (
-            <>
+            <div id="container-table" style={{ overflowX: "auto" }}>
                 <h2> Champs affichés </h2>
                 <div id="field-choice-list">
                     <table className="table table-bordered table-striped table-sm" style={{ textAlign: "center" }}>
@@ -209,7 +209,7 @@ export default function useDisplayService() {
                         </tbody>
                     </table>
                 </div>
-            </>
+            </div>
         );
     };
 

@@ -4,6 +4,7 @@ import usePopupService from "../services/popup.service";
 import React, { Suspense, lazy, useEffect } from "react";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./Admin.scss";
 
 export interface FeatureDefinition {
     name: string;
