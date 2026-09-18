@@ -4,6 +4,7 @@ stages:
 
 deploy-site:
   stage: deploy
+  tags: ["shell"]
   script:
     - echo "export const BACKEND_BASE_URL = 'https://www.rezal-mdm.com/api';" > frontend/src/base_url.js
     - /usr/bin/rsync -e 'ssh -p 2223' -atv --delete --exclude 'upload' --exclude '*__pycache__*' --exclude 'frontend/node_modules' --exclude '.git' . rezal@10.100.1.80:/
