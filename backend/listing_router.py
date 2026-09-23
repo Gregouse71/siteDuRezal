@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import SQLModel, Session, select
+from sqlmodel import SQLModel, Session, select, update
 from typing import Annotated
 from dotenv import load_dotenv
 from pydantic import EmailStr
@@ -92,3 +92,26 @@ async def filter_user (
         statement = select (User)
         users = session.exec (statement).all ()
         return users
+
+@listing_router.get("/clearall")
+def get_freewifi(
+    current_user: Annotated[User, Depends(get_current_user)]
+):
+    """
+    Supprime toutes les données de cotisation de l'année
+    """
+    if not current_user.is_admin:
+        raise HTTPException (
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Vous n'avez pas les droits pour réaliser cette action"
+        )
+    
+    with Session(engine) as session:
+        statement = update (User).values(
+            cotizT1=None, t1PaidAt=None, t1PaymentType=None,
+            cotizT2=None, t2PaidAt=None, t2PaymentType=None,
+            cotizT3=None, t3PaidAt=None, t3PaymentType=None
+        )
+        session.exec(statement)
+        session.commit()
+    return "Success"
