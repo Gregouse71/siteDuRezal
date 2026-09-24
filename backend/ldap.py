@@ -177,7 +177,7 @@ def ldap_clear_group (group: str):
             r = Reader (conn, obj, group)
             r.search ()
             w = Writer.from_cursor (r)
-            w[0].member = ["cn=placeHolder"]
+            w[0].member = ["uid=placeHolder,ou=People"]
             w.commit ()
         return True
     except Exception:
@@ -196,7 +196,7 @@ def ldap_user_in_group (uid: str, group: str):
             r.search ()
             return distinguished_name_from_uid (uid) in r[0].member
     except Exception:
-        return False
+        return []
 
 
 def ldap_group_members (group: str):
@@ -211,7 +211,7 @@ def ldap_group_members (group: str):
             r.search ()
             return [p.search(m).group(1) for m in r[0].member]
     except Exception:
-        return False
+        return []
 
 
 def test_ldap ():
