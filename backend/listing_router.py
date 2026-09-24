@@ -94,7 +94,7 @@ async def filter_user (
         return users
 
 @listing_router.get("/clearall")
-def get_freewifi(
+def clear_all_cotiz(
     current_user: Annotated[User, Depends(get_current_user)]
 ):
     """

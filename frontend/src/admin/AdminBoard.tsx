@@ -141,23 +141,31 @@ function ClearAllData() {
 
     const actionOnClick = () => {
         if (window.confirm("Tu es sûr ? Tu vas supprimer toutes les données de cotisation !")) {
-            httpInstance.get("api/list/clearall").then((response) => {
-                switch (response.data) {
-                    case "Success":
-                        popupService.changePopup({
-                            status: "success",
-                            message: "Opération réussie.",
-                        });
-                        break;
-                    default:
-                        popupService.changePopup({
-                            status: "error",
-                            message: "Echec.",
-                        });
-                        break;
-                }
-                updateDatabaseView();
-            });
+            httpInstance
+                .get("list/clearall")
+                .then((response) => {
+                    switch (response.data) {
+                        case "Success":
+                            popupService.changePopup({
+                                status: "success",
+                                message: "Opération réussie.",
+                            });
+                            break;
+                        default:
+                            popupService.changePopup({
+                                status: "error",
+                                message: "Echec.",
+                            });
+                            break;
+                    }
+                    updateDatabaseView();
+                })
+                .catch((_error) => {
+                    popupService.changePopup({
+                        status: "error",
+                        message: "Erreur serveur : impossible d'effacer les données.",
+                    });
+                });
         }
     };
 

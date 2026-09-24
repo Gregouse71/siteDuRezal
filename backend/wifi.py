@@ -11,9 +11,9 @@ wifi_router = APIRouter (
     prefix="/wifi"
 )
 
-DEBUT_T1 = datetime(2025, 9, 1, tzinfo=timezone.utc)
-DEBUT_T2 = datetime(2025, 11, 17, tzinfo=timezone.utc)
-DEBUT_T3 = datetime(2026, 2, 16, tzinfo=timezone.utc)
+DEBUT_T1 = datetime(2026, 9, 1, tzinfo=timezone.utc)
+DEBUT_T2 = datetime(2026, 11, 17, tzinfo=timezone.utc)
+DEBUT_T3 = datetime(2027, 2, 16, tzinfo=timezone.utc)
 
 class WiFiUpdate (SQLModel):
     uid: str

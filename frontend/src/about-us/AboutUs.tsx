@@ -131,7 +131,7 @@ export function AboutUs() {
                         <b>activer votre accès à internet</b> pour ce trimestre sur votre page{" "}
                         <Link to="/resident/board">résident</Link>.
                     </p>
-                    <h3>Calendrier 2025-2026</h3>
+                    <h3>Calendrier 2026-2027</h3>
                     <ul>
                         <li>
                             <b>Trimestre 1</b> : 10 septembre - 30 novembre
