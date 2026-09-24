@@ -35,6 +35,12 @@ def disallow_ldap_wifi (uid: str):
     """
     return ldap_delete_user_from_group (uid.replace(" ", ""), GROUPE_WIFI)
 
+def clear_ldap_wifi ():
+    """
+    Efface tous les utilisateurs du groupe LDAP pour le wifi
+    """
+    return ldap_clear_group(GROUPE_WIFI)
+
 
 def has_ldap_wifi (uid:str):
     """
@@ -156,6 +162,23 @@ def ldap_delete_user_from_group (uid: str, group: str):
     try:
         with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
             conn.modify (group, {"member": [(MODIFY_DELETE, [distinguished_name])]})
+        return True
+    except Exception:
+        return False
+
+
+def ldap_clear_group (group: str):
+    """
+    Retire tous les utilisateurs du groupe, en les remplaçant par un faux
+    """
+    try:
+        with Connection (server, LDAP_ADMIN_USERNAME, LDAP_ADMIN_PASSWORD) as conn:
+            obj = ObjectDef ("groupOfNames", conn)
+            r = Reader (conn, obj, group)
+            r.search ()
+            w = Writer.from_cursor (r)
+            w[0].member = ["cn=placeHolder"]
+            w.commit ()
         return True
     except Exception:
         return False

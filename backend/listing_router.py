@@ -6,7 +6,7 @@ from pydantic import EmailStr
 import os
 
 from database import User, engine
-from ldap import ldap_group_members
+from ldap import ldap_group_members, clear_ldap_wifi
 from auth_router import get_current_user
 
 load_dotenv()
@@ -105,13 +105,15 @@ def get_freewifi(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Vous n'avez pas les droits pour réaliser cette action"
         )
-    
+
     with Session(engine) as session:
         statement = update (User).values(
+            acces_wifi=False,
             cotizT1=None, t1PaidAt=None, t1PaymentType=None,
             cotizT2=None, t2PaidAt=None, t2PaymentType=None,
             cotizT3=None, t3PaidAt=None, t3PaymentType=None
         )
         session.exec(statement)
         session.commit()
+        clear_ldap_wifi()
     return "Success"
