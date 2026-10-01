@@ -71,7 +71,7 @@ export default function UserBoard() {
                     <div className="user-info-card">
                         <h3>Informations générales</h3>
 
-                        <div id="container-table">
+                        <div id="container-table" style={{ overflowX: "auto" }}>
                             <table className="table table-centered">
                                 <tbody>
                                     <tr>

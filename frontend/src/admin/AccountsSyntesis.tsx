@@ -43,49 +43,51 @@ export default function AccountsSyntesis() {
     };
 
     return (
-        <table
-            className="table table-bordered table-striped table-sm"
-            style={{ textAlign: "center", width: "80%", margin: 0 }}
-        >
-            <thead className="align-middle">
-                <tr>
-                    <th scope="col" rowSpan={3}>
-                        {" "}
-                        Période
-                    </th>
-                    <th scope="col" rowSpan={3}>
-                        {" "}
-                        Nombre cotisants
-                    </th>
-                    <th scope="col" rowSpan={2}></th>
-                    <th scope="col" colSpan={promotions.length} rowSpan={2}>
-                        {" "}
-                        Mines
-                    </th>
-                    <th scope="col" colSpan={paymentTypes.length}>
-                        {" "}
-                        Mode de paiement{" "}
-                    </th>
-                </tr>
-                <tr>
-                    {paymentTypes.map((type) => (
-                        <th key={"paymentTypes th " + type} rowSpan={2}>
-                            {type}
+        <div style={{ overflowX: "auto" }}>
+            <table
+                className="table table-bordered table-striped table-sm"
+                style={{ textAlign: "center", width: "80%", margin: 0 }}
+            >
+                <thead className="align-middle">
+                    <tr>
+                        <th scope="col" rowSpan={3}>
+                            {" "}
+                            Période
                         </th>
+                        <th scope="col" rowSpan={3}>
+                            {" "}
+                            Nombre cotisants
+                        </th>
+                        <th scope="col" rowSpan={2}></th>
+                        <th scope="col" colSpan={promotions.length} rowSpan={2}>
+                            {" "}
+                            Mines
+                        </th>
+                        <th scope="col" colSpan={paymentTypes.length}>
+                            {" "}
+                            Mode de paiement{" "}
+                        </th>
+                    </tr>
+                    <tr>
+                        {paymentTypes.map((type) => (
+                            <th key={"paymentTypes th " + type} rowSpan={2}>
+                                {type}
+                            </th>
+                        ))}
+                    </tr>
+                    <tr>
+                        {promotions.map((promo) => (
+                            <th key={"promotion th " + promo}>{promo}</th>
+                        ))}
+                        <th> Total Mines</th>
+                    </tr>
+                </thead>
+                <tbody className="align-middle">
+                    {[1, 2, 3].map((num) => (
+                        <TrimesterRow key={"TrimesterRow " + num} trimesterNum={num} />
                     ))}
-                </tr>
-                <tr>
-                    {promotions.map((promo) => (
-                        <th key={"promotion th " + promo}>{promo}</th>
-                    ))}
-                    <th> Total Mines</th>
-                </tr>
-            </thead>
-            <tbody className="align-middle">
-                {[1, 2, 3].map((num) => (
-                    <TrimesterRow key={"TrimesterRow " + num} trimesterNum={num} />
-                ))}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     );
 }
