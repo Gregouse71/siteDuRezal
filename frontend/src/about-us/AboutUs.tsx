@@ -2,8 +2,12 @@ import "./AboutUs.scss";
 import { BACKEND_BASE_URL } from "../base_url.js";
 import { Link } from "react-router-dom";
 import { helloAssoURL } from "../helloasso";
+import { useDateService } from "../services/date.service";
 
 export function AboutUs() {
+    const dateService = useDateService();
+    const anneeScolaire = dateService.getAnneeScolaire();
+
     return (
         <div className="about-us-layout">
             <nav className="toc-sidebar">
@@ -131,7 +135,9 @@ export function AboutUs() {
                         <b>activer votre accès à internet</b> pour ce trimestre sur votre page{" "}
                         <Link to="/resident/board">résident</Link>.
                     </p>
-                    <h3>Calendrier 2026-2027</h3>
+                    <h3>
+                        Calendrier {anneeScolaire} - {anneeScolaire + 1}
+                    </h3>
                     <ul>
                         <li>
                             <b>Trimestre 1</b> : 10 septembre - 30 novembre

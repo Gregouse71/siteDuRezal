@@ -1,10 +1,18 @@
 export function useDateService() {
-    const startFirstTrimester = new Date("09/10/2025 23:00"); // Format mm/dd/yyyy hh:mm
-    const endFirstTrimester = new Date("11/30/2025 23:00"); // Format mm/dd/yyyy hh:mm
-    const startSecondTrimester = new Date("11/17/2025 23:00"); // Format mm/dd/yyyy hh:mm
-    const endSecondTrimester = new Date("02/22/2026 23:00"); // Format mm/dd/yyyy hh:mm
-    const startThirdTrimester = new Date("02/16/2026 23:00"); // Format mm/dd/yyyy hh:mm
-    const endThirdTrimester = new Date("07/15/2026 23:00"); // Format mm/dd/yyyy hh:mm
+    // Année scolaire en cours, décidée en UTC comme le backend (wifi.py) : bascule au même instant.
+    const getAnneeScolaire = () => {
+        const now = new Date();
+        return now.getUTCMonth() >= 8 ? now.getUTCFullYear() : now.getUTCFullYear() - 1;
+    };
+
+    // Bornes des trimestres : jours fixes, seule l'année défile
+    const annee = getAnneeScolaire();
+    const startFirstTrimester = new Date(annee, 8, 10); // 10 septembre
+    const endFirstTrimester = new Date(annee, 10, 30); // 30 novembre
+    const startSecondTrimester = new Date(annee, 10, 17); // 17 novembre
+    const endSecondTrimester = new Date(annee + 1, 1, 22); // 22 février
+    const startThirdTrimester = new Date(annee + 1, 1, 16); // 16 février
+    const endThirdTrimester = new Date(annee + 1, 6, 15); // 15 juillet
 
     const dateTrimester = (numTrimester: number) => {
         switch (numTrimester) {
@@ -17,13 +25,6 @@ export function useDateService() {
             default:
                 return "Mauvais numéro de trimestre";
         }
-    };
-
-    const getTrimester = () => {
-        const now = new Date();
-        if (now < endFirstTrimester) return 1;
-        else if (now < endSecondTrimester) return 2;
-        else return 3;
     };
 
     const dateToString = (date: Date | null) => {
@@ -55,8 +56,8 @@ export function useDateService() {
     };
 
     return {
+        getAnneeScolaire: getAnneeScolaire,
         dateTrimester: dateTrimester,
-        getTrimester: getTrimester,
         dateToString: dateToString,
         stringToDate: stringToDate,
         tranformToDateIfPossible: tranformToDateIfPossible,

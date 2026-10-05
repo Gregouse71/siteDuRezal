@@ -11,9 +11,17 @@ wifi_router = APIRouter (
     prefix="/wifi"
 )
 
-DEBUT_T1 = datetime(2026, 9, 1, tzinfo=timezone.utc)
-DEBUT_T2 = datetime(2026, 11, 17, tzinfo=timezone.utc)
-DEBUT_T3 = datetime(2027, 2, 16, tzinfo=timezone.utc)
+def debuts_trimestres (date : datetime) -> tuple [datetime, datetime, datetime] :
+    """
+    Dates à partir desquelles la cotisation d'un trimestre ouvre l'accès wifi,
+    pour l'année scolaire en cours (l'année scolaire démarre en septembre).
+    """
+    annee = date.year if date.month >= 9 else date.year - 1
+    return (
+        datetime (annee, 9, 1, tzinfo=timezone.utc),
+        datetime (annee, 11, 17, tzinfo=timezone.utc),
+        datetime (annee + 1, 2, 16, tzinfo=timezone.utc),
+    )
 
 class WiFiUpdate (SQLModel):
     uid: str
@@ -41,13 +49,15 @@ def ajouter_credits_trimestre (
                 detail="Vous n'avez pas assez de crédits"
             )
 
+    debut_t1, debut_t2, debut_t3 = debuts_trimestres (datetime.now(timezone.utc))
+
     if req.T1:
         update = UserUpdate (
             credits=current_user.credits - 1,
             cotizT1=True, t1PaidAt=datetime.now(timezone.utc),
             t1PaymentType="Autocredits",
         )
-        if DEBUT_T2 > datetime.now(timezone.utc) > DEBUT_T1:
+        if debut_t2 > datetime.now(timezone.utc) > debut_t1:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 
@@ -60,7 +70,7 @@ def ajouter_credits_trimestre (
             cotizT2=True, t2PaidAt=datetime.now(timezone.utc),
             t2PaymentType="Autocredits",
         )
-        if DEBUT_T3 > datetime.now(timezone.utc) > DEBUT_T2:
+        if debut_t3 > datetime.now(timezone.utc) > debut_t2:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 
@@ -73,7 +83,7 @@ def ajouter_credits_trimestre (
             cotizT3=True, t3PaidAt=datetime.now(timezone.utc),
             t3PaymentType="Autocredits",
         )
-        if datetime.now(timezone.utc) > DEBUT_T3:
+        if datetime.now(timezone.utc) > debut_t3:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 

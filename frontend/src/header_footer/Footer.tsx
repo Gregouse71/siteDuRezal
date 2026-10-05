@@ -5,7 +5,7 @@ export function Footer() {
         <footer id="footer">
             <div className="container text-center">
                 <div className="footer-content">
-                    <span>Rezal © 2025</span>
+                    <span>Rezal © {new Date().getFullYear()}</span>
                 </div>
             </div>
         </footer>
