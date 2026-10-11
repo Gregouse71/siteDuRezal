@@ -1,7 +1,28 @@
-.option-radius-users {
-    display: flex;
-    justify-content: space-around;
-    margin: 1vh auto;
-    width: 20%;
-    white-space: nowrap;
+.radius-users {
+    overflow-x: scroll;
+
+    .option-radius-users {
+        display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+        margin: 1vh auto;
+    }
+
+    .liste-radius-users {
+        display: grid;
+        gap: 0;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .radius-user-item {
+        border: 1px solid black;
+        padding: 2px;
+        cursor: pointer;
+        overflow-x: hidden;
+        text-wrap-mode: nowrap;
+
+        &:hover {
+            background-color: #e0e0e0;
+        }
+    }
 }

@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Session, select
 from fastapi import APIRouter, HTTPException, Depends, status
 from typing import Annotated
 
-from datetime import datetime, timezone
+from datetime import datetime, UTC
 from database import User, engine, UserUpdate, patch_user_db
 from auth_router import get_current_user
 from ldap import allow_ldap_wifi, disallow_ldap_wifi
@@ -18,9 +18,9 @@ def debuts_trimestres (date : datetime) -> tuple [datetime, datetime, datetime] 
     """
     annee = date.year if date.month >= 9 else date.year - 1
     return (
-        datetime (annee, 9, 1, tzinfo=timezone.utc),
-        datetime (annee, 11, 17, tzinfo=timezone.utc),
-        datetime (annee + 1, 2, 16, tzinfo=timezone.utc),
+        datetime (annee, 9, 1, tzinfo=UTC),
+        datetime (annee, 11, 17, tzinfo=UTC),
+        datetime (annee + 1, 2, 16, tzinfo=UTC),
     )
 
 class WiFiUpdate (SQLModel):
@@ -49,15 +49,15 @@ def ajouter_credits_trimestre (
                 detail="Vous n'avez pas assez de crédits"
             )
 
-    debut_t1, debut_t2, debut_t3 = debuts_trimestres (datetime.now(timezone.utc))
+    debut_t1, debut_t2, debut_t3 = debuts_trimestres (datetime.now(UTC))
 
     if req.T1:
         update = UserUpdate (
             credits=current_user.credits - 1,
-            cotizT1=True, t1PaidAt=datetime.now(timezone.utc),
+            cotizT1=True, t1PaidAt=datetime.now(UTC),
             t1PaymentType="Autocredits",
         )
-        if debut_t2 > datetime.now(timezone.utc) > debut_t1:
+        if debut_t2 > datetime.now(UTC) > debut_t1:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 
@@ -67,10 +67,10 @@ def ajouter_credits_trimestre (
     if req.T2:
         update = UserUpdate (
             credits=current_user.credits - 1,
-            cotizT2=True, t2PaidAt=datetime.now(timezone.utc),
+            cotizT2=True, t2PaidAt=datetime.now(UTC),
             t2PaymentType="Autocredits",
         )
-        if debut_t3 > datetime.now(timezone.utc) > debut_t2:
+        if debut_t3 > datetime.now(UTC) > debut_t2:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 
@@ -80,10 +80,10 @@ def ajouter_credits_trimestre (
     if req.T3:
         update = UserUpdate (
             credits=current_user.credits - 1,
-            cotizT3=True, t3PaidAt=datetime.now(timezone.utc),
+            cotizT3=True, t3PaidAt=datetime.now(UTC),
             t3PaymentType="Autocredits",
         )
-        if datetime.now(timezone.utc) > debut_t3:
+        if datetime.now(UTC) > debut_t3:
             allow_ldap_wifi (current_user.uid)
             update.acces_wifi = True
 

@@ -40,10 +40,22 @@ export function useAdminService() {
         });
     };
 
+    const getRadiusSessions = (uid: string) => {
+        return new Promise<Array<string>>((resolve, reject) => {
+            httpInstance
+                .get(`radius/sessions/${uid}`)
+                .then((response) => {
+                    const sessionsRadius = response.data;
+                    resolve(sessionsRadius);
+                })
+                .catch((error) => reject(error));
+        });
+    };
+
     const getRadiusUsers = () => {
         return new Promise<Array<string>>((resolve, reject) => {
             httpInstance
-                .get("list/radius_users")
+                .get("radius/list")
                 .then((response) => {
                     const loginsInRadius = response.data;
                     resolve(loginsInRadius);
@@ -191,6 +203,7 @@ export function useAdminService() {
     return {
         databaseAccountsState: databaseAccountsState,
         updateDatabaseView: updateDatabaseView,
+        getRadiusSessions: getRadiusSessions,
         getRadiusUsers: getRadiusUsers,
         createAccounts: createAccounts,
         modifyAccounts: modifyAccounts,

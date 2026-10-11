@@ -1,5 +1,5 @@
 from pydantic import EmailStr
-from datetime import datetime, timezone
+from datetime import datetime, UTC
 from sqlmodel import SQLModel, Session, Field, UniqueConstraint, create_engine, select
 from fastapi import HTTPException, status
 import os
@@ -100,7 +100,7 @@ def user_from_received (user_rec: UserReceived) -> User:
                  is_admin=False,
                  acces_wifi=False,
                  email_verifie=False,
-                 createdAt=datetime.now(timezone.utc),
+                 createdAt=datetime.now(UTC),
                  promotion=user_rec.promotion,
                  has_lost_pass=False,
                  credits=0,
@@ -216,7 +216,7 @@ with Session (engine) as session:
             has_lost_pass=False,
             credits=0,
 
-            createdAt = datetime.now(timezone.utc)
+            createdAt = datetime.now(UTC)
         ))
         session.add (User (
             uid="24girardet",
@@ -232,7 +232,7 @@ with Session (engine) as session:
             has_lost_pass=False,
             credits=0,
 
-            createdAt=datetime.now(timezone.utc)
+            createdAt=datetime.now(UTC)
         ))
         session.add (User (
             uid="24liens",
@@ -248,6 +248,6 @@ with Session (engine) as session:
             has_lost_pass=False,
             credits=0,
 
-            createdAt=datetime.now(timezone.utc)
+            createdAt=datetime.now(UTC)
         ))
         session.commit ()

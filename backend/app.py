@@ -7,6 +7,7 @@ from auth_router import auth_router
 from wifi import wifi_router
 from listing_router import listing_router
 from helloasso import helloasso_router
+from radius import radius_router
 
 # TODO : passer à l'utilisation du certificat letsencrypt : il suffit de changer le fichier
 #profile_file = "Rézal.mobileconfig"
@@ -38,6 +39,7 @@ app.include_router (auth_router)
 app.include_router (wifi_router)
 app.include_router (listing_router)
 app.include_router (helloasso_router)
+app.include_router (radius_router)
 
 @app.get ("/is_alive")
 async def is_alive () -> bool:
