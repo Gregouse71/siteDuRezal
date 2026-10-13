@@ -25,7 +25,7 @@ export default function AccountsSyntesis() {
                 <td> {accountThatHavePaid.length} </td>
                 {promotions.map((promo) => (
                     <td key={"promotion td " + promo}>
-                        {accountsThatHavePaidAndAreMineurs.filter((account) => account.promotion === promo).length}
+                        {accountThatHavePaid.filter((account) => account.promotion === promo).length}
                     </td>
                 ))}
                 <td> {accountsThatHavePaidAndAreMineurs.length} </td>
@@ -45,8 +45,8 @@ export default function AccountsSyntesis() {
     return (
         <div style={{ overflowX: "auto" }}>
             <table
-                className="table table-bordered table-striped table-sm"
-                style={{ textAlign: "center", width: "80%", margin: 0 }}
+                className="table-synthesis table table-bordered table-striped table-sm"
+                style={{ textAlign: "center", width: "100%", margin: 0 }}
             >
                 <thead className="align-middle">
                     <tr>
@@ -70,8 +70,10 @@ export default function AccountsSyntesis() {
                     </tr>
                     <tr>
                         {paymentTypes.map((type) => (
-                            <th key={"paymentTypes th " + type} rowSpan={2}>
-                                {type}
+                            <th className="rotated-header" scope="col" key={"paymentTypes th " + type} rowSpan={2}>
+                                <div>
+                                    <span>{type}</span>
+                                </div>
                             </th>
                         ))}
                     </tr>
@@ -86,6 +88,10 @@ export default function AccountsSyntesis() {
                     {[1, 2, 3].map((num) => (
                         <TrimesterRow key={"TrimesterRow " + num} trimesterNum={num} />
                     ))}
+                    <tr>
+                        <td>Non utilisé</td>
+                        <td>{accounts.reduce((accu, [_, account]) => accu + account.credits, 0)}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
