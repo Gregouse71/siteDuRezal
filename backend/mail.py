@@ -15,11 +15,12 @@ SMTP_USERNAME = os.getenv ("SMTP_USERNAME")
 SMTP_PASSWORD = os.getenv ("SMTP_PASSWORD")
 SMTP_PORT = 587
 
-sender = SMTP_USERNAME
+# Adresse d'expédition : SMTP_SENDER si défini, sinon l'identifiant SMTP
+sender = os.getenv ("SMTP_SENDER") or SMTP_USERNAME
 
 SECRET_KEY_MAIL = os.getenv ("SECRET_KEY_MAIL")
 
-# Référence pour les mails avec gandi : https://docs.gandi.net/fr/gandimail/configuration_messagerie/index.html
+# Relais SMTP de Brevo : https://developers.brevo.com/docs/smtp-integration
 def send_mail (contenu: str, subject: str, to: str):
     server = smtplib.SMTP (SMTP_HOST, SMTP_PORT)
     server.starttls ()
